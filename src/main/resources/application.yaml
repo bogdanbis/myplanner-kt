@@ -1,0 +1,16 @@
+spring:
+    datasource:
+        url: ${dburl}
+        username: ${dbusername}
+        password: ${dbpassword}
+    jpa:
+        database-platform: ${dbdialect}
+        hibernate:
+            ddl-auto: update
+    servlet:
+        multipart:
+            max-file-size: 10MB
+security:
+    jwt:
+        secret: ${jwtSecret}
+        lifespanMs: 2_419_200_000 # 28 days

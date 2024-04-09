@@ -1,0 +1,12 @@
+dburl: jdbc:postgresql://localhost:5432/myplanner_kt
+dbusername: webadmin
+dbpassword: webadmin
+dbdialect: org.hibernate.dialect.PostgreSQLDialect
+jwtSecret: Y2FyYW1iYV9zb21icmVybzIzOTQ4
+
+server.port: 8086
+spring:
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: false
