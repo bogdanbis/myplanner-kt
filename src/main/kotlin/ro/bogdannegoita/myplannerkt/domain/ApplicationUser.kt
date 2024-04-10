@@ -3,11 +3,11 @@ package ro.bogdannegoita.myplannerkt.domain
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import java.util.*
 
-class ApplicationUser(
-    dto: ApplicationUserDto,
+open class ApplicationUser(
+    data: ApplicationUserDto,
 ) {
-    val id: UUID? = dto.id
-    val email: String = dto.email
-    val firstName: String = dto.firstName
-    val lastName: String = dto.lastName
+    val id: UUID = data.id!!
+    val email: String = data.email
+    val firstName: String = data.firstName
+    val lastName: String = data.lastName
 }

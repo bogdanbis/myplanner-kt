@@ -1,0 +1,23 @@
+package ro.bogdannegoita.myplannerkt.domain.factories
+
+import org.springframework.context.annotation.Scope
+import org.springframework.stereotype.Component
+import ro.bogdannegoita.myplannerkt.commons.AuthorDto
+import ro.bogdannegoita.myplannerkt.commons.PlanDto
+import ro.bogdannegoita.myplannerkt.domain.Author
+import ro.bogdannegoita.myplannerkt.domain.Plan
+import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
+
+@Component
+@Scope("prototype")
+class DomainFactory(
+    private val planDao: PlanDao,
+) {
+    fun plan(data: PlanDto): Plan {
+        return Plan(data, planDao, this)
+    }
+
+    fun author(data: AuthorDto): Author {
+        return Author(data)
+    }
+}

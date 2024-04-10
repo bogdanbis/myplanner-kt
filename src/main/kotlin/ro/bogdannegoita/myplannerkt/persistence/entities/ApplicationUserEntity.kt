@@ -1,9 +1,7 @@
 package ro.bogdannegoita.myplannerkt.persistence.entities
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
-import jakarta.persistence.Table
+import jakarta.persistence.*
+import jakarta.persistence.FetchType.LAZY
 import java.util.*
 
 @Entity
@@ -13,6 +11,10 @@ class ApplicationUserEntity(
     var firstName: String? = null,
     var lastName: String? = null,
     var password: String? = null,
+
+    @OneToOne(mappedBy = "user", fetch = LAZY)
+    var author: AuthorEntity? = null,
+
     @Id @GeneratedValue
     var id: UUID? = null
 )

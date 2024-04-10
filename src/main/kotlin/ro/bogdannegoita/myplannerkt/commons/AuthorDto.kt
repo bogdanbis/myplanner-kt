@@ -2,9 +2,11 @@ package ro.bogdannegoita.myplannerkt.commons
 
 import java.util.*
 
-open class ApplicationUserDto(
+data class AuthorDto(
     var id: UUID?,
-    var email: String,
     var firstName: String,
     var lastName: String,
-)
+    var email: String,
+) {
+    val userDto = ApplicationUserDto(id, email, firstName, lastName)
+}
