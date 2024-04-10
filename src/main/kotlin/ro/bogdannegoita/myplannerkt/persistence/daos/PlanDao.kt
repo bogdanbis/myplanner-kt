@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component
 import ro.bogdannegoita.myplannerkt.commons.AuthorDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
+import ro.bogdannegoita.myplannerkt.persistence.entities.AuthorEntity
 import ro.bogdannegoita.myplannerkt.persistence.entities.PlanEntity
 import ro.bogdannegoita.myplannerkt.persistence.mappers.DtoMapper
 import ro.bogdannegoita.myplannerkt.persistence.repositories.PlanRepository
@@ -22,5 +23,16 @@ class PlanDao(private val repository: PlanRepository) {
     fun findById(id: UUID): PlanEntity {
         return repository.findById(id)
             .orElseThrow { EntityNotFoundException(PlanEntity::class) }
+    }
+
+    fun createPlan(data: PlanDto, authorsIds: Collection<UUID>): PlanDto {
+        val authorEntities: MutableSet<AuthorEntity> = authorsIds.map { AuthorEntity(id = it) }.toMutableSet()
+        val planEntity = PlanEntity(
+            title = data.title,
+            description = data.description,
+            isPublic = data.isPublic,
+            authors = authorEntities,
+        )
+        return DtoMapper.planDto(repository.save(planEntity))
     }
 }

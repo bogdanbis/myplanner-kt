@@ -2,6 +2,7 @@ package ro.bogdannegoita.myplannerkt.domain
 
 import org.springframework.beans.factory.ObjectProvider
 import org.springframework.stereotype.Component
+import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
 import ro.bogdannegoita.myplannerkt.domain.factories.myPlannerCache
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
@@ -33,6 +34,19 @@ class MyPlanner(
         publicPlans = planDao.getPublicPlans().map(domainFactory::plan).toMutableList()
         loadedPublicPlans = true
         return publicPlans
+    }
+
+    fun createPlan(users: Collection<ApplicationUser>, planData: PlanDto): Plan {
+        val authors = users.map { user -> user.author ?: createAuthor(user) }
+        val persistedPlanData = planDao.createPlan(planData, authors.map(Author::id))
+        val plan = domainFactory.plan(persistedPlanData)
+        if (plan.isPublic)
+            publicPlans.add(plan)
+        return plan
+    }
+
+    fun createAuthor(user: ApplicationUser): Author {
+        TODO()
     }
 
     private var loadedPublicPlans = false

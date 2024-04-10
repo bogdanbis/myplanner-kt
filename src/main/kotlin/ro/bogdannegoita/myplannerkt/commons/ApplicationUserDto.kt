@@ -2,7 +2,7 @@ package ro.bogdannegoita.myplannerkt.commons
 
 import java.util.*
 
-open class ApplicationUserDto(
+data class ApplicationUserDto(
     var id: UUID?,
     var email: String,
     var firstName: String,

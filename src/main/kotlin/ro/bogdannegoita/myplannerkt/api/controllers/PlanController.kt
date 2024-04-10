@@ -1,17 +1,27 @@
 package ro.bogdannegoita.myplannerkt.api.controllers
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.web.bind.annotation.*
+import ro.bogdannegoita.myplannerkt.api.requests.CreatePlanRequest
 import ro.bogdannegoita.myplannerkt.api.responses.PlanResponse
+import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.domain.MyPlanner
 
 @RestController
 @RequestMapping("/plans")
-class PlanController(private val myPlanner: MyPlanner) {
+class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
 
     @GetMapping("/browse")
     fun getPublicPlans(): List<PlanResponse> {
         return myPlanner.getPublicPlans().map(::PlanResponse)
+    }
+
+    @PostMapping("/create-plan")
+    fun createPlan(@AuthenticationPrincipal principal: UserDetails, @RequestBody request: CreatePlanRequest)
+            : PlanResponse? {
+        val planData = PlanDto(title = request.title, description = request.description, isPublic = request.isPublic)
+        val plan = myPlanner.createPlan(listOf(user(principal)), planData)
+        return PlanResponse(plan)
     }
 }

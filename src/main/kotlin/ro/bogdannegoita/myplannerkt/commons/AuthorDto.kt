@@ -7,6 +7,4 @@ data class AuthorDto(
     var firstName: String,
     var lastName: String,
     var email: String,
-) {
-    val userDto = ApplicationUserDto(id, email, firstName, lastName)
-}
+)
