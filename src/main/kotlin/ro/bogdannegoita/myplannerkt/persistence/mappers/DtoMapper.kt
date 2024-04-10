@@ -18,7 +18,7 @@ class DtoMapper {
         }
 
         fun authorDto(author: AuthorEntity): AuthorDto {
-            return AuthorDto(author.id, author.firstName!!, author.firstName!!, author.email!!)
+            return AuthorDto(author.id, author.firstName!!, author.lastName!!, author.email!!)
         }
     }
 }

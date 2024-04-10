@@ -12,6 +12,7 @@ import java.util.*
 @Component
 class ApplicationUserDao(
     private val repository: ApplicationUserRepository,
+    private val authorDao: AuthorDao,
 ) {
     fun findByEmail(email: String): ApplicationUserDto {
         val entity = repository.findByEmail(email)
@@ -21,6 +22,10 @@ class ApplicationUserDao(
 
     fun getAuthor(id: UUID): AuthorDto? {
         return findById(id).author?.let { DtoMapper.authorDto(it) }
+    }
+
+    fun createAuthor(data: AuthorDto, userId: UUID): AuthorDto {
+        return authorDao.create(data, findById(userId))
     }
 
     fun findById(id: UUID): ApplicationUserEntity {

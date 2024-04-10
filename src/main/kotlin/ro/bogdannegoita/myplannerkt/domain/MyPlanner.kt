@@ -37,16 +37,12 @@ class MyPlanner(
     }
 
     fun createPlan(users: Collection<ApplicationUser>, planData: PlanDto): Plan {
-        val authors = users.map { user -> user.author ?: createAuthor(user) }
+        val authors = users.map { user -> user.author ?: user.createAuthor() }
         val persistedPlanData = planDao.createPlan(planData, authors.map(Author::id))
         val plan = domainFactory.plan(persistedPlanData)
         if (plan.isPublic)
             publicPlans.add(plan)
         return plan
-    }
-
-    fun createAuthor(user: ApplicationUser): Author {
-        TODO()
     }
 
     private var loadedPublicPlans = false

@@ -1,6 +1,7 @@
 package ro.bogdannegoita.myplannerkt.domain
 
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
+import ro.bogdannegoita.myplannerkt.commons.AuthorDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
 import java.util.*
@@ -20,6 +21,16 @@ class ApplicationUser(
             return field
         }
         private set
+
+    fun createAuthor(): Author {
+        loadAuthor()
+        if (author != null)
+            return author!!
+        val data = AuthorDto(firstName = firstName, lastName = lastName, email = email)
+        val persistedAuthorData = dao.createAuthor(data, id)
+        author = domainFactory.author(persistedAuthorData)
+        return author!!
+    }
 
     private fun loadAuthor() {
         if (loadedAuthor)
