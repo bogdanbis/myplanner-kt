@@ -7,6 +7,7 @@ import ro.bogdannegoita.myplannerkt.api.requests.CreatePlanRequest
 import ro.bogdannegoita.myplannerkt.api.responses.PlanResponse
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.domain.MyPlanner
+import java.util.*
 
 @RestController
 @RequestMapping("/plans")
@@ -23,5 +24,10 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
         val planData = PlanDto(title = request.title, description = request.description, isPublic = request.isPublic)
         val plan = myPlanner.createPlan(listOf(user(principal)), planData)
         return PlanResponse(plan)
+    }
+
+    @GetMapping("/{id}")
+    fun getPlanById(@AuthenticationPrincipal principal: UserDetails, @PathVariable id: UUID): PlanResponse? {
+        return myPlanner.getPlanById(id)?.let { PlanResponse(it) }
     }
 }

@@ -10,7 +10,8 @@ import kotlin.test.assertEquals
 class ApplicationUserDaoTest {
 
     private val repository = mockk<ApplicationUserRepository>()
-    private val dao: ApplicationUserDao = ApplicationUserDao(repository)
+    private val authorDao = mockk<AuthorDao>()
+    private val dao: ApplicationUserDao = ApplicationUserDao(repository, authorDao)
 
     @Test
     fun findByEmail() {

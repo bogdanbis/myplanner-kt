@@ -20,7 +20,11 @@ class PlanDao(private val repository: PlanRepository) {
         return findById(planId).authors.map(DtoMapper::authorDto).toList()
     }
 
-    fun findById(id: UUID): PlanEntity {
+    fun getById(id: UUID): PlanDto {
+        return DtoMapper.planDto(findById(id))
+    }
+
+    private fun findById(id: UUID): PlanEntity {
         return repository.findById(id)
             .orElseThrow { EntityNotFoundException(PlanEntity::class) }
     }

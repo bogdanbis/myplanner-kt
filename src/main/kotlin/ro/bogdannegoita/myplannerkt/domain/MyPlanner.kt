@@ -7,6 +7,7 @@ import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
 import ro.bogdannegoita.myplannerkt.domain.factories.myPlannerCache
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
+import java.util.*
 
 @Component
 class MyPlanner(
@@ -15,6 +16,8 @@ class MyPlanner(
     private val planDao: PlanDao,
     private val domainFactory: DomainFactory
 ) {
+    private val plansById by domainFactory.registry::plans
+
     private val users = myPlannerCache<String, ApplicationUser>()
     private var publicPlans = mutableListOf<Plan>()
 
@@ -29,11 +32,13 @@ class MyPlanner(
     }
 
     fun getPublicPlans(): List<Plan> {
-        if (loadedPublicPlans)
-            return publicPlans
-        publicPlans = planDao.getPublicPlans().map(domainFactory::plan).toMutableList()
-        loadedPublicPlans = true
+        loadPublicPlans()
         return publicPlans
+    }
+
+    fun getPlanById(id: UUID): Plan? {
+        loadPlan(id)
+        return plansById[id]
     }
 
     fun createPlan(users: Collection<ApplicationUser>, planData: PlanDto): Plan {
@@ -46,4 +51,17 @@ class MyPlanner(
     }
 
     private var loadedPublicPlans = false
+    private fun loadPublicPlans() {
+        if (loadedPublicPlans) return
+        publicPlans = planDao.getPublicPlans().map(domainFactory::plan).toMutableList()
+        loadedPublicPlans = true
+    }
+
+    private fun loadPlan(id: UUID) {
+        if (plansById[id] != null)
+            return
+        val planDto = planDao.getById(id)
+        plansById[id] = domainFactory.plan(planDto)
+    }
+
 }

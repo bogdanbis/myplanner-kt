@@ -13,6 +13,8 @@ import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
 class DomainFactory(
     private val planDao: PlanDao,
 ) {
+    val registry = DomainRegistry()
+
     fun plan(data: PlanDto): Plan {
         return Plan(data, planDao, this)
     }

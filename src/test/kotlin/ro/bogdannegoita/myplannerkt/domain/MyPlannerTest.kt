@@ -4,14 +4,17 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.ObjectProvider
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
+import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
+import ro.bogdannegoita.myplannerkt.persistence.entities.PlanEntity
 import java.util.*
 import kotlin.test.assertEquals
 
@@ -60,5 +63,21 @@ class MyPlannerTest @Autowired constructor(
         assertEquals(plans[0].id, plan1.id)
         assertEquals(plans[1].id, plan2.id)
         assertEquals(plans[2].id, plan3.id)
+    }
+
+    @Test
+    fun `should find a plan by id`() {
+        val planId = UUID.randomUUID()
+        val plan = PlanDto(planId, "Title 1", "Description 1", true)
+
+        every { planDao.getById(planId) } returns plan
+
+        assertEquals(myPlanner.getPlanById(planId)?.id, plan.id)
+    }
+
+    @Test
+    fun `should throw exception when plan is not found`() {
+        every { planDao.getById(any()) } throws EntityNotFoundException(PlanEntity::class)
+        assertThrows<EntityNotFoundException> { myPlanner.getPlanById(UUID.randomUUID()) }
     }
 }
