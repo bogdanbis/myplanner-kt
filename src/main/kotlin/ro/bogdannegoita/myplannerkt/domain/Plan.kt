@@ -16,7 +16,7 @@ class Plan(
     val color by data::color
     val isPublic by data::isPublic
 
-    var authors = mutableSetOf<ApplicationUserDto>()
+    var author: ApplicationUserDto? = null
         get() {
             loadAuthor()
             return field
@@ -27,7 +27,7 @@ class Plan(
     private fun loadAuthor() {
         if (loadedAuthor)
             return
-        authors = dao.getAuthorsOf(id).toMutableSet()
+        author = dao.getAuthor(id)
         loadedAuthor = true
     }
 

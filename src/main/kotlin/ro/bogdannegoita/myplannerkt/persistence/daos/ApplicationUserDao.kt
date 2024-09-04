@@ -5,6 +5,7 @@ import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.persistence.entities.ApplicationUserEntity
+import ro.bogdannegoita.myplannerkt.persistence.entities.PlanEntity
 import ro.bogdannegoita.myplannerkt.persistence.mappers.DtoMapper
 import ro.bogdannegoita.myplannerkt.persistence.repositories.ApplicationUserRepository
 import java.util.*
@@ -27,14 +28,28 @@ class ApplicationUserDao(
             .orElseThrow { EntityNotFoundException(ApplicationUserEntity::class) }
     }
 
-    fun addPlan(id: UUID, planId: UUID) {
-        val userEntity = findById(id)
-        val planEntity = planDao.findById(planId)
-        userEntity.plans.add(planEntity)
+    fun acquirePlan(userId: UUID, planId: UUID) {
+        val userEntity = findById(userId)
+        userEntity.acquiredPlans.add(planDao.findById(planId))
         repository.save(userEntity)
     }
 
-    fun getPlans(id: UUID): List<PlanDto> {
-        return findById(id).plans.map(dtoMapper::planDto)
+    fun createPlan(data: PlanDto, authorId: UUID): PlanDto {
+        val planEntity = PlanEntity(
+            title = data.title,
+            description = data.description,
+            color = data.color,
+            isPublic = data.isPublic,
+            author = findById(authorId),
+        )
+        return dtoMapper.planDto(planDao.save(planEntity))
+    }
+
+    fun getAcquiredPlans(id: UUID): List<PlanDto> {
+        return findById(id).acquiredPlans.map(dtoMapper::planDto)
+    }
+
+    fun getCreatedPlans(id: UUID): List<PlanDto> {
+        return findById(id).createdPlans.map(dtoMapper::planDto)
     }
 }

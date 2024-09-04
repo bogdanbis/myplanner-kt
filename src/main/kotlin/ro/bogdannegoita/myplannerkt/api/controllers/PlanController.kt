@@ -23,7 +23,7 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
             : PlanResponse? {
         val planData = PlanDto(title = request.title, description = request.description, color = request.color,
             isPublic = request.isPublic)
-        val plan = myPlanner.createPlan(listOf(user(principal)), planData)
+        val plan = myPlanner.createPlan(user(principal), planData)
         return PlanResponse(plan)
     }
 
@@ -35,6 +35,6 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
     @PostMapping("/{id}/acquire")
     fun acquirePlan(@AuthenticationPrincipal principal: UserDetails, @PathVariable id: UUID) {
         val plan = myPlanner.getPlanById(id) ?: return
-        user(principal).addPlan(plan)
+        user(principal).acquirePlan(plan)
     }
 }

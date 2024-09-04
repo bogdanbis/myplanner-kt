@@ -3,11 +3,13 @@ package ro.bogdannegoita.myplannerkt.domain
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
+import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
 import java.util.*
 
 class ApplicationUser(
     data: ApplicationUserDto,
     private val dao: ApplicationUserDao,
+    private val planDao: PlanDao,
     private val domainFactory: DomainFactory,
 ) {
     val id: UUID = data.id!!
@@ -15,27 +17,43 @@ class ApplicationUser(
     val firstName: String = data.firstName
     val lastName: String = data.lastName
 
-    var plans: SortedSet<Plan> = sortedSetOf()
+    var acquiredPlans: SortedSet<Plan> = sortedSetOf()
         get() {
-            loadPlans()
+            loadAcquiredPlans()
             return field
         }
         private set
 
-    fun addPlan(plan: Plan) {
-        if (plans.contains(plan))
+    var createdPlans: SortedSet<Plan> = sortedSetOf()
+        get() {
+            loadCreatedPlans()
+            return field
+        }
+        private set
+
+    fun acquirePlan(plan: Plan) {
+        if (acquiredPlans.contains(plan))
             return
-        plans.add(plan)
-        dao.addPlan(id, plan.id)
+        acquiredPlans.add(plan)
+        dao.acquirePlan(id, plan.id)
     }
 
-    private var loadedPlans = false
-    private fun loadPlans() {
-        if (loadedPlans)
+    private var loadedAcquiredPlans = false
+    private fun loadAcquiredPlans() {
+        if (loadedAcquiredPlans)
             return
-        plans = dao.getPlans(id).map { domainFactory.plan(it) }
+        acquiredPlans = dao.getAcquiredPlans(id).map { domainFactory.plan(it) }
             .toSortedSet()
-        loadedPlans = true
+        loadedAcquiredPlans = true
+    }
+
+    private var loadedCreatedPlans = false
+    private fun loadCreatedPlans() {
+        if (loadedCreatedPlans)
+            return
+        createdPlans = dao.getCreatedPlans(id).map { domainFactory.plan(it) }
+            .toSortedSet()
+        loadedCreatedPlans = true
     }
 
 }

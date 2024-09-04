@@ -12,8 +12,11 @@ class PlanEntity(
     var color: String? = null,
     var isPublic: Boolean? = null,
 
-    @ManyToMany(fetch = LAZY)
-    var authors: MutableSet<ApplicationUserEntity> = mutableSetOf(),
+    @ManyToOne(fetch = LAZY)
+    var author: ApplicationUserEntity? = null,
+
+    @ManyToMany(mappedBy = "acquiredPlans", fetch = LAZY)
+    var users: MutableSet<ApplicationUserEntity> = mutableSetOf(),
 
     @Id @GeneratedValue
     var id: UUID? = null

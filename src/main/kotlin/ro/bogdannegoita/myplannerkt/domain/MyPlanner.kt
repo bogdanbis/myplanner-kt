@@ -18,8 +18,7 @@ class MyPlanner(
 ) {
 
     private val users = myPlannerCache<String, ApplicationUser>()
-    private var publicPlans = mutableListOf<Plan>()
-    private val plansById by domainFactory.registry::publicPlans
+    private val publicPlansRegistry by domainFactory.registry::publicPlans
 
     fun loadUser(email: String): ApplicationUser {
         var user = users.getOrNull(email)
@@ -33,34 +32,42 @@ class MyPlanner(
 
     fun getPublicPlans(): List<Plan> {
         loadPublicPlans()
-        return publicPlans
+        return publicPlansRegistry.values.toList()
     }
 
     fun getPlanById(id: UUID): Plan? {
         loadPlan(id)
-        return plansById[id]
+        return publicPlansRegistry[id]
     }
 
-    fun createPlan(users: Collection<ApplicationUser>, planData: PlanDto): Plan {
-        val persistedPlanData = planDao.createPlan(planData, users.map(ApplicationUser::id))
+    fun createPlan(user: ApplicationUser, planData: PlanDto): Plan {
+        val persistedPlanData = userDao.createPlan(planData, user.id)
         val plan = domainFactory.plan(persistedPlanData)
         if (plan.isPublic)
-            publicPlans.add(plan)
+            publicPlansRegistry[plan.id] = plan
         return plan
     }
 
     private var loadedPublicPlans = false
     private fun loadPublicPlans() {
         if (loadedPublicPlans) return
-        publicPlans = planDao.getPublicPlans().map(domainFactory::plan).toMutableList()
+        planDao.getPublicPlans()
+            .map {
+                val plan = domainFactory.plan(it)
+                publicPlansRegistry[plan.id] = plan
+                plan
+            }
+            .toMutableList()
         loadedPublicPlans = true
     }
 
     private fun loadPlan(id: UUID) {
-        if (plansById[id] != null)
+        // TODO - remove from this list when plan is made private
+        if (publicPlansRegistry[id] != null)
             return
         val planDto = planDao.getById(id)
-        plansById[id] = domainFactory.plan(planDto)
+        if (planDto.isPublic)
+            publicPlansRegistry[id] = domainFactory.plan(planDto)
     }
 
 }

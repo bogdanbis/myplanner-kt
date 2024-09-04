@@ -17,6 +17,7 @@ import java.util.*
 class ApplicationUserTest {
 
     private val dao = mockk<ApplicationUserDao>()
+    private val planDao = mockk<PlanDao>()
     private val domainFactory = mockk<DomainFactory>()
     private lateinit var user: ApplicationUser
 
@@ -24,11 +25,11 @@ class ApplicationUserTest {
     fun setUp() {
         val userId = UUID.randomUUID()
         val userData = ApplicationUserDto(userId, "emai@email.com", "Bogdan", "Bis")
-        user = ApplicationUser(userData, dao, domainFactory)
+        user = ApplicationUser(userData, dao, planDao, domainFactory)
     }
 
     @Test
-    fun `should get the plans of this user sorted by title`() {
+    fun `should get the acquired plans of this user sorted by title`() {
         val planDao = mockk<PlanDao>()
         val plan1Data = PlanDto(UUID.randomUUID(), "Title 1", "Description C", "RED", true)
         val plan1 = Plan(plan1Data, planDao, domainFactory)
@@ -42,16 +43,16 @@ class ApplicationUserTest {
         every { domainFactory.plan(plan1Data) } returns plan1
         every { domainFactory.plan(plan2Data) } returns plan2
         every { domainFactory.plan(plan3Data) } returns plan3
-        every { dao.getPlans(user.id) } returns listOf(plan2Data, plan1Data, plan3Data)
+        every { dao.getAcquiredPlans(user.id) } returns listOf(plan2Data, plan1Data, plan3Data)
 
-        assertEquals(3, user.plans.size)
-        assertEquals(plan1.id, user.plans.elementAt(0).id)
-        assertEquals(plan2.id, user.plans.elementAt(1).id)
-        assertEquals(plan3.id, user.plans.elementAt(2).id)
+        assertEquals(3, user.acquiredPlans.size)
+        assertEquals(plan1.id, user.acquiredPlans.elementAt(0).id)
+        assertEquals(plan2.id, user.acquiredPlans.elementAt(1).id)
+        assertEquals(plan3.id, user.acquiredPlans.elementAt(2).id)
     }
 
     @Test
-    fun `should add a plan`() {
+    fun `should acquire a plan`() {
         val plan1Data = PlanDto(UUID.randomUUID(), "Title 1", "Description C", "RED", true)
         val planDao = mockk<PlanDao>()
         val plan1 = Plan(plan1Data, planDao, domainFactory)
@@ -59,11 +60,11 @@ class ApplicationUserTest {
         val plan2 = Plan(plan2Data, planDao, domainFactory)
 
         every { domainFactory.plan(plan1Data) } returns plan1
-        every { dao.getPlans(user.id) } returns listOf(plan1Data)
-        every { dao.addPlan(any(), any()) } just Runs
+        every { dao.getAcquiredPlans(user.id) } returns listOf(plan1Data)
+        every { dao.acquirePlan(any(), any()) } just Runs
 
-        user.addPlan(plan2)
+        user.acquirePlan(plan2)
 
-        assertEquals(2, user.plans.size)
+        assertEquals(2, user.acquiredPlans.size)
     }
 }

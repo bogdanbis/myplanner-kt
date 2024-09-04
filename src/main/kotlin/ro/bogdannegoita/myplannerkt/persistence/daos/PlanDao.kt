@@ -4,17 +4,14 @@ import org.springframework.stereotype.Component
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
-import ro.bogdannegoita.myplannerkt.persistence.entities.ApplicationUserEntity
 import ro.bogdannegoita.myplannerkt.persistence.entities.PlanEntity
 import ro.bogdannegoita.myplannerkt.persistence.mappers.DtoMapper
-import ro.bogdannegoita.myplannerkt.persistence.repositories.ApplicationUserRepository
 import ro.bogdannegoita.myplannerkt.persistence.repositories.PlanRepository
 import java.util.*
 
 @Component
 class PlanDao(
     private val repository: PlanRepository,
-    private val applicationUserRepository: ApplicationUserRepository
 ) {
     private val dtoMapper = DtoMapper()
 
@@ -22,8 +19,8 @@ class PlanDao(
         return repository.findByIsPublicTrue().map(dtoMapper::planDto)
     }
 
-    fun getAuthorsOf(planId: UUID): List<ApplicationUserDto> {
-        return findById(planId).authors.map(dtoMapper::applicationUserDto).toList()
+    fun getAuthor(planId: UUID): ApplicationUserDto {
+        return findById(planId).author?.let { dtoMapper.applicationUserDto(it) }!!
     }
 
     fun getById(id: UUID): PlanDto {
@@ -35,16 +32,7 @@ class PlanDao(
             .orElseThrow { EntityNotFoundException(PlanEntity::class) }
     }
 
-    fun createPlan(data: PlanDto, authorsIds: Collection<UUID>): PlanDto {
-        val authorEntities: MutableSet<ApplicationUserEntity> = applicationUserRepository.findAllById(authorsIds)
-            .toMutableSet()
-        val planEntity = PlanEntity(
-            title = data.title,
-            description = data.description,
-            color = data.color,
-            isPublic = data.isPublic,
-            authors = authorEntities,
-        )
-        return dtoMapper.planDto(repository.save(planEntity))
+    fun save(entity: PlanEntity): PlanEntity {
+        return repository.save(entity)
     }
 }

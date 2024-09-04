@@ -23,8 +23,8 @@ class ApplicationUserController(myPlanner: MyPlanner) : BaseController(myPlanner
         }
     }
 
-    @GetMapping("/my-plans")
-    fun getMyPlans(@AuthenticationPrincipal principal: UserDetails): List<PlanResponse> {
-        return user(principal).plans.map(::PlanResponse)
+    @GetMapping("/acquired-plans")
+    fun getAcquiredPlans(@AuthenticationPrincipal principal: UserDetails): List<PlanResponse> {
+        return user(principal).acquiredPlans.map(::PlanResponse)
     }
 }
