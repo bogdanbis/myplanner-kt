@@ -30,4 +30,10 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
     fun getPlanById(@AuthenticationPrincipal principal: UserDetails, @PathVariable id: UUID): PlanResponse? {
         return myPlanner.getPlanById(id)?.let { PlanResponse(it) }
     }
+
+    @PostMapping("/{id}/acquire")
+    fun acquirePlan(@AuthenticationPrincipal principal: UserDetails, @PathVariable id: UUID) {
+        val plan = myPlanner.getPlanById(id) ?: return
+        user(principal).addPlan(plan)
+    }
 }

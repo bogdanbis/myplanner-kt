@@ -15,6 +15,9 @@ class ApplicationUserEntity(
     @OneToOne(mappedBy = "user", fetch = LAZY)
     var author: AuthorEntity? = null,
 
+    @OneToMany(fetch = LAZY)
+    var plans: MutableSet<PlanEntity> = mutableSetOf(),
+
     @Id @GeneratedValue
     var id: UUID? = null
 )

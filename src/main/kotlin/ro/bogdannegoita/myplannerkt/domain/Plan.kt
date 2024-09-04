@@ -8,7 +8,7 @@ class Plan(
     data: PlanDto,
     private val dao: PlanDao,
     private val domainFactory: DomainFactory,
-) {
+) : Comparable<Plan> {
     val id = data.id!!
     val title by data::title
     val description by data::description
@@ -28,4 +28,6 @@ class Plan(
         authors = dao.getAuthorsOf(id).map { domainFactory.author(it) }.toMutableSet()
         loadedAuthor = true
     }
+
+    override fun compareTo(other: Plan) = title.compareTo(other.title, ignoreCase = true)
 }

@@ -7,11 +7,12 @@ import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.persistence.entities.AuthorEntity
 import ro.bogdannegoita.myplannerkt.persistence.entities.PlanEntity
 import ro.bogdannegoita.myplannerkt.persistence.mappers.DtoMapper
+import ro.bogdannegoita.myplannerkt.persistence.repositories.AuthorRepository
 import ro.bogdannegoita.myplannerkt.persistence.repositories.PlanRepository
 import java.util.*
 
 @Component
-class PlanDao(private val repository: PlanRepository) {
+class PlanDao(private val repository: PlanRepository, private val authorRepository: AuthorRepository) {
     fun getPublicPlans(): List<PlanDto> {
         return repository.findByIsPublicTrue().map(DtoMapper::planDto)
     }
@@ -24,13 +25,13 @@ class PlanDao(private val repository: PlanRepository) {
         return DtoMapper.planDto(findById(id))
     }
 
-    private fun findById(id: UUID): PlanEntity {
+    fun findById(id: UUID): PlanEntity {
         return repository.findById(id)
             .orElseThrow { EntityNotFoundException(PlanEntity::class) }
     }
 
     fun createPlan(data: PlanDto, authorsIds: Collection<UUID>): PlanDto {
-        val authorEntities: MutableSet<AuthorEntity> = authorsIds.map { AuthorEntity(id = it) }.toMutableSet()
+        val authorEntities: MutableSet<AuthorEntity> = authorRepository.findAllById(authorsIds).toMutableSet()
         val planEntity = PlanEntity(
             title = data.title,
             description = data.description,

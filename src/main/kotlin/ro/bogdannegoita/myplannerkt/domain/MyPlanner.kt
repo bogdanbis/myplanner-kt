@@ -16,10 +16,10 @@ class MyPlanner(
     private val planDao: PlanDao,
     private val domainFactory: DomainFactory
 ) {
-    private val plansById by domainFactory.registry::plans
 
     private val users = myPlannerCache<String, ApplicationUser>()
     private var publicPlans = mutableListOf<Plan>()
+    private val plansById by domainFactory.registry::publicPlans
 
     fun loadUser(email: String): ApplicationUser {
         var user = users.getOrNull(email)

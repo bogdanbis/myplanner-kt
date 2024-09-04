@@ -22,6 +22,13 @@ class ApplicationUser(
         }
         private set
 
+    var plans: SortedSet<Plan> = sortedSetOf()
+        get() {
+            loadPlans()
+            return field
+        }
+        private set
+
     fun createAuthor(): Author {
         loadAuthor()
         if (author != null)
@@ -32,6 +39,13 @@ class ApplicationUser(
         return author!!
     }
 
+    fun addPlan(plan: Plan) {
+        if (plans.contains(plan))
+            return
+        plans.add(plan)
+        dao.addPlan(id, plan.id)
+    }
+
     private fun loadAuthor() {
         if (loadedAuthor)
             return
@@ -39,5 +53,14 @@ class ApplicationUser(
         loadedAuthor = true
     }
 
+    private fun loadPlans() {
+        if (loadedPlans)
+            return
+        plans = dao.getPlans(id).map { domainFactory.plan(it) }
+            .toSortedSet()
+        loadedPlans = true
+    }
+
     private var loadedAuthor = false
+    private var loadedPlans = false
 }

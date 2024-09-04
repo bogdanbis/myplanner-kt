@@ -11,7 +11,8 @@ class ApplicationUserDaoTest {
 
     private val repository = mockk<ApplicationUserRepository>()
     private val authorDao = mockk<AuthorDao>()
-    private val dao: ApplicationUserDao = ApplicationUserDao(repository, authorDao)
+    private val planDao = mockk<PlanDao>()
+    private val dao: ApplicationUserDao = ApplicationUserDao(repository, authorDao, planDao)
 
     @Test
     fun findByEmail() {
