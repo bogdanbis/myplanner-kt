@@ -9,6 +9,7 @@ import java.util.*
 class PlanEntity(
     var title: String? = null,
     var description: String? = null,
+    var color: String? = null,
     var isPublic: Boolean? = null,
 
     @ManyToMany(fetch = LAZY)

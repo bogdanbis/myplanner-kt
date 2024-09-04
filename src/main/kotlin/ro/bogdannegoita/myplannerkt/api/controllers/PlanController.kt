@@ -21,7 +21,8 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
     @PostMapping("/create-plan")
     fun createPlan(@AuthenticationPrincipal principal: UserDetails, @RequestBody request: CreatePlanRequest)
             : PlanResponse? {
-        val planData = PlanDto(title = request.title, description = request.description, isPublic = request.isPublic)
+        val planData = PlanDto(title = request.title, description = request.description, color = request.color,
+            isPublic = request.isPublic)
         val plan = myPlanner.createPlan(listOf(user(principal)), planData)
         return PlanResponse(plan)
     }

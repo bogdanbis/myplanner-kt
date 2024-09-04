@@ -30,13 +30,13 @@ class ApplicationUserTest {
     @Test
     fun `should get the plans of this user sorted by title`() {
         val planDao = mockk<PlanDao>()
-        val plan1Data = PlanDto(UUID.randomUUID(), "Title 1", "Description C", true)
+        val plan1Data = PlanDto(UUID.randomUUID(), "Title 1", "Description C", "RED", true)
         val plan1 = Plan(plan1Data, planDao, domainFactory)
 
-        val plan2Data = PlanDto(UUID.randomUUID(), "Title 2", "Description B", true)
+        val plan2Data = PlanDto(UUID.randomUUID(), "Title 2", "Description B", "BLUE", true)
         val plan2 = Plan(plan2Data, planDao, domainFactory)
 
-        val plan3Data = PlanDto(UUID.randomUUID(), "Title 3", "Description A", true)
+        val plan3Data = PlanDto(UUID.randomUUID(), "Title 3", "Description A", "GREEN", true)
         val plan3 = Plan(plan3Data, planDao, domainFactory)
 
         every { domainFactory.plan(plan1Data) } returns plan1
@@ -52,10 +52,10 @@ class ApplicationUserTest {
 
     @Test
     fun `should add a plan`() {
-        val plan1Data = PlanDto(UUID.randomUUID(), "Title 1", "Description C", true)
+        val plan1Data = PlanDto(UUID.randomUUID(), "Title 1", "Description C", "RED", true)
         val planDao = mockk<PlanDao>()
         val plan1 = Plan(plan1Data, planDao, domainFactory)
-        val plan2Data = PlanDto(UUID.randomUUID(), "Title 2", "Description B", true)
+        val plan2Data = PlanDto(UUID.randomUUID(), "Title 2", "Description B", "BLUE", true)
         val plan2 = Plan(plan2Data, planDao, domainFactory)
 
         every { domainFactory.plan(plan1Data) } returns plan1

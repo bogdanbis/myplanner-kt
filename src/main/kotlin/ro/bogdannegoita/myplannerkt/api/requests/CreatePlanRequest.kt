@@ -3,5 +3,6 @@ package ro.bogdannegoita.myplannerkt.api.requests
 class CreatePlanRequest(
     val title: String,
     val description: String,
+    val color: String,
     val isPublic: Boolean,
 )

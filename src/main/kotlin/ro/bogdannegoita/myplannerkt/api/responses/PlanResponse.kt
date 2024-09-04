@@ -6,6 +6,7 @@ class PlanResponse(plan: Plan) {
     val id = plan.id
     val title = plan.title
     val description = plan.description
+    val color = plan.color
     val isPublic = plan.isPublic
     val authors = plan.authors.map(::AuthorResponse)
 }

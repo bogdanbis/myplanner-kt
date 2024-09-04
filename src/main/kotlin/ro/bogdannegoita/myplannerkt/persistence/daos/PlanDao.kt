@@ -35,6 +35,7 @@ class PlanDao(private val repository: PlanRepository, private val authorReposito
         val planEntity = PlanEntity(
             title = data.title,
             description = data.description,
+            color = data.color,
             isPublic = data.isPublic,
             authors = authorEntities,
         )

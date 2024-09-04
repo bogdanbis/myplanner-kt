@@ -12,6 +12,7 @@ class Plan(
     val id = data.id!!
     val title by data::title
     val description by data::description
+    val color by data::color
     val isPublic by data::isPublic
 
     var authors = mutableSetOf<Author>()

@@ -52,9 +52,9 @@ class MyPlannerTest @Autowired constructor(
 
     @Test
     fun `should get the public plans`() {
-        val plan1 = PlanDto(UUID.randomUUID(), "Title 1", "Description 1", true)
-        val plan2 = PlanDto(UUID.randomUUID(), "Title 2", "Description 2", true)
-        val plan3 = PlanDto(UUID.randomUUID(), "Title 3", "Description 3", true)
+        val plan1 = PlanDto(UUID.randomUUID(), "Title 1", "Description 1", "RED", true)
+        val plan2 = PlanDto(UUID.randomUUID(), "Title 2", "Description 2", "BLUE", true)
+        val plan3 = PlanDto(UUID.randomUUID(), "Title 3", "Description 3", "GREEN", true)
         every { planDao.getPublicPlans() } returns listOf(plan1, plan2, plan3)
 
         val plans = myPlanner.getPublicPlans()
@@ -68,7 +68,7 @@ class MyPlannerTest @Autowired constructor(
     @Test
     fun `should find a plan by id`() {
         val planId = UUID.randomUUID()
-        val plan = PlanDto(planId, "Title 1", "Description 1", true)
+        val plan = PlanDto(planId, "Title 1", "Description 1", "RED", true)
 
         every { planDao.getById(planId) } returns plan
 
