@@ -12,9 +12,6 @@ class ApplicationUserEntity(
     var lastName: String? = null,
     var password: String? = null,
 
-    @OneToOne(mappedBy = "user", fetch = LAZY)
-    var author: AuthorEntity? = null,
-
     @OneToMany(fetch = LAZY)
     var plans: MutableSet<PlanEntity> = mutableSetOf(),
 

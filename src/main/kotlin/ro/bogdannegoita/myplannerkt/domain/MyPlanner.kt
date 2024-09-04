@@ -42,8 +42,7 @@ class MyPlanner(
     }
 
     fun createPlan(users: Collection<ApplicationUser>, planData: PlanDto): Plan {
-        val authors = users.map { user -> user.author ?: user.createAuthor() }
-        val persistedPlanData = planDao.createPlan(planData, authors.map(Author::id))
+        val persistedPlanData = planDao.createPlan(planData, users.map(ApplicationUser::id))
         val plan = domainFactory.plan(persistedPlanData)
         if (plan.isPublic)
             publicPlans.add(plan)

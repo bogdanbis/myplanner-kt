@@ -1,5 +1,6 @@
 package ro.bogdannegoita.myplannerkt.domain
 
+import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
@@ -15,7 +16,7 @@ class Plan(
     val color by data::color
     val isPublic by data::isPublic
 
-    var authors = mutableSetOf<Author>()
+    var authors = mutableSetOf<ApplicationUserDto>()
         get() {
             loadAuthor()
             return field
@@ -26,7 +27,7 @@ class Plan(
     private fun loadAuthor() {
         if (loadedAuthor)
             return
-        authors = dao.getAuthorsOf(id).map { domainFactory.author(it) }.toMutableSet()
+        authors = dao.getAuthorsOf(id).toMutableSet()
         loadedAuthor = true
     }
 

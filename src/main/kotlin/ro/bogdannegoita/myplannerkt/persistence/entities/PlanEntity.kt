@@ -13,7 +13,7 @@ class PlanEntity(
     var isPublic: Boolean? = null,
 
     @ManyToMany(fetch = LAZY)
-    var authors: MutableSet<AuthorEntity> = mutableSetOf(),
+    var authors: MutableSet<ApplicationUserEntity> = mutableSetOf(),
 
     @Id @GeneratedValue
     var id: UUID? = null

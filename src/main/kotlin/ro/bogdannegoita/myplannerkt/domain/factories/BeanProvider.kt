@@ -1,5 +1,6 @@
 package ro.bogdannegoita.myplannerkt.domain.factories
 
+import org.springframework.beans.factory.ObjectProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Scope
@@ -9,12 +10,12 @@ import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
 
 @Configuration
 class BeanProvider(
-    private val domainFactory: DomainFactory,
-    private val applicationUserDao: ApplicationUserDao,
+    private val factoryProvider: ObjectProvider<DomainFactory>,
+    private val applicationUserDaoProvider: ObjectProvider<ApplicationUserDao>,
 ) {
     @Bean
     @Scope("prototype")
     fun applicationUser(data: ApplicationUserDto): ApplicationUser {
-        return ApplicationUser(data, applicationUserDao, domainFactory)
+        return ApplicationUser(data, applicationUserDaoProvider.getObject(), factoryProvider.getObject())
     }
 }

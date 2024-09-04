@@ -2,7 +2,6 @@ package ro.bogdannegoita.myplannerkt.persistence.daos
 
 import org.springframework.stereotype.Component
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
-import ro.bogdannegoita.myplannerkt.commons.AuthorDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.persistence.entities.ApplicationUserEntity
@@ -13,21 +12,14 @@ import java.util.*
 @Component
 class ApplicationUserDao(
     private val repository: ApplicationUserRepository,
-    private val authorDao: AuthorDao,
     private val planDao: PlanDao,
 ) {
+    private val dtoMapper = DtoMapper()
+
     fun findByEmail(email: String): ApplicationUserDto {
         val entity = repository.findByEmail(email)
             ?: throw EntityNotFoundException(ApplicationUserEntity::class)
-        return DtoMapper.applicationUserDto(entity)
-    }
-
-    fun getAuthor(id: UUID): AuthorDto? {
-        return findById(id).author?.let { DtoMapper.authorDto(it) }
-    }
-
-    fun createAuthor(data: AuthorDto, userId: UUID): AuthorDto {
-        return authorDao.create(data, findById(userId))
+        return dtoMapper.applicationUserDto(entity)
     }
 
     fun findById(id: UUID): ApplicationUserEntity {
@@ -43,6 +35,6 @@ class ApplicationUserDao(
     }
 
     fun getPlans(id: UUID): List<PlanDto> {
-        return findById(id).plans.map(DtoMapper::planDto)
+        return findById(id).plans.map(dtoMapper::planDto)
     }
 }
