@@ -1,5 +1,6 @@
 package ro.bogdannegoita.myplannerkt.commons
 
+import java.time.LocalDateTime
 import java.util.*
 
 data class PlanDto(
@@ -8,4 +9,5 @@ data class PlanDto(
     var description: String,
     var color: String,
     var isPublic: Boolean,
+    val createdAt: LocalDateTime,
 )

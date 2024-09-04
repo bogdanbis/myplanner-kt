@@ -7,6 +7,7 @@ import ro.bogdannegoita.myplannerkt.api.requests.PlanRequest
 import ro.bogdannegoita.myplannerkt.api.responses.PlanResponse
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.domain.MyPlanner
+import java.time.LocalDateTime
 import java.util.*
 
 @RestController
@@ -32,7 +33,7 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
     fun createPlan(@AuthenticationPrincipal principal: UserDetails, @RequestBody request: PlanRequest)
             : PlanResponse? {
         val planData = PlanDto(title = request.title, description = request.description, color = request.color,
-            isPublic = request.isPublic)
+            isPublic = request.isPublic, createdAt = LocalDateTime.now())
         val plan = myPlanner.createPlan(user(principal), planData)
         return PlanResponse(plan)
     }
@@ -55,7 +56,7 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
         @RequestBody request: PlanRequest
     ): PlanResponse? {
         val planData = PlanDto(title = request.title, description = request.description, color = request.color,
-            isPublic = request.isPublic)
+            isPublic = request.isPublic, createdAt = LocalDateTime.now())
         val plan = user(principal).updatePlan(id, planData)
         return PlanResponse(plan)
     }

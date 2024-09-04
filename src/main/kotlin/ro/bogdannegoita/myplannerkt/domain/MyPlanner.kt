@@ -44,8 +44,16 @@ class MyPlanner(
         val persistedPlanData = userDao.createPlan(planData, user.id)
         val plan = domainFactory.plan(persistedPlanData)
         if (plan.isPublic)
-            publicPlansRegistry[plan.id] = plan
+            publishPlan(plan)
         return plan
+    }
+
+    fun publishPlan(plan: Plan) {
+        publicPlansRegistry[plan.id] = plan
+    }
+
+    fun unpublishPlan(plan: Plan) {
+        publicPlansRegistry.remove(plan.id)
     }
 
     private var loadedPublicPlans = false

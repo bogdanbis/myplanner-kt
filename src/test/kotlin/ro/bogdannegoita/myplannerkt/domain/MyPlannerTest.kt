@@ -15,6 +15,7 @@ import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
 import ro.bogdannegoita.myplannerkt.persistence.entities.PlanEntity
+import java.time.LocalDateTime
 import java.util.*
 import kotlin.test.assertEquals
 
@@ -52,9 +53,13 @@ class MyPlannerTest @Autowired constructor(
 
     @Test
     fun `should get the public plans`() {
-        val plan1 = PlanDto(UUID.randomUUID(), "Title 1", "Description 1", "RED", true)
-        val plan2 = PlanDto(UUID.randomUUID(), "Title 2", "Description 2", "BLUE", true)
-        val plan3 = PlanDto(UUID.randomUUID(), "Title 3", "Description 3", "GREEN", true)
+        val plan1 = PlanDto(UUID.randomUUID(), "Title 1", "Description 1", "RED", true,
+            LocalDateTime.parse("2024-01-01T16:50:50"))
+        val plan2 = PlanDto(UUID.randomUUID(), "Title 2", "Description 2", "BLUE", true,
+            LocalDateTime.parse("2024-01-02T16:50:50"))
+        val plan3 = PlanDto(UUID.randomUUID(), "Title 3", "Description 3", "GREEN", true,
+            LocalDateTime.parse("2024-01-03T16:50:50"))
+
         every { planDao.getPublicPlans() } returns listOf(plan1, plan2, plan3)
 
         val plans = myPlanner.getPublicPlans()
@@ -68,7 +73,8 @@ class MyPlannerTest @Autowired constructor(
     @Test
     fun `should find a plan by id`() {
         val planId = UUID.randomUUID()
-        val plan = PlanDto(planId, "Title 1", "Description 1", "RED", true)
+        val plan = PlanDto(planId, "Title 1", "Description 1", "RED", true,
+            LocalDateTime.parse("2024-01-03T16:50:50"))
 
         every { planDao.getById(planId) } returns plan
 

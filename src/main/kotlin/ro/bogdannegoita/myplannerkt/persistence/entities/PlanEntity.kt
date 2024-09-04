@@ -2,6 +2,7 @@ package ro.bogdannegoita.myplannerkt.persistence.entities
 
 import jakarta.persistence.*
 import jakarta.persistence.FetchType.LAZY
+import java.time.LocalDateTime
 import java.util.*
 
 @Entity
@@ -11,6 +12,7 @@ class PlanEntity(
     var description: String? = null,
     var color: String? = null,
     var isPublic: Boolean? = null,
+    var createdAt: LocalDateTime? = null,
 
     @ManyToOne(fetch = LAZY)
     var author: ApplicationUserEntity? = null,

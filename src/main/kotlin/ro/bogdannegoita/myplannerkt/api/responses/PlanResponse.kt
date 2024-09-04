@@ -8,5 +8,6 @@ class PlanResponse(plan: Plan) {
     val description = plan.description
     val color = plan.color
     val isPublic = plan.isPublic
+    val createdAt = plan.createdAt
     val author = plan.author
 }

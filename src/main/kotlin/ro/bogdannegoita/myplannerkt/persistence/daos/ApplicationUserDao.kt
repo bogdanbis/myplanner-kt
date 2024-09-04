@@ -5,7 +5,6 @@ import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.persistence.entities.ApplicationUserEntity
-import ro.bogdannegoita.myplannerkt.persistence.entities.PlanEntity
 import ro.bogdannegoita.myplannerkt.persistence.mappers.DtoMapper
 import ro.bogdannegoita.myplannerkt.persistence.repositories.ApplicationUserRepository
 import java.util.*
@@ -35,14 +34,7 @@ class ApplicationUserDao(
     }
 
     fun createPlan(data: PlanDto, authorId: UUID): PlanDto {
-        val planEntity = PlanEntity(
-            title = data.title,
-            description = data.description,
-            color = data.color,
-            isPublic = data.isPublic,
-            author = findById(authorId),
-        )
-        return dtoMapper.planDto(planDao.save(planEntity))
+        return planDao.create(data, findById(authorId))
     }
 
     fun getAcquiredPlans(id: UUID): List<PlanDto> {
