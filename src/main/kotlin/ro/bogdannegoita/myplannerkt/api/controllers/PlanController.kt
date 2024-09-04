@@ -4,6 +4,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
 import ro.bogdannegoita.myplannerkt.api.requests.PlanRequest
+import ro.bogdannegoita.myplannerkt.api.requests.TasksRequest
+import ro.bogdannegoita.myplannerkt.api.responses.PlanResponse
 import ro.bogdannegoita.myplannerkt.api.responses.PlanSimpleResponse
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.domain.MyPlanner
@@ -39,8 +41,8 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
     }
 
     @GetMapping("/{id}")
-    fun getPlanById(@AuthenticationPrincipal principal: UserDetails, @PathVariable id: UUID): PlanSimpleResponse? {
-        return myPlanner.getPlanById(id)?.let { PlanSimpleResponse(it) }
+    fun getPlanById(@AuthenticationPrincipal principal: UserDetails, @PathVariable id: UUID): PlanResponse? {
+        return myPlanner.getPlanById(id)?.let { PlanResponse(it) }
     }
 
     @PostMapping("/{id}/acquire")
@@ -59,5 +61,16 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
             isPublic = request.isPublic, createdAt = LocalDateTime.now())
         val plan = user(principal).updatePlan(id, planData)
         return PlanSimpleResponse(plan)
+    }
+
+    @PostMapping("/{id}/create-tasks")
+    fun addTasks(
+        @AuthenticationPrincipal principal: UserDetails,
+        @PathVariable id: UUID,
+        @RequestBody request: TasksRequest
+    ): PlanResponse? {
+        val plan = user(principal).getCreatedPlan(id) ?: return null
+        plan.addTasks(request.tasks)
+        return PlanResponse(plan)
     }
 }

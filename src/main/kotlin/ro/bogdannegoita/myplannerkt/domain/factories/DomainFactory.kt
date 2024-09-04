@@ -4,7 +4,9 @@ import org.springframework.context.ApplicationEventPublisher
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
+import ro.bogdannegoita.myplannerkt.commons.TaskDto
 import ro.bogdannegoita.myplannerkt.domain.Plan
+import ro.bogdannegoita.myplannerkt.domain.Task
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
 
 @Component
@@ -16,6 +18,10 @@ class DomainFactory(
     val registry = DomainRegistry()
 
     fun plan(data: PlanDto): Plan {
-        return Plan(data, planDao, eventPublisher)
+        return Plan(data, planDao, this, eventPublisher)
+    }
+
+    fun task(data: TaskDto): Task {
+        return Task(data)
     }
 }

@@ -3,6 +3,7 @@ package ro.bogdannegoita.myplannerkt.persistence.daos
 import org.springframework.stereotype.Component
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
+import ro.bogdannegoita.myplannerkt.commons.TaskDto
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.persistence.entities.ApplicationUserEntity
 import ro.bogdannegoita.myplannerkt.persistence.entities.PlanEntity
@@ -13,6 +14,7 @@ import java.util.*
 @Component
 class PlanDao(
     private val repository: PlanRepository,
+    private val taskDao: TaskDao,
 ) {
     private val dtoMapper = DtoMapper()
 
@@ -52,5 +54,14 @@ class PlanDao(
         entity.color = data.color
         entity.isPublic = data.isPublic
         repository.save(entity)
+    }
+
+    fun getTasks(id: UUID): Collection<TaskDto> {
+        return findById(id).tasks.map(dtoMapper::taskDto)
+    }
+
+    fun addTask(id: UUID, taskData: TaskDto): TaskDto {
+        val planEntity = findById(id)
+        return taskDao.create(taskData, planEntity)
     }
 }

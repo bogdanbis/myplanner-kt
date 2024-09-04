@@ -35,15 +35,15 @@ class ApplicationUserTest {
         val planDao = mockk<PlanDao>()
         val plan1Data = PlanDto(UUID.randomUUID(), "Title 1", "Description C", "RED", true,
             LocalDateTime.parse("2024-01-01T16:50:50"))
-        val plan1 = Plan(plan1Data, planDao, eventPublisher)
+        val plan1 = Plan(plan1Data, planDao, domainFactory, eventPublisher)
 
         val plan2Data = PlanDto(UUID.randomUUID(), "Title 2", "Description B", "BLUE", true,
             LocalDateTime.parse("2024-01-02T16:50:50"))
-        val plan2 = Plan(plan2Data, planDao, eventPublisher)
+        val plan2 = Plan(plan2Data, planDao, domainFactory, eventPublisher)
 
         val plan3Data = PlanDto(UUID.randomUUID(), "Title 3", "Description A", "GREEN", true,
             LocalDateTime.parse("2024-01-03T16:50:50"))
-        val plan3 = Plan(plan3Data, planDao, eventPublisher)
+        val plan3 = Plan(plan3Data, planDao, domainFactory, eventPublisher)
 
         every { domainFactory.plan(plan1Data) } returns plan1
         every { domainFactory.plan(plan2Data) } returns plan2
@@ -61,10 +61,10 @@ class ApplicationUserTest {
         val plan1Data = PlanDto(UUID.randomUUID(), "Title 1", "Description C", "RED", true,
             LocalDateTime.parse("2024-01-01T16:50:50"))
         val planDao = mockk<PlanDao>()
-        val plan1 = Plan(plan1Data, planDao, eventPublisher)
+        val plan1 = Plan(plan1Data, planDao, domainFactory, eventPublisher)
         val plan2Data = PlanDto(UUID.randomUUID(), "Title 2", "Description B", "BLUE", true,
             LocalDateTime.parse("2024-01-02T16:50:50"))
-        val plan2 = Plan(plan2Data, planDao, eventPublisher)
+        val plan2 = Plan(plan2Data, planDao, domainFactory, eventPublisher)
 
         every { domainFactory.plan(plan1Data) } returns plan1
         every { dao.getAcquiredPlans(user.id) } returns listOf(plan1Data)

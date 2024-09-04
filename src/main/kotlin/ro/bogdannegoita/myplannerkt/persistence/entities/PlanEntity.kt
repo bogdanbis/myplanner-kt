@@ -20,6 +20,9 @@ class PlanEntity(
     @ManyToMany(mappedBy = "acquiredPlans", fetch = LAZY)
     var users: MutableSet<ApplicationUserEntity> = mutableSetOf(),
 
+    @OneToMany(mappedBy = "plan")
+    var tasks: MutableList<TaskEntity> = mutableListOf(),
+
     @Id @GeneratedValue
     var id: UUID? = null
 )

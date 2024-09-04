@@ -2,8 +2,10 @@ package ro.bogdannegoita.myplannerkt.persistence.mappers
 
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
+import ro.bogdannegoita.myplannerkt.commons.TaskDto
 import ro.bogdannegoita.myplannerkt.persistence.entities.ApplicationUserEntity
 import ro.bogdannegoita.myplannerkt.persistence.entities.PlanEntity
+import ro.bogdannegoita.myplannerkt.persistence.entities.TaskEntity
 
 class DtoMapper {
     fun applicationUserDto(entity: ApplicationUserEntity): ApplicationUserDto {
@@ -13,5 +15,9 @@ class DtoMapper {
     fun planDto(entity: PlanEntity): PlanDto {
         return PlanDto(entity.id, entity.title!!, entity.description!!, entity.color!!, entity.isPublic!!,
             entity.createdAt!!)
+    }
+
+    fun taskDto(entity: TaskEntity): TaskDto {
+        return TaskDto(entity.id, entity.title!!, entity.description!!, entity.index!!)
     }
 }

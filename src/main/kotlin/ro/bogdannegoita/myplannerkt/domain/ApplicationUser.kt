@@ -46,6 +46,10 @@ class ApplicationUser(
         return plan
     }
 
+    fun getCreatedPlan(id: UUID): Plan? {
+        return createdPlans.find { it.id == id }
+    }
+
     private var loadedAcquiredPlans = false
     private fun loadAcquiredPlans() {
         if (loadedAcquiredPlans)

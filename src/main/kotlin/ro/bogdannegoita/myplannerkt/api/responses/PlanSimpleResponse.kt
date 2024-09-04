@@ -2,7 +2,7 @@ package ro.bogdannegoita.myplannerkt.api.responses
 
 import ro.bogdannegoita.myplannerkt.domain.Plan
 
-class PlanSimpleResponse(plan: Plan) {
+open class PlanSimpleResponse(plan: Plan) {
     val id = plan.id
     val title = plan.title
     val description = plan.description
