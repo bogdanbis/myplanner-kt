@@ -4,7 +4,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
 import ro.bogdannegoita.myplannerkt.api.requests.PlanRequest
-import ro.bogdannegoita.myplannerkt.api.responses.PlanResponse
+import ro.bogdannegoita.myplannerkt.api.responses.PlanSimpleResponse
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.domain.MyPlanner
 import java.time.LocalDateTime
@@ -15,32 +15,32 @@ import java.util.*
 class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
 
     @GetMapping("/browse")
-    fun getPublicPlans(): List<PlanResponse> {
-        return myPlanner.getPublicPlans().map(::PlanResponse)
+    fun getPublicPlans(): List<PlanSimpleResponse> {
+        return myPlanner.getPublicPlans().map(::PlanSimpleResponse)
     }
 
     @GetMapping("/acquired")
-    fun getAcquiredPlans(@AuthenticationPrincipal principal: UserDetails): List<PlanResponse> {
-        return user(principal).acquiredPlans.map(::PlanResponse)
+    fun getAcquiredPlans(@AuthenticationPrincipal principal: UserDetails): List<PlanSimpleResponse> {
+        return user(principal).acquiredPlans.map(::PlanSimpleResponse)
     }
 
     @GetMapping("/created")
-    fun getCreatedPlans(@AuthenticationPrincipal principal: UserDetails): List<PlanResponse> {
-        return user(principal).createdPlans.map(::PlanResponse)
+    fun getCreatedPlans(@AuthenticationPrincipal principal: UserDetails): List<PlanSimpleResponse> {
+        return user(principal).createdPlans.map(::PlanSimpleResponse)
     }
 
     @PostMapping("/create")
     fun createPlan(@AuthenticationPrincipal principal: UserDetails, @RequestBody request: PlanRequest)
-            : PlanResponse? {
+            : PlanSimpleResponse? {
         val planData = PlanDto(title = request.title, description = request.description, color = request.color,
             isPublic = request.isPublic, createdAt = LocalDateTime.now())
         val plan = myPlanner.createPlan(user(principal), planData)
-        return PlanResponse(plan)
+        return PlanSimpleResponse(plan)
     }
 
     @GetMapping("/{id}")
-    fun getPlanById(@AuthenticationPrincipal principal: UserDetails, @PathVariable id: UUID): PlanResponse? {
-        return myPlanner.getPlanById(id)?.let { PlanResponse(it) }
+    fun getPlanById(@AuthenticationPrincipal principal: UserDetails, @PathVariable id: UUID): PlanSimpleResponse? {
+        return myPlanner.getPlanById(id)?.let { PlanSimpleResponse(it) }
     }
 
     @PostMapping("/{id}/acquire")
@@ -54,10 +54,10 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
         @AuthenticationPrincipal principal: UserDetails,
         @PathVariable id: UUID,
         @RequestBody request: PlanRequest
-    ): PlanResponse? {
+    ): PlanSimpleResponse? {
         val planData = PlanDto(title = request.title, description = request.description, color = request.color,
             isPublic = request.isPublic, createdAt = LocalDateTime.now())
         val plan = user(principal).updatePlan(id, planData)
-        return PlanResponse(plan)
+        return PlanSimpleResponse(plan)
     }
 }
