@@ -14,6 +14,6 @@ class DomainFactory(
     val registry = DomainRegistry()
 
     fun plan(data: PlanDto): Plan {
-        return Plan(data, planDao, this)
+        return Plan(data, planDao)
     }
 }

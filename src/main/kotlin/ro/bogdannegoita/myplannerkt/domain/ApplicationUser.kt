@@ -1,15 +1,15 @@
 package ro.bogdannegoita.myplannerkt.domain
 
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
+import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
+import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
-import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
 import java.util.*
 
 class ApplicationUser(
     data: ApplicationUserDto,
     private val dao: ApplicationUserDao,
-    private val planDao: PlanDao,
     private val domainFactory: DomainFactory,
 ) {
     val id: UUID = data.id!!
@@ -36,6 +36,14 @@ class ApplicationUser(
             return
         acquiredPlans.add(plan)
         dao.acquirePlan(id, plan.id)
+    }
+
+    fun updatePlan(id: UUID, data: PlanDto): Plan {
+        val plan = createdPlans.find { it.id == id }
+        if (plan == null)
+            throw EntityNotFoundException(Plan::class)
+        plan.update(data)
+        return plan
     }
 
     private var loadedAcquiredPlans = false

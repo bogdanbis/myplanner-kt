@@ -5,7 +5,6 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 import ro.bogdannegoita.myplannerkt.api.responses.ApplicationUserResponse
-import ro.bogdannegoita.myplannerkt.api.responses.PlanResponse
 import ro.bogdannegoita.myplannerkt.domain.MyPlanner
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.security.exceptions.UserNotFoundException
@@ -21,10 +20,5 @@ class ApplicationUserController(myPlanner: MyPlanner) : BaseController(myPlanner
         } catch (e: EntityNotFoundException) {
             throw UserNotFoundException()
         }
-    }
-
-    @GetMapping("/acquired-plans")
-    fun getAcquiredPlans(@AuthenticationPrincipal principal: UserDetails): List<PlanResponse> {
-        return user(principal).acquiredPlans.map(::PlanResponse)
     }
 }

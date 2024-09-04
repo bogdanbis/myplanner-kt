@@ -3,7 +3,7 @@ package ro.bogdannegoita.myplannerkt.api.controllers
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
-import ro.bogdannegoita.myplannerkt.api.requests.CreatePlanRequest
+import ro.bogdannegoita.myplannerkt.api.requests.PlanRequest
 import ro.bogdannegoita.myplannerkt.api.responses.PlanResponse
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.domain.MyPlanner
@@ -18,8 +18,18 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
         return myPlanner.getPublicPlans().map(::PlanResponse)
     }
 
-    @PostMapping("/create-plan")
-    fun createPlan(@AuthenticationPrincipal principal: UserDetails, @RequestBody request: CreatePlanRequest)
+    @GetMapping("/acquired")
+    fun getAcquiredPlans(@AuthenticationPrincipal principal: UserDetails): List<PlanResponse> {
+        return user(principal).acquiredPlans.map(::PlanResponse)
+    }
+
+    @GetMapping("/created")
+    fun getCreatedPlans(@AuthenticationPrincipal principal: UserDetails): List<PlanResponse> {
+        return user(principal).createdPlans.map(::PlanResponse)
+    }
+
+    @PostMapping("/create")
+    fun createPlan(@AuthenticationPrincipal principal: UserDetails, @RequestBody request: PlanRequest)
             : PlanResponse? {
         val planData = PlanDto(title = request.title, description = request.description, color = request.color,
             isPublic = request.isPublic)
@@ -36,5 +46,17 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
     fun acquirePlan(@AuthenticationPrincipal principal: UserDetails, @PathVariable id: UUID) {
         val plan = myPlanner.getPlanById(id) ?: return
         user(principal).acquirePlan(plan)
+    }
+
+    @PutMapping("/{id}")
+    fun updatePlan(
+        @AuthenticationPrincipal principal: UserDetails,
+        @PathVariable id: UUID,
+        @RequestBody request: PlanRequest
+    ): PlanResponse? {
+        val planData = PlanDto(title = request.title, description = request.description, color = request.color,
+            isPublic = request.isPublic)
+        val plan = user(principal).updatePlan(id, planData)
+        return PlanResponse(plan)
     }
 }

@@ -35,4 +35,13 @@ class PlanDao(
     fun save(entity: PlanEntity): PlanEntity {
         return repository.save(entity)
     }
+
+    fun update(id: UUID, data: PlanDto) {
+        val entity = findById(id)
+        entity.title = data.title
+        entity.description = data.description
+        entity.color = data.color
+        entity.isPublic = data.isPublic
+        repository.save(entity)
+    }
 }

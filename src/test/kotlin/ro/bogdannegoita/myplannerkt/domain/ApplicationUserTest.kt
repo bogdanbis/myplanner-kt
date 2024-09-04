@@ -17,7 +17,6 @@ import java.util.*
 class ApplicationUserTest {
 
     private val dao = mockk<ApplicationUserDao>()
-    private val planDao = mockk<PlanDao>()
     private val domainFactory = mockk<DomainFactory>()
     private lateinit var user: ApplicationUser
 
@@ -25,20 +24,20 @@ class ApplicationUserTest {
     fun setUp() {
         val userId = UUID.randomUUID()
         val userData = ApplicationUserDto(userId, "emai@email.com", "Bogdan", "Bis")
-        user = ApplicationUser(userData, dao, planDao, domainFactory)
+        user = ApplicationUser(userData, dao, domainFactory)
     }
 
     @Test
     fun `should get the acquired plans of this user sorted by title`() {
         val planDao = mockk<PlanDao>()
         val plan1Data = PlanDto(UUID.randomUUID(), "Title 1", "Description C", "RED", true)
-        val plan1 = Plan(plan1Data, planDao, domainFactory)
+        val plan1 = Plan(plan1Data, planDao)
 
         val plan2Data = PlanDto(UUID.randomUUID(), "Title 2", "Description B", "BLUE", true)
-        val plan2 = Plan(plan2Data, planDao, domainFactory)
+        val plan2 = Plan(plan2Data, planDao)
 
         val plan3Data = PlanDto(UUID.randomUUID(), "Title 3", "Description A", "GREEN", true)
-        val plan3 = Plan(plan3Data, planDao, domainFactory)
+        val plan3 = Plan(plan3Data, planDao)
 
         every { domainFactory.plan(plan1Data) } returns plan1
         every { domainFactory.plan(plan2Data) } returns plan2
@@ -55,9 +54,9 @@ class ApplicationUserTest {
     fun `should acquire a plan`() {
         val plan1Data = PlanDto(UUID.randomUUID(), "Title 1", "Description C", "RED", true)
         val planDao = mockk<PlanDao>()
-        val plan1 = Plan(plan1Data, planDao, domainFactory)
+        val plan1 = Plan(plan1Data, planDao)
         val plan2Data = PlanDto(UUID.randomUUID(), "Title 2", "Description B", "BLUE", true)
-        val plan2 = Plan(plan2Data, planDao, domainFactory)
+        val plan2 = Plan(plan2Data, planDao)
 
         every { domainFactory.plan(plan1Data) } returns plan1
         every { dao.getAcquiredPlans(user.id) } returns listOf(plan1Data)
