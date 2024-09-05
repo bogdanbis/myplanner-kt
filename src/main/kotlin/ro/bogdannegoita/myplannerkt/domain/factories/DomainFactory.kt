@@ -6,15 +6,23 @@ import org.springframework.stereotype.Component
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.commons.PlanProgressDto
 import ro.bogdannegoita.myplannerkt.commons.TaskDto
+import ro.bogdannegoita.myplannerkt.commons.TaskProgressDto
 import ro.bogdannegoita.myplannerkt.domain.Plan
 import ro.bogdannegoita.myplannerkt.domain.PlanProgress
 import ro.bogdannegoita.myplannerkt.domain.Task
+import ro.bogdannegoita.myplannerkt.domain.TaskProgress
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
+import ro.bogdannegoita.myplannerkt.persistence.daos.PlanProgressDao
+import ro.bogdannegoita.myplannerkt.persistence.daos.TaskDao
+import ro.bogdannegoita.myplannerkt.persistence.daos.TaskProgressDao
 
 @Component
 @Scope("prototype")
 class DomainFactory(
     private val planDao: PlanDao,
+    private val taskDao: TaskDao,
+    private val planProgressDao: PlanProgressDao,
+    private val taskProgressDao: TaskProgressDao,
     private val eventPublisher: ApplicationEventPublisher,
 ) {
     val registry = DomainRegistry()
@@ -28,10 +36,14 @@ class DomainFactory(
     }
 
     fun task(data: TaskDto): Task {
-        return Task(data)
+        return Task(data, taskDao)
     }
 
     fun planProgress(data: PlanProgressDto, plan: Plan): PlanProgress {
-        return PlanProgress(data, plan)
+        return PlanProgress(data, plan, planProgressDao, this)
+    }
+
+    fun taskProgress(data: TaskProgressDto, task: Task): TaskProgress {
+        return TaskProgress(data, task, taskProgressDao)
     }
 }

@@ -2,8 +2,8 @@ package ro.bogdannegoita.myplannerkt.domain
 
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
+import ro.bogdannegoita.myplannerkt.commons.TaskDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
-import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
 import java.util.*
 
@@ -32,7 +32,7 @@ class ApplicationUser(
         private set
 
     fun acquirePlan(plan: Plan): PlanProgress? {
-        if (acquiredPlans.any { it.planData.id == plan.id })
+        if (acquiredPlans.any { it.plan.id == plan.id })
             return null
         val planProgressData = dao.acquirePlan(id, plan.id)
         val planProgress = domainFactory.planProgress(planProgressData, plan)
@@ -40,18 +40,17 @@ class ApplicationUser(
         return planProgress
     }
 
-    fun createPlan(planData: PlanDto): Plan {
+    fun createPlan(planData: PlanDto, tasks: List<TaskDto>? = null): Plan {
         val persistedPlanData = dao.createPlan(planData, id)
         val plan = domainFactory.plan(persistedPlanData)
+        plan.update(plan.data, tasks)
         createdPlans.add(plan)
         return plan
     }
 
-    fun updatePlan(id: UUID, data: PlanDto): Plan {
+    fun updatePlan(id: UUID, data: PlanDto, tasks: List<TaskDto>? = null): Plan? {
         val plan = createdPlans.find { it.id == id }
-        if (plan == null)
-            throw EntityNotFoundException(Plan::class)
-        plan.update(data)
+        plan?.update(data, tasks)
         return plan
     }
 

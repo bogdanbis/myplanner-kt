@@ -3,5 +3,5 @@ package ro.bogdannegoita.myplannerkt.api.responses
 import ro.bogdannegoita.myplannerkt.domain.Plan
 
 class PlanResponse(plan: Plan) : PlanSimpleResponse(plan) {
-    val tasks = plan.tasks.map(::TaskResponse).toList()
+    val tasks = plan.tasks.map(::TaskResponse)
 }

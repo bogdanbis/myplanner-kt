@@ -2,9 +2,8 @@ package ro.bogdannegoita.myplannerkt.commons
 
 import java.util.*
 
-data class TaskDto(
+data class TaskProgressDto(
     val id: UUID? = null,
-    var title: String,
-    var description: String,
-    var index: Int,
+    val completed: Boolean,
+    val task: TaskDto,
 )

@@ -1,13 +1,7 @@
 package ro.bogdannegoita.myplannerkt.persistence.mappers
 
-import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
-import ro.bogdannegoita.myplannerkt.commons.PlanDto
-import ro.bogdannegoita.myplannerkt.commons.PlanProgressDto
-import ro.bogdannegoita.myplannerkt.commons.TaskDto
-import ro.bogdannegoita.myplannerkt.persistence.entities.ApplicationUserEntity
-import ro.bogdannegoita.myplannerkt.persistence.entities.PlanEntity
-import ro.bogdannegoita.myplannerkt.persistence.entities.PlanProgressEntity
-import ro.bogdannegoita.myplannerkt.persistence.entities.TaskEntity
+import ro.bogdannegoita.myplannerkt.commons.*
+import ro.bogdannegoita.myplannerkt.persistence.entities.*
 
 class DtoMapper {
     fun applicationUserDto(entity: ApplicationUserEntity): ApplicationUserDto {
@@ -25,5 +19,9 @@ class DtoMapper {
 
     fun planProgressDto(entity: PlanProgressEntity): PlanProgressDto {
         return PlanProgressDto(entity.id, planDto(entity.plan!!), entity.acquiredAt!!)
+    }
+
+    fun taskProgressDto(entity: TaskProgressEntity): TaskProgressDto {
+        return TaskProgressDto(entity.id, entity.completed!!, taskDto(entity.task!!))
     }
 }

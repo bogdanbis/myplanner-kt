@@ -31,7 +31,10 @@ class ApplicationUserDao(
 
     fun acquirePlan(userId: UUID, planId: UUID): PlanProgressDto {
         val userEntity = findById(userId)
-        return planProgressDao.create(planDao.findById(planId), userEntity)
+        val planEntity = planDao.findById(planId)
+        val planProgressDto = planProgressDao.create(planEntity, userEntity)
+        planEntity.tasks.map { planProgressDao.createTaskProgress(it, planProgressDto.id!!) }
+        return planProgressDto
     }
 
     fun createPlan(data: PlanDto, authorId: UUID): PlanDto {

@@ -3,6 +3,7 @@ package ro.bogdannegoita.myplannerkt.domain
 import org.springframework.beans.factory.ObjectProvider
 import org.springframework.stereotype.Component
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
+import ro.bogdannegoita.myplannerkt.commons.TaskDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
 import ro.bogdannegoita.myplannerkt.domain.factories.myPlannerCache
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
@@ -44,8 +45,8 @@ class MyPlanner(
         return getPublicPlan(id) ?: user.getCreatedPlan(id)
     }
 
-    fun createPlan(user: ApplicationUser, planData: PlanDto): Plan {
-        val plan = user.createPlan(planData)
+    fun createPlan(user: ApplicationUser, planData: PlanDto, tasks: List<TaskDto>? = null): Plan {
+        val plan = user.createPlan(planData, tasks)
         if (plan.isPublic)
             publishPlan(plan)
         return plan

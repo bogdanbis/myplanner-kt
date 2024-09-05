@@ -4,6 +4,7 @@ import ro.bogdannegoita.myplannerkt.domain.PlanProgress
 
 class PlanProgressResponse(planProgress: PlanProgress) {
     val id = planProgress.id
-    val plan = planProgress.planData
+    val plan = PlanSimpleResponse(planProgress.plan)
     val acquiredAt = planProgress.acquiredAt
+    val tasks = planProgress.tasks.map(::TaskProgressResponse)
 }

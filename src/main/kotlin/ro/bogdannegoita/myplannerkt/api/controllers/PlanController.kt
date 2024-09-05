@@ -4,7 +4,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
 import ro.bogdannegoita.myplannerkt.api.requests.PlanRequest
-import ro.bogdannegoita.myplannerkt.api.requests.TasksRequest
 import ro.bogdannegoita.myplannerkt.api.responses.PlanProgressResponse
 import ro.bogdannegoita.myplannerkt.api.responses.PlanResponse
 import ro.bogdannegoita.myplannerkt.api.responses.PlanSimpleResponse
@@ -37,7 +36,7 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
             : PlanSimpleResponse? {
         val planData = PlanDto(title = request.title, description = request.description, color = request.color,
             isPublic = request.isPublic, createdAt = LocalDateTime.now())
-        val plan = myPlanner.createPlan(user(principal), planData)
+        val plan = myPlanner.createPlan(user(principal), planData, request.tasks)
         return PlanSimpleResponse(plan)
     }
 
@@ -55,19 +54,7 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
     ): PlanResponse? {
         val planData = PlanDto(title = request.title, description = request.description, color = request.color,
             isPublic = request.isPublic, createdAt = LocalDateTime.now())
-        val plan = user(principal).updatePlan(id, planData)
-        return PlanResponse(plan)
-    }
-
-    // TDOO: most likely should be included in updatePlan
-    @PostMapping("/{id}/add-tasks")
-    fun addTasks(
-        @AuthenticationPrincipal principal: UserDetails,
-        @PathVariable id: UUID,
-        @RequestBody request: TasksRequest
-    ): PlanResponse? {
-        val plan = user(principal).getCreatedPlan(id) ?: return null
-        plan.addTasks(request.tasks)
-        return PlanResponse(plan)
+        val plan = user(principal).updatePlan(id, planData, request.tasks)
+        return plan?.let { PlanResponse(it) }
     }
 }

@@ -34,17 +34,20 @@ class Plan(
         }
         private set
 
-    fun update(data: PlanDto) {
+    fun update(data: PlanDto, tasks: List<TaskDto>? = null) {
         title = data.title
         description = data.description
         color = data.color
         isPublic = data.isPublic
         eventPublisher.publishEvent(PlanUpdatedEvent(this, this))
         dao.update(id, this.data)
-    }
-
-    fun addTasks(tasks: Collection<TaskDto>) {
-        tasks.forEach { addTask(it) }
+        tasks?.forEach { task ->
+            val existingTask = this.tasks.find { it.id == task.id }
+            if (existingTask != null)
+                existingTask.update(task)
+            else
+                addTask(task)
+        }
     }
 
     private fun addTask(taskData: TaskDto): Task {

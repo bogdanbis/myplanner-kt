@@ -1,14 +1,23 @@
 package ro.bogdannegoita.myplannerkt.domain
 
 import ro.bogdannegoita.myplannerkt.commons.TaskDto
+import ro.bogdannegoita.myplannerkt.persistence.daos.TaskDao
 
 class Task(
     private val data: TaskDto,
+    private val dao: TaskDao,
 ) : Comparable<Task> {
     val id = data.id!!
-    val title by data::title
-    val description by data::description
-    val index by data::index
+    var title by data::title
+    var description by data::description
+    var index by data::index
+
+    fun update(data: TaskDto) {
+        title = data.title
+        description = data.description
+        index = data.index
+        dao.update(id, this.data)
+    }
 
     override fun compareTo(other: Task) = index.compareTo(other.index)
 }

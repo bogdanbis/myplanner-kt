@@ -21,7 +21,8 @@ class PlanProgressController(myPlanner: MyPlanner) : BaseController(myPlanner) {
 
     @GetMapping("/{id}")
     fun getPlanProgress(
-        @AuthenticationPrincipal principal: UserDetails, @PathVariable id: UUID
+        @AuthenticationPrincipal principal: UserDetails,
+        @PathVariable id: UUID
     ): PlanProgressResponse? {
         return user(principal).getAcquiredPlan(id)?.let { PlanProgressResponse(it) }
     }

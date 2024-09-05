@@ -1,6 +1,7 @@
 package ro.bogdannegoita.myplannerkt.persistence.entities
 
 import jakarta.persistence.*
+import jakarta.persistence.CascadeType.ALL
 import jakarta.persistence.FetchType.LAZY
 import java.time.LocalDateTime
 import java.util.*
@@ -15,6 +16,9 @@ class PlanProgressEntity(
 
     @ManyToOne(fetch = LAZY)
     var user: ApplicationUserEntity? = null,
+
+    @OneToMany(mappedBy = "plan", fetch = LAZY, cascade = [ALL])
+    var tasks: MutableList<TaskProgressEntity> = mutableListOf(),
 
     @Id @GeneratedValue
     var id: UUID? = null
