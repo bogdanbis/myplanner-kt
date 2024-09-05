@@ -38,6 +38,12 @@ class ApplicationUser(
         dao.acquirePlan(id, plan.id)
     }
 
+    fun createPlan(planData: PlanDto): Plan {
+        val persistedPlanData = dao.createPlan(planData, id)
+        val plan = domainFactory.plan(persistedPlanData)
+        return plan
+    }
+
     fun updatePlan(id: UUID, data: PlanDto): Plan {
         val plan = createdPlans.find { it.id == id }
         if (plan == null)

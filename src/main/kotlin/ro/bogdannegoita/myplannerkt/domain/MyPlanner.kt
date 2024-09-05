@@ -14,7 +14,7 @@ class MyPlanner(
     private val domainProvider: ObjectProvider<ApplicationUser>,
     private val userDao: ApplicationUserDao,
     private val planDao: PlanDao,
-    private val domainFactory: DomainFactory
+    private val domainFactory: DomainFactory,
 ) {
 
     private val users = myPlannerCache<String, ApplicationUser>()
@@ -35,14 +35,13 @@ class MyPlanner(
         return publicPlansRegistry.values.toList()
     }
 
-    fun getPlanById(id: UUID): Plan? {
+    fun getPublicPlan(id: UUID): Plan? {
         loadPlan(id)
         return publicPlansRegistry[id]
     }
 
     fun createPlan(user: ApplicationUser, planData: PlanDto): Plan {
-        val persistedPlanData = userDao.createPlan(planData, user.id)
-        val plan = domainFactory.plan(persistedPlanData)
+        val plan = user.createPlan(planData)
         if (plan.isPublic)
             publishPlan(plan)
         return plan
@@ -70,7 +69,6 @@ class MyPlanner(
     }
 
     private fun loadPlan(id: UUID) {
-        // TODO - remove from this list when plan is made private
         if (publicPlansRegistry[id] != null)
             return
         val planDto = planDao.getById(id)

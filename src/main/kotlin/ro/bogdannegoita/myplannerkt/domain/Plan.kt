@@ -47,7 +47,7 @@ class Plan(
         tasks.forEach { addTask(it) }
     }
 
-    fun addTask(taskData: TaskDto): Task {
+    private fun addTask(taskData: TaskDto): Task {
         val persistedData = dao.addTask(id, taskData)
         val task = domainFactory.task(persistedData)
         tasks.add(task)

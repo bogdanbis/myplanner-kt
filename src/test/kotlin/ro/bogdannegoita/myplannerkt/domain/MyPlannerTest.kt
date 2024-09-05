@@ -78,12 +78,12 @@ class MyPlannerTest @Autowired constructor(
 
         every { planDao.getById(planId) } returns plan
 
-        assertEquals(myPlanner.getPlanById(planId)?.id, plan.id)
+        assertEquals(myPlanner.getPublicPlan(planId)?.id, plan.id)
     }
 
     @Test
     fun `should throw exception when plan is not found`() {
         every { planDao.getById(any()) } throws EntityNotFoundException(PlanEntity::class)
-        assertThrows<EntityNotFoundException> { myPlanner.getPlanById(UUID.randomUUID()) }
+        assertThrows<EntityNotFoundException> { myPlanner.getPublicPlan(UUID.randomUUID()) }
     }
 }

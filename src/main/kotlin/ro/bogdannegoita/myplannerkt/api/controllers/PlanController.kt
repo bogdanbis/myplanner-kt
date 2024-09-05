@@ -21,6 +21,11 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
         return myPlanner.getPublicPlans().map(::PlanSimpleResponse)
     }
 
+    @GetMapping("/{id}")
+    fun getPlanById(@PathVariable id: UUID): PlanResponse? {
+        return myPlanner.getPublicPlan(id)?.let { PlanResponse(it) }
+    }
+
     @GetMapping("/acquired")
     fun getAcquiredPlans(@AuthenticationPrincipal principal: UserDetails): List<PlanSimpleResponse> {
         return user(principal).acquiredPlans.map(::PlanSimpleResponse)
@@ -40,14 +45,9 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
         return PlanSimpleResponse(plan)
     }
 
-    @GetMapping("/{id}")
-    fun getPlanById(@AuthenticationPrincipal principal: UserDetails, @PathVariable id: UUID): PlanResponse? {
-        return myPlanner.getPlanById(id)?.let { PlanResponse(it) }
-    }
-
     @PostMapping("/{id}/acquire")
     fun acquirePlan(@AuthenticationPrincipal principal: UserDetails, @PathVariable id: UUID) {
-        val plan = myPlanner.getPlanById(id) ?: return
+        val plan = myPlanner.getPublicPlan(id) ?: return
         user(principal).acquirePlan(plan)
     }
 
