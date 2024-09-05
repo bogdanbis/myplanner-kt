@@ -10,7 +10,7 @@ import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
 import java.util.*
 
 class Plan(
-    private val data: PlanDto,
+    val data: PlanDto,
     private val dao: PlanDao,
     private val domainFactory: DomainFactory,
     private val eventPublisher: ApplicationEventPublisher,
@@ -70,5 +70,5 @@ class Plan(
         loadedTasks = true
     }
 
-    override fun compareTo(other: Plan) = createdAt.compareTo(other.createdAt)
+    override fun compareTo(other: Plan) = other.createdAt.compareTo(createdAt)
 }

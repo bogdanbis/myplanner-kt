@@ -17,7 +17,7 @@ class ApplicationUser(
     val firstName: String = data.firstName
     val lastName: String = data.lastName
 
-    var acquiredPlans: SortedSet<Plan> = sortedSetOf()
+    var acquiredPlans: SortedSet<PlanProgress> = sortedSetOf()
         get() {
             loadAcquiredPlans()
             return field
@@ -31,16 +31,19 @@ class ApplicationUser(
         }
         private set
 
-    fun acquirePlan(plan: Plan) {
-        if (acquiredPlans.contains(plan))
-            return
-        acquiredPlans.add(plan)
-        dao.acquirePlan(id, plan.id)
+    fun acquirePlan(plan: Plan): PlanProgress? {
+        if (acquiredPlans.any { it.planData.id == plan.id })
+            return null
+        val planProgressData = dao.acquirePlan(id, plan.id)
+        val planProgress = domainFactory.planProgress(planProgressData, plan)
+        acquiredPlans.add(planProgress)
+        return planProgress
     }
 
     fun createPlan(planData: PlanDto): Plan {
         val persistedPlanData = dao.createPlan(planData, id)
         val plan = domainFactory.plan(persistedPlanData)
+        createdPlans.add(plan)
         return plan
     }
 
@@ -52,6 +55,10 @@ class ApplicationUser(
         return plan
     }
 
+    fun getAcquiredPlan(id: UUID): PlanProgress? {
+        return acquiredPlans.find { it.id == id }
+    }
+
     fun getCreatedPlan(id: UUID): Plan? {
         return createdPlans.find { it.id == id }
     }
@@ -60,7 +67,8 @@ class ApplicationUser(
     private fun loadAcquiredPlans() {
         if (loadedAcquiredPlans)
             return
-        acquiredPlans = dao.getAcquiredPlans(id).map { domainFactory.plan(it) }
+        acquiredPlans = dao.getAcquiredPlans(id)
+            .map { domainFactory.planProgress(it, domainFactory.plan(it.plan)) }
             .toSortedSet()
         loadedAcquiredPlans = true
     }

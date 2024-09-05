@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
 import ro.bogdannegoita.myplannerkt.api.requests.PlanRequest
 import ro.bogdannegoita.myplannerkt.api.requests.TasksRequest
+import ro.bogdannegoita.myplannerkt.api.responses.PlanProgressResponse
 import ro.bogdannegoita.myplannerkt.api.responses.PlanResponse
 import ro.bogdannegoita.myplannerkt.api.responses.PlanSimpleResponse
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
@@ -26,11 +27,6 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
         return myPlanner.getPlan(user(principal), id)?.let(::PlanResponse)
     }
 
-    @GetMapping("/acquired")
-    fun getAcquiredPlans(@AuthenticationPrincipal principal: UserDetails): List<PlanSimpleResponse> {
-        return user(principal).acquiredPlans.map(::PlanSimpleResponse)
-    }
-
     @GetMapping("/created")
     fun getCreatedPlans(@AuthenticationPrincipal principal: UserDetails): List<PlanSimpleResponse> {
         return user(principal).createdPlans.map(::PlanSimpleResponse)
@@ -46,9 +42,9 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
     }
 
     @PostMapping("/{id}/acquire")
-    fun acquirePlan(@AuthenticationPrincipal principal: UserDetails, @PathVariable id: UUID) {
-        val plan = myPlanner.getPublicPlan(id) ?: return
-        user(principal).acquirePlan(plan)
+    fun acquirePlan(@AuthenticationPrincipal principal: UserDetails, @PathVariable id: UUID): PlanProgressResponse? {
+        val plan = myPlanner.getPublicPlan(id) ?: return null
+        return user(principal).acquirePlan(plan)?.let { PlanProgressResponse(it) }
     }
 
     @PutMapping("/{id}")
@@ -56,14 +52,15 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
         @AuthenticationPrincipal principal: UserDetails,
         @PathVariable id: UUID,
         @RequestBody request: PlanRequest
-    ): PlanSimpleResponse? {
+    ): PlanResponse? {
         val planData = PlanDto(title = request.title, description = request.description, color = request.color,
             isPublic = request.isPublic, createdAt = LocalDateTime.now())
         val plan = user(principal).updatePlan(id, planData)
-        return PlanSimpleResponse(plan)
+        return PlanResponse(plan)
     }
 
-    @PostMapping("/{id}/create-tasks")
+    // TDOO: most likely should be included in updatePlan
+    @PostMapping("/{id}/add-tasks")
     fun addTasks(
         @AuthenticationPrincipal principal: UserDetails,
         @PathVariable id: UUID,

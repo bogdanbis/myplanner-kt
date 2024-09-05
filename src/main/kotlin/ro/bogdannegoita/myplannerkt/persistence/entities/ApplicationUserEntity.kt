@@ -15,11 +15,8 @@ class ApplicationUserEntity(
     @OneToMany(mappedBy = "author", fetch = LAZY)
     var createdPlans: MutableSet<PlanEntity> = mutableSetOf(),
 
-    @ManyToMany(fetch = LAZY)
-    @JoinTable(name = "acquired_plans",
-        joinColumns = [JoinColumn(name = "application_user_id")],
-        inverseJoinColumns = [JoinColumn(name = "acquired_plans_id")])
-    var acquiredPlans: MutableSet<PlanEntity> = mutableSetOf(),
+    @OneToMany(mappedBy = "user", fetch = LAZY)
+    var acquiredPlans: MutableSet<PlanProgressEntity> = mutableSetOf(),
 
     @Id @GeneratedValue
     var id: UUID? = null

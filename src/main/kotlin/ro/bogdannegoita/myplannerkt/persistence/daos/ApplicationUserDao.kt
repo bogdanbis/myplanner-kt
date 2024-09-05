@@ -3,6 +3,7 @@ package ro.bogdannegoita.myplannerkt.persistence.daos
 import org.springframework.stereotype.Component
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
+import ro.bogdannegoita.myplannerkt.commons.PlanProgressDto
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.persistence.entities.ApplicationUserEntity
 import ro.bogdannegoita.myplannerkt.persistence.mappers.DtoMapper
@@ -13,6 +14,7 @@ import java.util.*
 class ApplicationUserDao(
     private val repository: ApplicationUserRepository,
     private val planDao: PlanDao,
+    private val planProgressDao: PlanProgressDao,
 ) {
     private val dtoMapper = DtoMapper()
 
@@ -27,18 +29,17 @@ class ApplicationUserDao(
             .orElseThrow { EntityNotFoundException(ApplicationUserEntity::class) }
     }
 
-    fun acquirePlan(userId: UUID, planId: UUID) {
+    fun acquirePlan(userId: UUID, planId: UUID): PlanProgressDto {
         val userEntity = findById(userId)
-        userEntity.acquiredPlans.add(planDao.findById(planId))
-        repository.save(userEntity)
+        return planProgressDao.create(planDao.findById(planId), userEntity)
     }
 
     fun createPlan(data: PlanDto, authorId: UUID): PlanDto {
         return planDao.create(data, findById(authorId))
     }
 
-    fun getAcquiredPlans(id: UUID): List<PlanDto> {
-        return findById(id).acquiredPlans.map(dtoMapper::planDto)
+    fun getAcquiredPlans(id: UUID): List<PlanProgressDto> {
+        return findById(id).acquiredPlans.map(dtoMapper::planProgressDto)
     }
 
     fun getCreatedPlans(id: UUID): List<PlanDto> {

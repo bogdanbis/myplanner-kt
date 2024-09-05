@@ -17,11 +17,11 @@ class PlanEntity(
     @ManyToOne(fetch = LAZY)
     var author: ApplicationUserEntity? = null,
 
-    @ManyToMany(mappedBy = "acquiredPlans", fetch = LAZY)
-    var users: MutableSet<ApplicationUserEntity> = mutableSetOf(),
-
-    @OneToMany(mappedBy = "plan")
+    @OneToMany(mappedBy = "plan", fetch = LAZY)
     var tasks: MutableList<TaskEntity> = mutableListOf(),
+
+    @OneToMany(mappedBy = "plan", fetch = LAZY)
+    var acquiredPlans: MutableList<PlanProgressEntity> = mutableListOf(),
 
     @Id @GeneratedValue
     var id: UUID? = null
