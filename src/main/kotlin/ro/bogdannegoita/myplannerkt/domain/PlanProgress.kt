@@ -1,8 +1,10 @@
 package ro.bogdannegoita.myplannerkt.domain
 
 import ro.bogdannegoita.myplannerkt.commons.PlanProgressDto
+import ro.bogdannegoita.myplannerkt.commons.TaskProgressDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanProgressDao
+import java.util.*
 
 class PlanProgress(
     private val data: PlanProgressDto,
@@ -19,12 +21,17 @@ class PlanProgress(
         }
         private set
 
+    fun updateTaskProgress(taskId: UUID, taskProgressData: TaskProgressDto): TaskProgress? {
+        return tasks.find { it.id == taskId }
+            ?.update(taskProgressData)
+    }
+
     private var loadedTasks = false
     private fun loadTasks() {
         if (loadedTasks) return
         tasks = dao.getTasks(id)
             .map { taskDto ->
-                val task = plan.tasks.find { it.id == taskDto.task.id }
+                val task = plan.tasks.find { it.id == taskDto.task!!.id }
                 val taskProgress = domainFactory.taskProgress(taskDto, task!!)
                 taskProgress
             }

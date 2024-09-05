@@ -4,6 +4,6 @@ import java.util.*
 
 data class TaskProgressDto(
     val id: UUID? = null,
-    val completed: Boolean,
-    val task: TaskDto,
+    var completed: Boolean,
+    val task: TaskDto?,
 )

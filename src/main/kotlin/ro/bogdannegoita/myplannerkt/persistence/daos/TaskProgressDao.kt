@@ -23,20 +23,14 @@ class TaskProgressDao(private val repository: TaskProgressRepository) {
         return dtoMapper.taskProgressDto(repository.save(entity))
     }
 
-    fun complete(id: UUID) {
-        val task = findById(id)
-        task.completed = true
-        repository.save(task)
-    }
-
-    fun uncomplete(id: UUID) {
-        val task = findById(id)
-        task.completed = false
-        repository.save(task)
-    }
-
     fun findById(id: UUID): TaskProgressEntity {
         return repository.findById(id)
             .orElseThrow { EntityNotFoundException(TaskProgressEntity::class) }
+    }
+
+    fun update(id: UUID, data: TaskProgressDto) {
+        val entity = findById(id)
+        entity.completed = data.completed
+        repository.save(entity)
     }
 }
