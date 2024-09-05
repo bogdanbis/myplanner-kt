@@ -22,8 +22,8 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
     }
 
     @GetMapping("/{id}")
-    fun getPlanById(@PathVariable id: UUID): PlanResponse? {
-        return myPlanner.getPublicPlan(id)?.let { PlanResponse(it) }
+    fun getPlanById(@AuthenticationPrincipal principal: UserDetails, @PathVariable id: UUID): PlanResponse? {
+        return myPlanner.getPlan(user(principal), id)?.let(::PlanResponse)
     }
 
     @GetMapping("/acquired")
