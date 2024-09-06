@@ -1,7 +1,7 @@
 <template>
-	<h2 class="page-title">Browse Plans</h2>
-	<Card>
-		{{ plans }}
+	<h1 class="page-title">Browse Plans</h1>
+	<Card v-for="plan in plans" :title="plan.title">
+		<span>{{ plan.description }}</span>
 	</Card>
 </template>
 

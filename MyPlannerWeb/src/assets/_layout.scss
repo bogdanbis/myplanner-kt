@@ -1,20 +1,30 @@
-.header {
-	position: relative;
+:root {
+	--header-height: 48px;
+}
+
+.header-placeholder {
 	height: var(--header-height);
-	color: black;
-	background-color: #D1E9F6;
+}
+
+.header {
+	position: fixed;
+	top: 0;
+	height: var(--header-height);
+	color: white;
+	background: linear-gradient(to bottom right, var(--indigo) 30%, var(--blue) 100%);
 	box-shadow: 0 0 5px rgba(black, .5);
 	backdrop-filter: blur(10px);
 	z-index: 2;
 	display: flex;
 	justify-content: center;
+	align-items: center;
 	width: 100%;
 	padding: $spacer-s $spacer-s;
 }
 
 .header-logo {
 	font-family: "Lobster", cursive;
-	font-size: $font-size-m;
+	font-size: 24px;
 }
 
 .page {
@@ -24,7 +34,8 @@
 
 .content {
 	margin-top: $spacer-xxxl;
-	max-width: 1000px;
+	max-width: calc(80ch + $spacer-m * 2);
+	padding: $spacer-m;
 }
 
 .page-title {

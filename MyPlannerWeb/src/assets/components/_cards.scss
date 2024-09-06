@@ -1,5 +1,5 @@
 :root {
-	--card-margin: #{$spacer-m};
+	--card-margin: #{$spacer-xl} 0;
 	--card-padding: #{$spacer-xxxl};
 	--card-padding-top: calc(var(--card-padding) / 1.2);
 	--card-border-radius: 32px;
@@ -20,5 +20,9 @@
 }
 
 .card-title {
-
+	font-size: $font-size-m;
+	margin-bottom: $font-size-m;
+	font-weight: 500;
+	margin-top: 0;
+	padding-top: 0;
 }
