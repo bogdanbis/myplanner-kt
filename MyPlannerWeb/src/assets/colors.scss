@@ -94,13 +94,15 @@ $brown-dark: #AC8E68;
 	--text-color: black;
 	--background: #F5F5F7;
 	--card-bg: white;
-	--primary: var(--cyan);
+	--primary: var(--indigo);
 	--secondary: #58585B;
 	--accent: var(--mint);
 
 	--box-shadow: var(--gray-4) 0 2px 10px -1px, var(--gray) 0 1px 3px -1px;
 
 	--gradient-primary: linear-gradient(120deg, var(--primary) 30%, var(--accent) 100%);
+
+	--border-color: #{$gray-4};
 }
 
 .dark {

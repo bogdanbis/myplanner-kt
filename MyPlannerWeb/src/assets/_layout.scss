@@ -19,12 +19,22 @@
 	justify-content: center;
 	align-items: center;
 	width: 100%;
-	padding: $spacer-s $spacer-s;
+	padding: $spacer-s $spacer-xl;
+
+	@media only screen and (max-width: $mobile-width-breakpoint) {
+		justify-content: start;
+	}
 }
 
 .header-logo {
 	font-family: "Lobster", cursive;
 	font-size: 24px;
+}
+
+.header-actions {
+	font-weight: 500;
+	position: absolute;
+	right: $spacer-xl;
 }
 
 .page {
@@ -33,11 +43,16 @@
 }
 
 .content {
-	margin-top: $spacer-xxxl;
 	max-width: calc(80ch + $spacer-m * 2);
 	padding: $spacer-m;
 }
 
 .page-title {
+	font-weight: 500;
 	text-align: center;
+
+	@media only screen and (max-width: $mobile-width-breakpoint) {
+		text-align: start;
+		margin-left: $spacer-s;
+	}
 }

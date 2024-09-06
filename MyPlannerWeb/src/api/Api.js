@@ -21,7 +21,7 @@ export default class Api {
 
 	async logIn(email, password) {
 		localStorage.removeItem('token');
-		const logInResponse = await this.post('/login', { email, password }, undefined, false);
+		const logInResponse = await this.post('/login', { email, password });
 		const user = new ApplicationUser(logInResponse);
 		if (logInResponse.token) {
 			const params = {

@@ -1,9 +1,12 @@
 <template>
-	<div class="card">
-		<div v-if="title" class="card-title">
+	<div class="mp-card">
+		<div v-if="title" class="mp-card-title">
 			{{ title }}
 		</div>
 		<slot></slot>
+		<div class="mp-card-actions">
+			<slot name="actions"></slot>
+		</div>
 	</div>
 </template>
 

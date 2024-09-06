@@ -1,20 +1,14 @@
 :root {
+	--form-item-bg: var(--card-bg);
+	--form-item-bg-disabled: #{$gray-5};
 	--select-dropdown-arrow-color: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
 	--checkbox-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
 }
 
-.dark {
-	--select-dropdown-arrow-color: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-	-webkit-appearance: none;
-	margin: 0;
-}
-
-input[type=number] {
-	-moz-appearance: textfield; /* Firefox */
+.mp-form-actions {
+	display: flex;
+	justify-content: end;
+	margin-top: $spacer-m;
 }
 
 .mp-form-item-container {
@@ -27,7 +21,7 @@ input[type=number] {
 	}
 
 	small {
-		color: var(--secondary);
+		color: var(--text-secondary-color);
 		padding-left: .25rem;
 		margin-top: .25rem;
 		font-size: small;
@@ -46,15 +40,15 @@ input[type=number] {
 .mp-form-item {
 	color: var(--text-color);
 	border: 1px solid var(--border-color);
+	border-radius: $border-radius-xs;
 	caret-color: var(--primary);
-	border-radius: $border-radius-s;
 	width: 100%;
-	padding: $spacer-m $spacer-l;
+	padding: $spacer-s $spacer-m;
 	transition: border-color .2s, box-shadow .2s, background-color .2s;
 
 	&:focus, &:focus-within, &:focus-visible {
 		outline: 0;
-		background-color: var(--card-bg);
+		background-color: var(--form-item-bg-focus);
 		border-color: var(--primary);
 		box-shadow: 0 0 0 1px var(--primary);
 	}
@@ -84,6 +78,12 @@ input[type=number] {
 	background-size: 16px 12px;
 }
 
+.mp-form-check-col {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: $spacer-m;
+}
+
 .mp-form-check {
 	user-select: none;
 	display: flex;
@@ -111,4 +111,14 @@ input[type=number] {
 	label {
 		padding-left: .5rem;
 	}
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+input[type=number] {
+	-moz-appearance: textfield; /* Firefox */
 }

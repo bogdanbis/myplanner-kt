@@ -9,7 +9,7 @@
 	}
 }
 
-.card {
+.mp-card {
 	margin: var(--card-margin);
 	padding: var(--card-padding);
 	padding-top: var(--card-padding-top);
@@ -19,10 +19,16 @@
 	width: 100%;
 }
 
-.card-title {
+.mp-card-title {
 	font-size: $font-size-m;
 	margin-bottom: $font-size-m;
 	font-weight: 500;
 	margin-top: 0;
 	padding-top: 0;
+}
+
+.mp-card-actions {
+	margin-top: $spacer-s;
+	display: flex;
+	justify-content: end;
 }

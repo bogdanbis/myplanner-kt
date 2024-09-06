@@ -1,0 +1,41 @@
+.dialog {
+	background-color: var(--card-bg);
+	padding: 0;
+	border: none;
+	border-radius: $border-radius-m;
+	margin-top: 10vh;
+
+	.dialog-body {
+		padding: $spacer-xxxl;
+
+		@media only screen and (max-width: $mobile-width-breakpoint) {
+			padding: $spacer-xl;
+		}
+	}
+
+	&::backdrop {
+		-webkit-backdrop-filter: blur(2px);
+		backdrop-filter: blur(2px);
+	}
+
+	.dialog-title {
+		font-size: $font-size-l;
+		display: flex;
+		margin-bottom: $spacer-l;
+
+		.dialog-close-btn {
+			background: none;
+			border: none;
+			font-weight: bold;
+			color: var(--primary);
+			margin-left: auto;
+			outline: none;
+			cursor: pointer;
+			padding: 0;
+		}
+	}
+
+	&.dialog-size-small {
+		max-width: $mobile-width-breakpoint;
+	}
+}
