@@ -1,0 +1,24 @@
+:root {
+	--card-margin: #{$spacer-m};
+	--card-padding: #{$spacer-xxxl};
+	--card-padding-top: calc(var(--card-padding) / 1.2);
+	--card-border-radius: 32px;
+
+	@media only screen and (max-width: $mobile-width-breakpoint) {
+		--card-padding: #{$spacer-xxl};
+	}
+}
+
+.card {
+	margin: var(--card-margin);
+	padding: var(--card-padding);
+	padding-top: var(--card-padding-top);
+	border-radius: var(--card-border-radius);
+	background-color: var(--card-bg);
+	box-shadow: var(--box-shadow);
+	width: 100%;
+}
+
+.card-title {
+
+}

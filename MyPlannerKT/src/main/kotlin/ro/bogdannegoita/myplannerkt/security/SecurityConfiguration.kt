@@ -32,7 +32,8 @@ class SecurityConfiguration(val jwtTokenFilter: JwtFilter) {
                 it
                     .dispatcherTypeMatchers(FORWARD, ERROR).permitAll()
                     .requestMatchers(
-                        "/api/signup", "/api/login"
+                        "/api/signup", "/api/login",
+                        "/api/plans/browse",
                     )
                     .permitAll()
                     .anyRequest().authenticated()

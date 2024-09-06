@@ -1,9 +1,25 @@
+# root dir
 HELP.md
+**/docker/application.yaml
+
+# backend
+**/.DS_Store
 .gradle
-build/
 !gradle/wrapper/gradle-wrapper.jar
+.mvn
+!.mvn/wrapper/maven-wrapper.jar
+build/
+target/
+!**/src/main/**/target/
+!**/src/test/**/target/
 !**/src/main/**/build/
 !**/src/test/**/build/
+
+# web
+**/resources/static/
+**/node_modules/*
+dist/
+**/package-lock.json
 
 ### STS ###
 .apt_generated
@@ -13,18 +29,12 @@ build/
 .settings
 .springBeans
 .sts4-cache
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
 
 ### NetBeans ###
 /nbproject/private/
@@ -32,9 +42,9 @@ out/
 /dist/
 /nbdist/
 /.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
 ### VS Code ###
 .vscode/
-
-### Kotlin ###
-.kotlin

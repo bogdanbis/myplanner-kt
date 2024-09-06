@@ -1,0 +1,54 @@
+$mobile-width-breakpoint: 600px;
+
+/* BASE DIMENSIONS */
+$dimension-1: 4px;
+$dimension-2: 8px;
+$dimension-3: 12px;
+$dimension-4: 16px;
+$dimension-5: 20px;
+$dimension-6: 28px;
+$dimension-7: 40px;
+$dimension-8: 60px;
+$dimension-9: 100px;
+$dimension-10: 160px;
+$dimension-11: 240px;
+
+/* TYPOGRAPHY */
+$font-size-xs: $dimension-2;
+$font-size-s: $dimension-3;
+$font-size: $dimension-4;
+$font-size-2: 18px;
+$font-size-m: $dimension-5;
+$font-size-l: $dimension-6;
+$font-size-l2: 32px;
+$font-size-xl: $dimension-7;
+$font-size-xxl: $dimension-8;
+
+/* SPACING */
+$spacer-xs: $dimension-1;
+$spacer-s: $dimension-2;
+$spacer-m: $dimension-3;
+$spacer-l: $dimension-4;
+$spacer-xl: $dimension-5;
+$spacer-xxl: $dimension-6;
+$spacer-xxxl: $dimension-7;
+
+/* BORDERS */
+$border-radius-xs: 6px;
+$border-radius-s: 20px;
+$border-radius-m: 24px;
+$border-radius-l: 30px;
+$border-radius-xl: 36px;
+
+
+/* SPACERS */
+$spacers: (
+	0: 0,
+	xs: $spacer-xs,
+	s: $spacer-s,
+	m: $spacer-m,
+	l: $spacer-l,
+	xl: $spacer-xl,
+	xxl: $spacer-xxl,
+	xxxl: $spacer-xxxl,
+);

@@ -1,0 +1,32 @@
+.header {
+	position: relative;
+	height: var(--header-height);
+	color: black;
+	background-color: #D1E9F6;
+	box-shadow: 0 0 5px rgba(black, .5);
+	backdrop-filter: blur(10px);
+	z-index: 2;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	padding: $spacer-s $spacer-s;
+}
+
+.header-logo {
+	font-family: "Lobster", cursive;
+	font-size: $font-size-m;
+}
+
+.page {
+	display: flex;
+	justify-content: center;
+}
+
+.content {
+	margin-top: $spacer-xxxl;
+	max-width: 1000px;
+}
+
+.page-title {
+	text-align: center;
+}
