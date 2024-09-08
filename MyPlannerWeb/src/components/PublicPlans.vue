@@ -1,10 +1,21 @@
 <template>
 	<MpCard v-for="plan in plans" :title="plan.title">
+		<span class="author-name">
+			<MpIcon icon="person-fill" />
+			{{ plan.author.firstName + ' ' + plan.author.lastName }}
+		</span>
+		<br />
 		<span class="text-secondary">{{ plan.description }}</span>
 		<template #actions>
-			<MpButton v-if="!plan.acquired" @click="acquirePlan(plan)">Get</MpButton>
+			<MpButton
+				v-if="!plan.acquired"
+				@click="acquirePlan(plan)"
+				:busy="loading"
+			>
+				Get
+			</MpButton>
 			<span v-else class="text-primary">
-				<MpIcon icon="person-check-fill" /> You have this plan
+				You have this plan <MpIcon icon="check-lg" />
 			</span>
 		</template>
 	</MpCard>
@@ -18,6 +29,7 @@ import { computed, onMounted, ref } from 'vue';
 const authStore = useAuthStore();
 const user = computed(() => authStore.user);
 const plans = ref([]);
+const loading = ref(false);
 
 onMounted(async () => {
 	const publicPlans = await api.get('/plans/browse');
@@ -34,13 +46,15 @@ onMounted(async () => {
 
 const acquirePlan = async (plan) => {
 	if (!user.value)
-		return authStore.requestLogin()
+		return authStore.requestLogin();
 
+	loading.value = true;
 	await user.value.acquirePlan(plan);
 	user.value.acquiredPlans.forEach((plan) => {
 		const index = plans.value.findIndex(p => p.id === plan.plan.id)
 		if (index >= 0)
 			plans.value[index].acquired = true;
 	});
+	loading.value = false;
 }
 </script>

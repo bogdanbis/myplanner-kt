@@ -17,6 +17,7 @@ class Plan(
 ) : Comparable<Plan> {
     val id = data.id!!
     var title by data::title
+    var shortDescription by data::shortDescription
     var description by data::description
     var color by data::color
     var isPublic by data::isPublic
@@ -36,6 +37,7 @@ class Plan(
 
     fun update(data: PlanDto, tasks: List<TaskDto>? = null) {
         title = data.title
+        shortDescription = data.shortDescription
         description = data.description
         color = data.color
         isPublic = data.isPublic

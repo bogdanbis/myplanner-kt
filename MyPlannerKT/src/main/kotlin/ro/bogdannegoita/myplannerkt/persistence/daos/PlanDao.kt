@@ -38,6 +38,7 @@ class PlanDao(
     fun create(data: PlanDto, author: ApplicationUserEntity): PlanDto {
         val entity = PlanEntity(
             title = data.title,
+            shortDescription = data.shortDescription,
             description = data.description,
             color = data.color,
             isPublic = data.isPublic,
@@ -50,6 +51,7 @@ class PlanDao(
     fun update(id: UUID, data: PlanDto) {
         val entity = findById(id)
         entity.title = data.title
+        entity.shortDescription = data.shortDescription
         entity.description = data.description
         entity.color = data.color
         entity.isPublic = data.isPublic

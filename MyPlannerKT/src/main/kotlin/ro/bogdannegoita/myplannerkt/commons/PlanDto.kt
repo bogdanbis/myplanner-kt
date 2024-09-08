@@ -6,6 +6,7 @@ import java.util.*
 data class PlanDto(
     val id: UUID? = null,
     var title: String,
+    var shortDescription: String,
     var description: String,
     var color: String,
     var isPublic: Boolean,

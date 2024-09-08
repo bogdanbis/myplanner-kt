@@ -9,8 +9,8 @@ class DtoMapper {
     }
 
     fun planDto(entity: PlanEntity): PlanDto {
-        return PlanDto(entity.id, entity.title!!, entity.description!!, entity.color!!, entity.isPublic!!,
-            entity.createdAt!!)
+        return PlanDto(entity.id, entity.title!!, entity.shortDescription!!, entity.description!!,
+            entity.color!!, entity.isPublic!!, entity.createdAt!!)
     }
 
     fun taskDto(entity: TaskEntity): TaskDto {

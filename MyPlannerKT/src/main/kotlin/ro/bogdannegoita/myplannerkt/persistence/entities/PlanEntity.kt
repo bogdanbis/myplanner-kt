@@ -9,6 +9,8 @@ import java.util.*
 @Table(name = "plan")
 class PlanEntity(
     var title: String? = null,
+    var shortDescription: String? = null,
+    @Column(length = 1000)
     var description: String? = null,
     var color: String? = null,
     var isPublic: Boolean? = null,
