@@ -1,3 +1,4 @@
+import Toast from 'vue-toastification';
 import MpButton from './buttons/MpButton.vue';
 import MpForm from './form/MpForm.vue';
 import MpFormCheckbox from './form/MpFormCheckbox.vue';
@@ -30,4 +31,12 @@ export default function registerUiElements(Vue) {
 	// grid
 	Vue.component('MpCol', MpCol);
 	Vue.component('MpRow', MpRow);
+
+	// plug-ins
+	Vue.use(Toast, {
+		draggable: false,
+		hideProgressBar: true,
+		icon: false,
+		transition: 'fade',
+	});
 }

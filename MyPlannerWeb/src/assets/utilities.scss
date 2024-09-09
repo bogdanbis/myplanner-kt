@@ -1,0 +1,22 @@
+.user-select-none {
+	user-select: none;
+}
+
+.cursor-pointer {
+	cursor: pointer !important;
+}
+
+.cursor-default {
+	cursor: default !important;
+}
+
+.text-overflow-3dots {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.clickable {
+	@extend .cursor-pointer;
+	@extend .user-select-none;
+}

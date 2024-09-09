@@ -1,16 +1,9 @@
 <template>
-	<Header />
-	<div class="page">
-		<div class="content">
-			<h1 class="page-title">Browse Plans</h1>
-			<PublicPlans />
-		</div>
-	</div>
+	<Layout />
 </template>
 
 <script setup>
-import Header from '@/components/layout/Header.vue';
-import PublicPlans from '@/components/PublicPlans.vue';
+import Layout from './components/layout/Layout.vue';
 import { onBeforeMount } from 'vue';
 import { useAuthStore } from './store/auth.js';
 

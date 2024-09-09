@@ -1,0 +1,70 @@
+:root {
+	--top-bar-color: var(--html-bg-color);
+}
+
+:root.dark {
+	--top-bar-bottom-border: solid 1px var(--gray-4);
+}
+
+.nav-top {
+	background: var(--top-bar-color);
+	color: white;
+	backdrop-filter: blur(5px);
+	-webkit-backdrop-filter: blur(5px);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border-bottom: var(--top-bar-bottom-border);
+	height: $top-bar-height;
+
+	.menu-button {
+		display: none;
+		user-select: none;
+		font-size: $font-size-m;
+	}
+
+	@media only screen and (max-width: $hide-sidebar-breakpoint) {
+		.menu-button {
+			margin-left: 1.5rem;
+			display: block;
+			cursor: pointer;
+		}
+	}
+
+	.logo-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100%;
+		margin: 0 $spacer-xxl;
+		color: white;
+		position: absolute;
+		left: 50%;
+		transform: translate(-50%, 0);
+
+		.logo {
+			font-family: "Lobster", sans-serif;
+			-webkit-user-select: none; /* Safari */
+			-moz-user-select: none; /* Firefox */
+			-ms-user-select: none; /* IE10+/Edge */
+			user-select: none; /* Standard */
+		}
+	}
+
+	.theme-switcher-container {
+		width: 12ch;
+		padding-left: $spacer-m;
+		padding-right: $spacer-m;
+
+		.theme-switcher {
+			@extend .clickable;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+
+			small {
+				margin-right: $spacer-m;
+			}
+		}
+	}
+}

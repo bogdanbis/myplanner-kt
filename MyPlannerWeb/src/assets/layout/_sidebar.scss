@@ -1,0 +1,105 @@
+:root {
+	--menu-item-padding: 1.1rem 0 1.1rem 0.5rem;
+}
+
+.sidebar {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+
+	.close-menu-button {
+		position: absolute;
+		visibility: hidden;
+	}
+
+	@media only screen and (max-width: $hide-sidebar-breakpoint) {
+		.close-menu-button {
+			visibility: visible;
+			top: $spacer-xl;
+			right: $spacer-l;
+			font-size: 2rem;
+			cursor: pointer;
+		}
+	}
+
+	.main-menu {
+		background: none;
+		border-radius: $border-radius-xs;
+		margin-top: $spacer-l;
+		font-weight: 500;
+
+		$menu-item-gap: $spacer-m;
+		$menu-item-height: 36px;
+
+		.menu-title {
+			display: grid;
+			place-items: center;
+			margin: $spacer-xl;
+		}
+
+		.nav-menu {
+			display: flex;
+			flex-direction: column;
+			row-gap: $menu-item-gap;
+		}
+
+		.menu-item {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			height: $menu-item-height;
+			padding: var(--menu-item-padding);
+			border-radius: $border-radius-xs;
+			cursor: pointer;
+			z-index: 1;
+			text-decoration: none;
+			color: inherit;
+
+			&:hover {
+				filter: none;
+			}
+
+			.text-container {
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+
+			.bi {
+				margin-right: $spacer-xs;
+			}
+
+			&.sub-item {
+				margin-left: 2rem;
+			}
+		}
+
+		.active-menu-item {
+			position: absolute;
+			z-index: var(--item-negative-index);
+			background: var(--linear-gradient-primary);
+			height: $menu-item-height;
+			width: calc($sidebar-width - $layout-padding * 2);
+			border-radius: $border-radius-xs;
+			padding: var(--menu-item-padding);
+			margin-top: $menu-item-gap;
+			opacity: 0.2;
+			transform: translateY(calc(0px - ($menu-item-gap + $menu-item-height) * var(--item-negative-index)));
+			transition: transform .3s ease;
+
+			@media only screen and (max-width: $hide-sidebar-breakpoint) {
+				transition-duration: .1s;
+				width: calc(100% - $spacer-l * 2);
+			}
+		}
+	}
+
+	.my-account-item {
+		margin-top: auto;
+		padding: 1.5rem;
+
+		@media only screen and (max-width: $mobile-width-breakpoint) {
+			margin-top: 0;
+		}
+	}
+}
