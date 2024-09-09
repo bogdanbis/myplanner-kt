@@ -52,3 +52,45 @@ $spacers: (
 	xxl: $spacer-xxl,
 	xxxl: $spacer-xxxl,
 );
+
+@each $size, $dimension in $spacers {
+	.m-#{$size} {
+		margin: $dimension;
+	}
+
+	.m-top-#{$size} {
+		margin-top: $dimension;
+	}
+
+	.m-right-#{$size} {
+		margin-right: $dimension;
+	}
+
+	.m-bottom-#{$size} {
+		margin-bottom: $dimension;
+	}
+
+	.m-left-#{$size} {
+		margin-left: $dimension;
+	}
+
+	.p-#{$size} {
+		padding: $dimension;
+	}
+
+	.p-top-#{$size} {
+		padding-top: $dimension;
+	}
+
+	.p-right-#{$size} {
+		padding-right: $dimension;
+	}
+
+	.p-bottom-#{$size} {
+		padding-bottom: $dimension;
+	}
+
+	.p-left-#{$size} {
+		padding-left: $dimension;
+	}
+}

@@ -81,9 +81,10 @@ $shadow-primary: rgba($indigo, .3);
 
 .mp-link-button {
 	background: none;
-	border: none;
-	color: white;
+	color: var(--primary);
 	font-weight: 500;
+	border: none;
+	padding: $spacer-m 0;
 	cursor: pointer;
 	box-shadow: none;
 
@@ -91,9 +92,4 @@ $shadow-primary: rgba($indigo, .3);
 		text-decoration: underline;
 		text-underline-offset: 2px;
 	}
-}
-
-.log-in-button {
-	padding-right: 0;
-	padding-left: 0;
 }

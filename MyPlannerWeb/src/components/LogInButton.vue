@@ -8,7 +8,7 @@
 			</template>
 		</MpForm>
 	</MpDialog>
-	<MpButton class="log-in-button" link @click="openLoginDialog">
+	<MpButton class="log-in-button" :class="$attrs.class" @click="openLoginDialog">
 		Log In
 	</MpButton>
 </template>
@@ -19,6 +19,14 @@ import api from '@/api/index.js';
 import { ref, useTemplateRef, watch } from 'vue';
 import { useToast } from 'vue-toastification';
 import { useAuthStore } from '../store/auth.js';
+
+const props = defineProps({
+	redirectTo: {
+		type: String,
+		required: false,
+		default: '/',
+	},
+});
 
 const authStore = useAuthStore();
 
@@ -36,7 +44,7 @@ const logIn = async () => {
 	loading.value = true;
 	try {
 		await api.logIn(email.value, password.value);
-		window.location = '/';
+		window.location = props.redirectTo;
 	} catch (e) {
 		const error_type = e.response?.data.error_type;
 		if (error_type === 'user_not_found')

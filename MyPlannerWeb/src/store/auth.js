@@ -2,7 +2,7 @@ import api from '@/api';
 import ApplicationUser from '@/models/ApplicationUser';
 import { defineStore } from 'pinia';
 
-export const useAuthStore = defineStore('$auth', {
+export const useAuthStore = defineStore('auth', {
 	state: () => ({
 		user: null,
 		requireLogin: false,

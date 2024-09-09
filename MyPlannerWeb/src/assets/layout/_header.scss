@@ -42,6 +42,13 @@
 		.left-side {
 			margin-left: auto;
 		}
+
+		.log-in-button {
+			@extend .mp-link-button;
+			color: white !important;
+			padding-right: 0;
+			padding-left: 0;
+		}
 	}
 
 	.logo-container {

@@ -15,7 +15,8 @@
 				Get
 			</MpButton>
 			<span v-else class="text-primary">
-				You have this plan <MpIcon icon="check-lg" />
+				You have this plan
+				<MpIcon icon="check-lg" />
 			</span>
 		</template>
 	</MpCard>
@@ -24,15 +25,18 @@
 <script setup>
 import api from '@/api/index.js';
 import { useAuthStore } from '@/store/auth.js';
+import { usePlansStore } from '@/store/publicPlans.js';
 import { computed, onMounted, ref } from 'vue';
 
 const authStore = useAuthStore();
+const plansStore = usePlansStore();
+
 const user = computed(() => authStore.user);
-const plans = ref([]);
+const plans = ref(plansStore.publicPlans);
 const loading = ref(false);
 
 onMounted(async () => {
-	const publicPlans = await api.get('/plans/browse');
+	const publicPlans = await plansStore.fetchPublicPlans();
 	if (user.value) {
 		const acquiredPlans = await user.value.fetchAcquiredPlans();
 		acquiredPlans.forEach((plan) => {
@@ -50,7 +54,7 @@ const acquirePlan = async (plan) => {
 
 	loading.value = true;
 	await user.value.acquirePlan(plan);
-	user.value.acquiredPlans.forEach((plan) => {
+	user.value.acquiredPlans.forEach(plan => {
 		const index = plans.value.findIndex(p => p.id === plan.plan.id)
 		if (index >= 0)
 			plans.value[index].acquired = true;
