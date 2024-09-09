@@ -8,7 +8,9 @@
 			</template>
 		</MpForm>
 	</MpDialog>
-	<MpButton link @click="openLoginDialog">Log In</MpButton>
+	<MpButton class="log-in-button" link @click="openLoginDialog">
+		Log In
+	</MpButton>
 </template>
 
 <script setup>

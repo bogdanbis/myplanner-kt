@@ -1,6 +1,6 @@
 <template>
 	<div class="page-grid">
-		<TopBar @show-sidebar="showSidebar = true" />
+		<Header @show-sidebar="showSidebar = true" />
 		<div class="content">
 			<div :class="{focused: showSidebar}" class="sidebar-container">
 				<Sidebar @hide-sidebar="showSidebar = false" />
@@ -15,7 +15,7 @@
 <script setup>
 import { ref } from 'vue';
 import Sidebar from './Sidebar.vue';
-import TopBar from './TopBar.vue';
+import Header from './Header.vue';
 
 const showSidebar = ref(false);
 </script>

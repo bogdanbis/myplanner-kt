@@ -9,31 +9,15 @@
 			</div>
 			<NavMenu @nav-item-clicked="hideSidebar" />
 		</div>
-		<!--<div class="my-account-item">-->
-		<!--	<NavMenuItem-->
-		<!--		@click="hideSidebar"-->
-		<!--		:active="false"-->
-		<!--		icon="gear-fill"-->
-		<!--		label="Contul meu"-->
-		<!--		to="/my-account"-->
-		<!--	/>-->
-		<!--</div>-->
 	</div>
 </template>
 
-<script>
+<script setup>
 import NavMenu from './NavMenu.vue';
-import NavMenuItem from './NavMenuItem.vue';
 
-export default {
-	name: 'Sidebar',
-	components: { NavMenu, NavMenuItem },
+const emit = defineEmits(['hide-sidebar']);
 
-	methods: {
-		hideSidebar() {
-			this.$emit('hide-sidebar');
-		},
-	},
-	emits: ['hide-sidebar'],
-};
+const hideSidebar = () => {
+	emit('hide-sidebar')
+}
 </script>

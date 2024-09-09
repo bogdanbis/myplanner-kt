@@ -12,8 +12,7 @@
 	backdrop-filter: blur(5px);
 	-webkit-backdrop-filter: blur(5px);
 	display: flex;
-	align-items: center;
-	justify-content: space-between;
+	justify-content: center;
 	border-bottom: var(--top-bar-bottom-border);
 	height: $top-bar-height;
 	grid-row: 1;
@@ -21,17 +20,27 @@
 	top: 0;
 	z-index: 4;
 
-	.menu-button {
-		display: none;
-		user-select: none;
-		font-size: $font-size-m;
-	}
+	.header-content {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 $spacer-xxl;
+		width: 100%;
+		max-width: calc($content-max-width + $sidebar-width);
 
-	@media only screen and (max-width: $hide-sidebar-breakpoint) {
 		.menu-button {
-			margin-left: 1.5rem;
-			display: block;
-			cursor: pointer;
+			display: none;
+			user-select: none;
+			font-size: $font-size-m;
+
+			@media only screen and (max-width: $hide-sidebar-breakpoint) {
+				display: block !important;
+				cursor: pointer;
+			}
+		}
+
+		.left-side {
+			margin-left: auto;
 		}
 	}
 
