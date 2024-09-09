@@ -23,7 +23,6 @@
 </template>
 
 <script setup>
-import api from '@/api/index.js';
 import { useAuthStore } from '@/store/auth.js';
 import { usePlansStore } from '@/store/publicPlans.js';
 import { computed, onMounted, ref } from 'vue';
@@ -38,7 +37,9 @@ const loading = ref(false);
 onMounted(async () => {
 	const publicPlans = await plansStore.fetchPublicPlans();
 	if (user.value) {
-		const acquiredPlans = await user.value.fetchAcquiredPlans();
+		if (user.value?.acquiredPlans == null)
+			await user.value?.fetchAcquiredPlans();
+		const acquiredPlans = user.value.acquiredPlans;
 		acquiredPlans.forEach((plan) => {
 			const index = publicPlans.findIndex(p => p.id === plan.plan.id)
 			if (index >= 0)

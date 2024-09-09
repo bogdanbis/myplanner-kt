@@ -22,6 +22,11 @@ export default class ApplicationUser {
 		return this.acquiredPlans;
 	}
 
+	async fetchCreatedPlans() {
+		this.createdPlans = await api.get('/plans/created');
+		return this.createdPlans;
+	}
+
 	async acquirePlan(plan) {
 		if (this.acquiredPlans == null)
 			await this.fetchAcquiredPlans();

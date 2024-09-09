@@ -41,6 +41,14 @@
 
 		.left-side {
 			margin-left: auto;
+			white-space: nowrap;
+
+			@media only screen and (max-width: $mobile-width-breakpoint) {
+				max-width: 150px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				font-size: $font-size-s;
+			}
 		}
 
 		.log-in-button {
@@ -60,6 +68,10 @@
 		position: absolute;
 		left: 50%;
 		transform: translate(-50%, 0);
+
+		@media only screen and (max-width: $mobile-width-breakpoint) {
+			left: 30%;
+		}
 
 		.logo {
 			font-family: "Lobster", sans-serif;

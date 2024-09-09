@@ -12,6 +12,7 @@ import LoadingIcon from './icons/LoadingIcon.vue';
 import MpIcon from './icons/MpIcon.vue';
 import MpCard from './MpCard.vue';
 import MpDialog from './MpDialog.vue';
+import MpLink from './MpLink.vue';
 
 export default function registerUiElements(Vue) {
 	Vue.component('MpCard', MpCard);
@@ -19,6 +20,7 @@ export default function registerUiElements(Vue) {
 	Vue.component('MpIcon', MpIcon);
 	Vue.component('LoadingIcon', LoadingIcon);
 	Vue.component('MpDialog', MpDialog);
+	Vue.component('MpLink', MpLink);
 
 	// forms
 	Vue.component('MpForm', MpForm);

@@ -22,19 +22,18 @@
 		}
 	}
 
-	.main-menu {
-		background: none;
+	.menu {
 		border-radius: $border-radius-xs;
-		margin-top: $spacer-l;
+		margin-top: $spacer-xxxl;
 		font-weight: 500;
 
-		$menu-item-gap: $spacer-m;
+		$menu-item-gap: $spacer-s;
 		$menu-item-height: 36px;
 
 		.menu-title {
 			display: grid;
-			place-items: center;
-			margin: $spacer-xl;
+			margin: $spacer-m $spacer-s;
+			font-weight: bold;
 		}
 
 		.nav-menu {
@@ -92,6 +91,10 @@
 				width: calc(100% - $spacer-l * 2);
 			}
 		}
+	}
+
+	.creator-menu {
+		margin-top: $spacer-xxxl * 2;
 	}
 
 	.my-account-item {

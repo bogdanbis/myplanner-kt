@@ -6,7 +6,7 @@
 			</div>
 			<div class="left-side">
 				<LogInButton v-if="!user?.email" />
-				<span v-else>Welcome, {{ user.firstName }}!</span>
+				<span v-else><MpIcon icon="person-circle" /> {{ user.firstName }}</span>
 			</div>
 		</div>
 		<div class="logo-container">

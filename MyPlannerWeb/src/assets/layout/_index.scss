@@ -16,6 +16,8 @@ $layout-padding: $spacer-l;
 	display: grid;
 	grid-template-rows: $top-bar-height 1fr;
 	background: var(--background);
+	background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+	background-size: 16px 16px;
 
 	@media only screen and (max-width: $mobile-width-breakpoint) {
 		display: block;
@@ -72,4 +74,11 @@ $layout-padding: $spacer-l;
 	@media only screen and (max-width: $hide-sidebar-breakpoint) {
 		grid-column: 1;
 	}
+}
+
+.page-subtitle {
+	display: block;
+	margin-top: -$spacer-l;
+	margin-bottom: $font-size-l;
+	color: var(--secondary);
 }

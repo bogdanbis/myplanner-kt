@@ -55,42 +55,62 @@ $spacers: (
 
 @each $size, $dimension in $spacers {
 	.m-#{$size} {
-		margin: $dimension;
+		margin: $dimension !important;
+	}
+
+	.m-y-#{$size} {
+		margin-top: $dimension !important;
+		margin-bottom: $dimension !important;
+	}
+
+	.m-x-#{$size} {
+		margin-left: $dimension !important;
+		margin-right: $dimension !important;
 	}
 
 	.m-top-#{$size} {
-		margin-top: $dimension;
+		margin-top: $dimension !important;
 	}
 
 	.m-right-#{$size} {
-		margin-right: $dimension;
+		margin-right: $dimension !important;
 	}
 
 	.m-bottom-#{$size} {
-		margin-bottom: $dimension;
+		margin-bottom: $dimension !important;
 	}
 
 	.m-left-#{$size} {
-		margin-left: $dimension;
+		margin-left: $dimension !important;
 	}
 
 	.p-#{$size} {
-		padding: $dimension;
+		padding: $dimension !important;
+	}
+
+	.p-y-#{$size} {
+		padding-top: $dimension !important;
+		padding-bottom: $dimension !important;
+	}
+
+	.p-x-#{$size} {
+		padding-left: $dimension !important;
+		padding-right: $dimension !important;
 	}
 
 	.p-top-#{$size} {
-		padding-top: $dimension;
+		padding-top: $dimension !important;
 	}
 
 	.p-right-#{$size} {
-		padding-right: $dimension;
+		padding-right: $dimension !important;
 	}
 
 	.p-bottom-#{$size} {
-		padding-bottom: $dimension;
+		padding-bottom: $dimension !important;
 	}
 
 	.p-left-#{$size} {
-		padding-left: $dimension;
+		padding-left: $dimension !important;
 	}
 }

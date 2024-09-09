@@ -1,6 +1,7 @@
 <template>
 	<div v-if="user?.email">
 		<h2>My Plans</h2>
+		<span class="page-subtitle">The plans you got from other creators.</span>
 		<MpCard v-for="{ plan } in user.acquiredPlans" :title="plan.title">
 			<span class="author-name">
 				<MpIcon icon="person-fill" />
@@ -8,9 +9,7 @@
 			</span>
 			<br />
 			<span class="text-secondary">{{ plan.description }}</span>
-			<template #actions>
-
-			</template>
+			<MpLink :to="'/my-plans/' + plan.id" class="m-top-l">Details</MpLink>
 		</MpCard>
 	</div>
 	<MpCard v-else>
@@ -29,6 +28,7 @@ const authStore = useAuthStore();
 const user = computed(() => authStore.user);
 
 onMounted(async () => {
-	await user.value?.fetchAcquiredPlans();
+	if (user.value?.acquiredPlans == null)
+		await user.value?.fetchAcquiredPlans();
 })
 </script>

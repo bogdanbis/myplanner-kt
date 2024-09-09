@@ -1,0 +1,18 @@
+a {
+	text-decoration: none;
+	font-weight: 500;
+	color: var(--primary);
+
+	&:hover {
+		text-decoration: underline;
+		filter: brightness(80%);
+	}
+}
+
+.router-link-wrapper {
+	width: auto;
+
+	.link-icon {
+		margin-right: 4px;
+	}
+}

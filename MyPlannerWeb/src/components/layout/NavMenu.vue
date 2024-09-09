@@ -25,37 +25,34 @@ import NavMenuItem from './NavMenuItem.vue';
 
 const emit = defineEmits(['nav-item-clicked']);
 
-
-const menu = [
-	{
-		icon: 'search',
-		label: 'Explore',
-		path: '/',
+const props = defineProps({
+	menuItems: {
+		type: Array,
+		required: true,
 	},
-	{
-		label: 'My Plans',
-		path: '/my-plans',
-	},
-];
+})
 
 const route = useRoute();
 
 const selectedIndex = ref(null);
 
 const menuItems = computed(() => {
-	return menu.map((menuItem, index) => {
-		const isActive = route.path === menuItem.path
+	let activeIndex = null;
+	const menuItems = props.menuItems.map((menuItem, index) => {
+		let isActive = route.path === menuItem.path;
 		if (isActive)
-			selectedIndex.value = index
+			activeIndex = index;
 		return {
 			...menuItem,
 			isActive: isActive,
 		}
 	})
+	selectedIndex.value = activeIndex;
+	return menuItems;
 })
 
 const itemNegativeIndex = computed(() => {
-	const negativeIndex = menu.length - selectedIndex.value;
+	const negativeIndex = props.menuItems.length - selectedIndex.value;
 	return { '--item-negative-index': negativeIndex }
 });
 </script>
