@@ -1,6 +1,6 @@
 <template>
 	<div class="page-grid">
-		<TopBar class="topbar" @show-sidebar="showSidebar = true" />
+		<TopBar @show-sidebar="showSidebar = true" />
 		<div class="content">
 			<div :class="{focused: showSidebar}" class="sidebar-container">
 				<Sidebar @hide-sidebar="showSidebar = false" />

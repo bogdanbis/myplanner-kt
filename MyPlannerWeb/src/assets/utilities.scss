@@ -10,13 +10,17 @@
 	cursor: default !important;
 }
 
+.clickable {
+	@extend .cursor-pointer;
+	@extend .user-select-none;
+}
+
 .text-overflow-3dots {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
 
-.clickable {
-	@extend .cursor-pointer;
-	@extend .user-select-none;
+.text-center {
+	text-align: center;
 }

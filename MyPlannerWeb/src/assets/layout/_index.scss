@@ -22,16 +22,10 @@ $layout-padding: $spacer-l;
 	}
 }
 
-.topbar {
-	grid-row: 1;
-	position: sticky;
-	top: 0;
-	z-index: 4;
-}
-
 .content {
 	display: grid;
-	grid-template-columns: $sidebar-width 1fr;
+	grid-template-columns: minmax($sidebar-width, auto) minmax(auto, $content-max-width);
+	justify-content: center;
 
 	@media only screen and (max-width: $hide-sidebar-breakpoint) {
 		grid-template-columns: 1fr;
@@ -42,6 +36,7 @@ $layout-padding: $spacer-l;
 	grid-column: 1;
 	position: sticky;
 	top: $top-bar-height;
+	min-width: $sidebar-width;
 	height: calc(100vh - #{$top-bar-height});
 	padding: $layout-padding;
 
@@ -72,7 +67,6 @@ $layout-padding: $spacer-l;
 .main-content {
 	padding: $layout-padding;
 	max-width: $content-max-width;
-	justify-self: center;
 	grid-column: 2;
 
 	@media only screen and (max-width: $hide-sidebar-breakpoint) {

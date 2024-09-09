@@ -43,7 +43,6 @@ const route = useRoute();
 const selectedIndex = ref(null);
 
 const menuItems = computed(() => {
-	console.log(route.path)
 	return menu.map((menuItem, index) => {
 		const isActive = route.path === menuItem.path
 		if (isActive)

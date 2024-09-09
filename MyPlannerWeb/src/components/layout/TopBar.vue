@@ -1,5 +1,5 @@
 <template>
-	<div class="nav-top">
+	<div class="header">
 		<div @click="emit('show-sidebar')" class="menu-button">
 			<span><MpIcon icon="list" /></span>
 		</div>
