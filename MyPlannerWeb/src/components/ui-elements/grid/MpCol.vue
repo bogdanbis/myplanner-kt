@@ -5,7 +5,7 @@
 </template>
 
 <script>
-const gridColumns = 60;
+const gridColumns = 12;
 
 export default {
 	name: 'MpCol',

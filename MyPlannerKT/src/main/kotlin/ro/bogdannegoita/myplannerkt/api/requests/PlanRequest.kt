@@ -4,7 +4,7 @@ import ro.bogdannegoita.myplannerkt.commons.TaskDto
 
 class PlanRequest(
     val title: String,
-    val shortDescription: String,
+    val shortDescription: String = "",
     val description: String,
     val color: String,
     val isPublic: Boolean,

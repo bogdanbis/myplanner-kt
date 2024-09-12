@@ -39,7 +39,9 @@ const selectedIndex = ref(null);
 const menuItems = computed(() => {
 	let activeIndex = null;
 	const menuItems = props.menuItems.map((menuItem, index) => {
-		let isActive = route.path === menuItem.path;
+		let isActive = menuItem.path === '/'
+				? route.path === '/'
+				: route.path.startsWith(menuItem.path);
 		if (isActive)
 			activeIndex = index;
 		return {

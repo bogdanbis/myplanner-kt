@@ -7,6 +7,9 @@
 		ref="textarea"
 		v-bind="$attrs"
 	/>
+	<small v-if="showCount" class="mp-textarea-counter">
+		{{ modelValue?.length }}
+	</small>
 </template>
 
 <script>
@@ -24,6 +27,11 @@ export default {
 			required: false,
 		},
 		required: {
+			type: Boolean,
+			required: false,
+			default: false,
+		},
+		showCount: {
 			type: Boolean,
 			required: false,
 			default: false,
