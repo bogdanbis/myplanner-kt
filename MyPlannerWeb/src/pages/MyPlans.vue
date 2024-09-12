@@ -22,7 +22,7 @@
 <script setup>
 import LogInButton from '@/components/LogInButton.vue';
 import { useAuthStore } from '@/store/auth.js';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted } from 'vue';
 
 const authStore = useAuthStore();
 const user = computed(() => authStore.user);

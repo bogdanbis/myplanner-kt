@@ -1,11 +1,13 @@
 a {
 	text-decoration: none;
 	font-weight: 500;
-	color: var(--primary);
+	color: var(--blue);
+	transition: filter .2s;
 
 	&:hover {
 		text-decoration: underline;
-		filter: brightness(80%);
+		filter: brightness(115%);
+		transition: all .2s;
 	}
 }
 
