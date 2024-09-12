@@ -1,9 +1,10 @@
-import Home from '@/pages/Home.vue';
+import Home from '@/pages/tracker/Home.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
-const MyPlans = () => import('@/pages/MyPlans.vue');
-const AuthoredPlans = () => import('@/pages/AuthoredPlans.vue');
-const CreatePlan = () => import('@/pages/CreatePlan.vue');
+const MyPlans = () => import('@/pages/tracker/MyPlans.vue');
+const AuthoredPlans = () => import('./pages/creator/CreatedPlans.vue');
+const CreatePlan = () => import('@/pages/creator/CreatePlan.vue');
+const EditPlan = () => import('./pages/creator/EditPlan.vue');
 
 const router = createRouter({
 	history: createWebHistory(),
@@ -30,6 +31,11 @@ const router = createRouter({
 			path: '/creator/new',
 			name: 'Create a Plan',
 			component: CreatePlan,
+		},
+		{
+			path: '/creator/details/:id',
+			name: 'Plan Details',
+			component: EditPlan,
 		},
 		{
 			path: '/:pathMatch(.*)*',

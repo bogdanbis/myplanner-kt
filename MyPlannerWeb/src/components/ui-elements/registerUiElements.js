@@ -1,4 +1,5 @@
 import Toast from 'vue-toastification';
+import MpBackLink from './MpBackLink.vue';
 import MpButton from './buttons/MpButton.vue';
 import MpForm from './form/MpForm.vue';
 import MpFormCheckbox from './form/MpFormCheckbox.vue';
@@ -21,6 +22,7 @@ export default function registerUiElements(Vue) {
 	Vue.component('LoadingIcon', LoadingIcon);
 	Vue.component('MpDialog', MpDialog);
 	Vue.component('MpLink', MpLink);
+	Vue.component('MpBackLink', MpBackLink);
 
 	// forms
 	Vue.component('MpForm', MpForm);

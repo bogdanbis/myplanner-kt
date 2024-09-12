@@ -14,10 +14,16 @@ $shadow-primary: rgba($indigo, .3);
 	border: none;
 	border-radius: 10px;
 	white-space: nowrap;
-	transition: background-color .1s, box-shadow .2s, transform .1s;
 	box-shadow: var(--button-shadow);
 	display: flex;
 	align-items: center;
+	transition: background-color .1s, box-shadow .2s, transform .1s;
+
+	&.secondary {
+		background: var(--secondary);
+		color: var(--button-text-color);
+		box-shadow: var(--button-secondary-shadow);
+	}
 
 	.button-icon {
 		margin-right: $spacer-s;
@@ -34,7 +40,9 @@ $shadow-primary: rgba($indigo, .3);
 
 	&:disabled {
 		background-color: var(--primary);
+		box-shadow: none;
 		opacity: .5;
+		transition: background-color .1s, box-shadow .2s;
 	}
 
 	&:hover:not(:disabled) {

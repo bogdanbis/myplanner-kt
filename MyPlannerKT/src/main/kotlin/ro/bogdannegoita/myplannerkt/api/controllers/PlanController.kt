@@ -18,7 +18,7 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
 
     @GetMapping("/browse")
     fun getPublicPlans(): List<PlanSimpleResponse> {
-        return myPlanner.getPublicPlans().map(::PlanSimpleResponse)
+        return myPlanner.getPublicPlans().toSortedSet().map(::PlanSimpleResponse)
     }
 
     @GetMapping("/{id}")

@@ -43,7 +43,7 @@ const mainMenuItems = [
 const creatorMenuItems = [
 	{
 		icon: 'pencil-square',
-		label: 'Authored plans',
+		label: 'Created Plans',
 		path: '/creator'
 	}
 ]

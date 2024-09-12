@@ -73,7 +73,9 @@ export default {
 
 	watch: {
 		modelValue() {
-			this.resize()
+			this.$nextTick(() => {
+				this.resize()
+			})
 		},
 	},
 }

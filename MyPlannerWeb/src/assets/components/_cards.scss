@@ -5,7 +5,7 @@
 	--card-border-radius: 32px;
 
 	@media only screen and (max-width: $mobile-width-breakpoint) {
-		--card-padding: #{$spacer-xxl};
+		--card-padding: #{$spacer-xl};
 	}
 }
 

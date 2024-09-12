@@ -1,24 +1,32 @@
 :root {
 	--form-item-bg: var(--card-bg);
 	--form-item-bg-disabled: #{$gray-5};
+	--form-item-bg-focus: white;
 	--select-dropdown-arrow-color: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
 	--checkbox-background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
 }
 
+.dark {
+	--form-item-bg: #{$gray-5-dark};
+	--form-item-bg-focus: black;
+	--select-dropdown-arrow-color: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+
 .mp-form {
-	row-gap: $spacer-l;
+	row-gap: $spacer-xxl;
 }
 
 .mp-form-actions {
 	display: flex;
 	justify-content: end;
 	margin-top: $spacer-m;
+	gap: $spacer-m;
 }
 
 .mp-form-item-container {
 	display: flex;
 	flex-direction: column;
-	margin-bottom: $spacer-m;
+	margin-bottom: $spacer-m + $spacer-s;
 
 	label {
 		margin-bottom: $spacer-m;
@@ -28,8 +36,8 @@
 	small {
 		color: var(--text-secondary);
 		padding-left: $spacer-s;
-		margin-top: $spacer-s;
-		font-size: small;
+		font-size: $font-size-s;
+		line-height: 2.5;
 	}
 
 	&:has(.large-input) {
@@ -48,6 +56,7 @@
 
 .mp-form-item {
 	color: var(--text-color);
+	background-color: var(--form-item-bg);
 	border: 1px solid var(--border-color);
 	border-radius: 8px;
 	caret-color: var(--primary);
@@ -76,7 +85,7 @@
 	border: 0;
 	padding: $spacer-xs;
 	border-bottom: solid 1px var(--border-color);
-	transition: border-bottom-width .2s;
+	background-color: var(--card-bg) !important;
 
 	&:focus, &:focus-within, &:focus-visible {
 		box-shadow: none;
@@ -92,6 +101,7 @@
 .mp-textarea-counter {
 	text-align: end;
 	margin-right: $spacer-xs;
+	height: 0;
 }
 
 .mp-select {

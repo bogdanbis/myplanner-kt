@@ -1,10 +1,11 @@
 <template>
 	<div v-if="user?.email">
-		<h2>Authored Plans</h2>
-		<span class="page-subtitle">Plans that you have created.</span>
+		<h2>Created Plans</h2>
+		<span class="page-subtitle">Plans that you have created. Add a new one or edit an existing one.</span>
 		<MpLink icon="plus-circle" to="/creator/new">Create a new Plan</MpLink>
 		<MpCard v-for="plan in user.createdPlans" :title="plan.title">
 			<span class="text-secondary">{{ plan.description }}</span>
+			<MpLink :to="'/creator/details/' + plan.id" class="m-top-m">Details</MpLink>
 		</MpCard>
 	</div>
 	<MpCard v-else>
@@ -15,7 +16,7 @@
 </template>
 
 <script setup>
-import LogInButton from '../components/LogInButton.vue';
+import LogInButton from '@/components/LogInButton.vue';
 import { useAuthStore } from '@/store/auth.js';
 import { computed, onMounted } from 'vue';
 

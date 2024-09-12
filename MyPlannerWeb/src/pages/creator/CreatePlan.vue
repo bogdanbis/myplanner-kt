@@ -1,4 +1,5 @@
 <template>
+	<MpBackLink to="/creator">Created Plans</MpBackLink>
 	<h2>Create a Plan</h2>
 	<span class="page-subtitle">Create a Plan for yourself or to share with others.</span>
 	<MpCard>
@@ -34,7 +35,7 @@
 				id="color"
 				type="color"
 				label="Primary color"
-				description="Pick a color to make personalize your plan. Make it recognizable with a glance."
+				description="Pick a color to personalize your plan. Make it recognizable at a glance."
 				v-model="color"
 			/>
 
@@ -51,7 +52,9 @@
 import { ref } from 'vue';
 import api from '@/api';
 import { useRouter } from "vue-router";
+import { useAuthStore } from '../../store/auth.js';
 
+const authStore = useAuthStore();
 const router = useRouter();
 
 const title = ref('');
@@ -68,6 +71,7 @@ const createPlan = async () => {
 		isPublic: isPublic.value,
 		color: color.value,
 	});
-	router.push('/creator')
+	authStore.user.fetchCreatedPlans();
+	router.push('/creator');
 }
 </script>

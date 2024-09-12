@@ -10,6 +10,7 @@ $layout-padding: $spacer-l;
 }
 
 .dark {
+	--sidebar-color: rgba(0, 0, 0, .75);
 	--bg-dot-color: var(--gray-6);
 }
 
