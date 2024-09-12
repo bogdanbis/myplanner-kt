@@ -1,6 +1,6 @@
 <template>
 	<MpCard v-for="plan in plans" :title="plan.title">
-		<span class="author-name">
+		<span class="mp-card-subtitle">
 			<MpIcon icon="person-fill" />
 			{{ plan.author.firstName + ' ' + plan.author.lastName }}
 		</span>

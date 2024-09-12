@@ -21,10 +21,16 @@
 
 .mp-card-title {
 	font-size: $font-size-m;
-	margin-bottom: $font-size-m;
+	margin-bottom: $font-size-s;
 	font-weight: 500;
 	margin-top: 0;
 	padding-top: 0;
+}
+
+.mp-card-subtitle {
+	display: block;
+	margin-top: -$spacer-xs;
+	margin-bottom: -$spacer-xs;
 }
 
 .mp-card-actions {

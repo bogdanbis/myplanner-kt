@@ -3,7 +3,7 @@
 		<h2>My Plans</h2>
 		<span class="page-subtitle">The plans you got from other creators.</span>
 		<MpCard v-for="{ plan } in user.acquiredPlans" :title="plan.title">
-			<span class="author-name">
+			<span class="mp-card-subtitle">
 				<MpIcon icon="person-fill" />
 				{{ plan.author?.firstName + ' ' + plan.author?.lastName }}
 			</span>
