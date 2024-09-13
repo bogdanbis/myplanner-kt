@@ -9,7 +9,7 @@ const EditPlan = () => import('./pages/creator/EditPlan.vue');
 const router = createRouter({
 	history: createWebHistory(),
 	scrollBehavior() {
-		return { y: 0, behavior: 'smooth' }
+		return { top: 0, behavior: 'smooth' }
 	},
 	routes: [
 		{

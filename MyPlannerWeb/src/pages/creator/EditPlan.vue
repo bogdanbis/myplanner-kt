@@ -8,7 +8,7 @@
 				<MpButton v-show="hasChanges" @click="cancelChanges" class="secondary" :disabled="!hasChanges">
 					Cancel
 				</MpButton>
-				<MpButton type="submit" :disabled="!hasChanges">
+				<MpButton type="submit" :disabled="!hasChanges || !hasRequiredFields">
 					Save
 				</MpButton>
 			</template>
@@ -46,8 +46,14 @@ onMounted(async () => {
 
 const hasChanges = computed(() => !isEqual(plan.value, planEdits.value))
 
+const hasRequiredFields = computed(() => {
+	return planEdits.value.title && planEdits.value.description && planEdits.value.shortDescription
+			&& planEdits.value.isPublic != null && planEdits.value.color;
+})
+
 const updatePlan = async () => {
-	if (!hasChanges.value) return;
+	if (!hasChanges.value || !hasRequiredFields.value)
+		return;
 	await api.put('/plans/' + planId, planEdits.value);
 	plan.value = { ...planEdits.value };
 }

@@ -5,7 +5,7 @@
 	<MpCard>
 		<PlanForm :plan="plan" @submit="createPlan">
 			<template #actions>
-				<MpButton type="submit">
+				<MpButton type="submit" :disabled="!hasRequiredFields">
 					Submit
 				</MpButton>
 			</template>
@@ -17,7 +17,7 @@
 import api from '@/api';
 import PlanForm from '@/components/plans/PlanForm.vue';
 import { useAuthStore } from '@/store/auth.js';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const authStore = useAuthStore();
@@ -31,7 +31,14 @@ const plan = ref({
 	color: '#5856D6',
 });
 
+const hasRequiredFields = computed(() => {
+	return plan.value.title && plan.value.description && plan.value.shortDescription
+			&& plan.value.isPublic != null && plan.value.color;
+})
+
 const createPlan = async () => {
+	if (!hasRequiredFields.value)
+		return;
 	await api.post('/plans/create', {
 		title: plan.value.title,
 		description: plan.value.description,

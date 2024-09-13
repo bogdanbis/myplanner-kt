@@ -11,7 +11,8 @@
 			id="short-description"
 			label="Short Description"
 			v-model="plan.shortDescription"
-			placeholder="A few key concepts to give an idea as to what this is about. Make it short!"
+			placeholder="A few key concepts to give an idea as to what this is about."
+			description="This is used in previews. It should be just a sentence or two."
 			show-count
 		/>
 		<MpFormTextarea
