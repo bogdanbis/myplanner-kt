@@ -17,8 +17,14 @@
 
 }
 
+.mp-form-section {
+	display: flex;
+	flex-direction: column;
+	row-gap: $spacer-xxl;
+}
+
 .mp-form-section-title {
-	font-size: $font-size-m;
+	font-size: $font-size-m2;
 	margin-bottom: 0;
 }
 
@@ -26,7 +32,6 @@
 	position: relative;
 	box-shadow: var(--box-shadow);
 	border-radius: $border-radius-s;
-	margin: 0 $spacer-m;
 	padding: $spacer-l;
 
 	@media only screen and (max-width: $mobile-width-breakpoint) {
@@ -61,6 +66,10 @@
 	justify-content: end;
 	margin-top: $spacer-m;
 	gap: $spacer-m;
+
+	@media only screen and (max-width: $mobile-width-breakpoint) {
+		flex-direction: column;
+	}
 }
 
 .mp-form-item-container {
@@ -129,6 +138,10 @@
 
 	&:focus, &:focus-within, &:focus-visible {
 		box-shadow: none;
+	}
+
+	@media only screen and (max-width: $mobile-width-breakpoint) {
+		font-size: $font-size-m2;
 	}
 }
 

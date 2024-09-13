@@ -19,6 +19,7 @@ $button-padding-x: 32px;
 	box-shadow: var(--button-shadow);
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	transition: background-color .1s, box-shadow .2s, transform .1s;
 
 	&.secondary {
@@ -98,6 +99,7 @@ $button-padding-x: 32px;
 	padding: $button-padding-y 0 !important;
 	cursor: pointer;
 	box-shadow: none;
+	width: fit-content;
 
 	.loading-icon {
 		border-color: var(--primary);

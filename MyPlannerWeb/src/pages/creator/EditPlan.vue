@@ -31,6 +31,7 @@
 <script setup>
 import api from '@/api';
 import PlanForm from '@/components/plans/PlanForm.vue';
+import Plan from '@/models/Plan.js';
 import { useAuthStore } from '@/store/auth.js';
 import { isEqual } from 'lodash';
 import { computed, onMounted, ref } from 'vue';
@@ -42,18 +43,12 @@ const planId = useRoute().params.id;
 
 const authStore = useAuthStore();
 const user = computed(() => authStore.user);
-const plan = ref({});
-const planEdits = ref({
-	title: '',
-	description: '',
-	shortDescription: '',
-	isPublic: '',
-	color: '#5856D6',
-	tasks: [],
-});
+const plan = ref(new Plan());
+const planEdits = ref(new Plan());
 
 onMounted(async () => {
-	plan.value = await api.get('/plans/' + planId);
+	const planResponse = await api.get('/plans/' + planId);
+	plan.value = new Plan(planResponse);
 	if (!plan.value)
 		router.push('/creator');
 	initChanges();
@@ -72,15 +67,14 @@ const updatePlan = async () => {
 	if (!hasChanges.value || !hasRequiredFields.value)
 		return;
 	await api.put('/plans/' + planId, planEdits.value);
-	plan.value = { ...planEdits.value };
-	plan.value.tasks = [...planEdits.value.tasks];
+	plan.value = new Plan(planEdits.value);
 	updating.value = false;
 	user.value.fetchCreatedPlans();
 }
 
 const initChanges = () => {
-	planEdits.value = { ...plan.value };
-	planEdits.value.tasks = [...plan.value.tasks];
+	console.log(planEdits.value.tasks)
+	planEdits.value = new Plan(plan.value);
 }
 
 const deleting = ref(false);

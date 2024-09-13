@@ -1,4 +1,5 @@
 import api from '@/api/index.js';
+import Plan from './Plan.js';
 
 export default class ApplicationUser {
 	firstName;
@@ -23,7 +24,8 @@ export default class ApplicationUser {
 	}
 
 	async fetchCreatedPlans() {
-		this.createdPlans = await api.get('/plans/created');
+		const plans = await api.get('/plans/created');
+		this.createdPlans = plans.map(p => new Plan(p));
 		return this.createdPlans;
 	}
 

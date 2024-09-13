@@ -1,5 +1,5 @@
 <template>
-	<MpForm @submit="emit('submit')" v-auto-animate>
+	<MpForm @submit="emit('submit')">
 		<MpFormInput
 			v-model="plan.title"
 			placeholder="The Title"
@@ -34,27 +34,28 @@
 			v-model="plan.color"
 		/>
 
-		<MpFormSectionTitle>Tasks</MpFormSectionTitle>
-		<MpCol v-for="(task, index) in plan.tasks" :key="index" class="mp-form-subsection">
-			<div class="change-index-container">
-				<MpButton link icon="arrow-down" />
-				<MpButton link icon="arrow-up" />
-				<span class="hover-info">Move item</span>
-			</div>
-			<MpFormInput
-				:id="'task-title-' + index"
-				label="Title"
-				v-model="task.title"
-			/>
-			<MpFormTextarea
-				:id="'task-description-' + index"
-				label="Description"
-				v-model="task.description"
-			/>
-			<div class="mp-form-actions">
-				<MpButton link @click="removeTask(task)" icon="dash">Remove</MpButton>
-			</div>
-		</MpCol>
+		<MpFormSection title="Tasks" v-auto-animate>
+			<MpCol v-for="(task, index) in tasks" :key="task" class="mp-form-subsection">
+				<div class="change-index-container">
+					<MpButton v-if="index < (tasks.length - 1)" link icon="arrow-down" @click="moveTaskDown(task)" />
+					<MpButton v-if="index > 0" link icon="arrow-up" @click="moveTaskUp(task)" />
+					<span class="hover-info">Move item</span>
+				</div>
+				<MpFormInput
+					:id="'task-title-' + index"
+					label="Title"
+					v-model="task.title"
+				/>
+				<MpFormTextarea
+					:id="'task-description-' + index"
+					label="Description"
+					v-model="task.description"
+				/>
+				<div class="mp-form-actions">
+					<MpButton link @click="removeTask(task)" icon="dash" class="ms-auto">Remove</MpButton>
+				</div>
+			</MpCol>
+		</MpFormSection>
 		<MpCol cols="1">
 			<MpButton @click="addNewTask" icon="plus-circle">Task</MpButton>
 		</MpCol>
@@ -68,6 +69,10 @@
 
 <script setup>
 
+import Task from '@/models/Task.js';
+import { sortBy } from 'lodash';
+import { computed } from 'vue';
+
 const { plan } = defineProps({
 	plan: {
 		type: Object,
@@ -77,11 +82,10 @@ const { plan } = defineProps({
 
 const emit = defineEmits(['submit']);
 
+const tasks = computed(() => sortBy(plan.tasks, 'index'));
+
 const addNewTask = () => {
-	plan.tasks.push({
-		title: '',
-		description: '',
-	});
+	plan.tasks.push(new Task({ index: plan.tasks.length }));
 	setTimeout(() => {
 		document.getElementById('task-title-' + (plan.tasks.length - 1)).scrollIntoView({ behavior: 'smooth' });
 	}, 250);
@@ -89,5 +93,22 @@ const addNewTask = () => {
 
 const removeTask = (task) => {
 	plan.tasks.splice(plan.tasks.indexOf(task), 1);
+	tasks.value.forEach((t, i) => t.index = i + 1);
+}
+
+const moveTaskUp = (task) => {
+	if (task.index <= 0)
+		return;
+	const prevTask = tasks.value[tasks.value.indexOf(task) - 1];
+	prevTask.index++;
+	task.index--;
+}
+
+const moveTaskDown = (task) => {
+	if (task.index >= tasks.value.length - 1)
+		return;
+	const nextTask = tasks.value[tasks.value.indexOf(task) + 1];
+	nextTask.index--;
+	task.index++;
 }
 </script>

@@ -16,6 +16,7 @@
 <script setup>
 import api from '@/api';
 import PlanForm from '@/components/plans/PlanForm.vue';
+import Plan from '@/models/Plan.js';
 import { useAuthStore } from '@/store/auth.js';
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -23,13 +24,7 @@ import { useRouter } from 'vue-router';
 const authStore = useAuthStore();
 const router = useRouter();
 
-const plan = ref({
-	title: '',
-	description: '',
-	shortDescription: '',
-	isPublic: false,
-	color: '#5856D6',
-});
+const plan = ref(new Plan());
 
 const hasRequiredFields = computed(() => {
 	return plan.value.title && plan.value.description && plan.value.shortDescription
@@ -41,13 +36,7 @@ const createPlan = async () => {
 	loading.value = true;
 	if (!hasRequiredFields.value)
 		return;
-	await api.post('/plans/create', {
-		title: plan.value.title,
-		description: plan.value.description,
-		shortDescription: plan.value.shortDescription,
-		isPublic: plan.value.isPublic,
-		color: plan.value.color,
-	});
+	await api.post('/plans/create', plan.value);
 	authStore.user.fetchCreatedPlans();
 	router.push('/creator');
 }
