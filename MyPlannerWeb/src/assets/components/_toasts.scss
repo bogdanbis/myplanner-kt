@@ -7,5 +7,16 @@
 
 .#{$vt-namespace}__toast {
 	min-height: 1rem;
-	padding: 1rem;
+	padding: .75rem 1rem;
+}
+
+.#{$vt-namespace}__toast--default {
+	background: var(--linear-gradient-primary);
+}
+
+.#{$vt-namespace}__close-button {
+	font-family: "Inter", sans-serif;
+	font-weight: normal;
+	color: $vt-text-color-default;
+	opacity: .8;
 }

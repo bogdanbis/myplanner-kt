@@ -1,4 +1,6 @@
 $shadow-primary: rgba($indigo, .3);
+$button-padding-y: 7px;
+$button-padding-x: 32px;
 
 :root {
 	--button-text-color: var(--white);
@@ -10,7 +12,7 @@ $shadow-primary: rgba($indigo, .3);
 	font-weight: normal;
 	background: var(--linear-gradient-primary);
 	color: var(--button-text-color);
-	padding: 7px 2rem;
+	padding: $button-padding-y $button-padding-x;
 	border: none;
 	border-radius: 10px;
 	white-space: nowrap;
@@ -20,7 +22,7 @@ $shadow-primary: rgba($indigo, .3);
 	transition: background-color .1s, box-shadow .2s, transform .1s;
 
 	&.secondary {
-		background: var(--secondary);
+		background: var(--secondary) !important;
 		color: var(--button-text-color);
 		box-shadow: var(--button-secondary-shadow);
 	}
@@ -43,6 +45,7 @@ $shadow-primary: rgba($indigo, .3);
 		box-shadow: none;
 		opacity: .5;
 		transition: background-color .1s, box-shadow .2s;
+		pointer-events: none;
 	}
 
 	&:hover:not(:disabled) {
@@ -81,23 +84,44 @@ $shadow-primary: rgba($indigo, .3);
 		}
 
 		&:not(:has(.bi)) {
-			padding: 7px 1.25rem;
+			padding: $button-padding-y 1.25rem;
 		}
 	}
 
 }
 
 .mp-link-button {
-	background: none;
+	background: none !important;
 	color: var(--primary);
 	font-weight: 500;
 	border: none;
-	padding: $spacer-m 0;
+	padding: $button-padding-y 0 !important;
 	cursor: pointer;
 	box-shadow: none;
 
-	&:hover {
-		text-decoration: underline;
-		text-underline-offset: 2px;
+	.loading-icon {
+		border-color: var(--primary);
 	}
+
+	&.secondary {
+		color: var(--text-color);
+
+		.loading-icon {
+			border-color: var(--text-color);
+		}
+	}
+
+	&.danger {
+		color: var(--danger);
+
+		.loading-icon {
+			border-color: var(--danger);
+		}
+	}
+}
+
+.mp-button-confirm-container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: $spacer-l;
 }

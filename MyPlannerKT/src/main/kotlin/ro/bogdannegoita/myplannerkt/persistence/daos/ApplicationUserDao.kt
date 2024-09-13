@@ -48,4 +48,8 @@ class ApplicationUserDao(
     fun getCreatedPlans(id: UUID): List<PlanDto> {
         return findById(id).createdPlans.map(dtoMapper::planDto)
     }
+
+    fun deletePlan(id: UUID) {
+        planDao.delete(id)
+    }
 }

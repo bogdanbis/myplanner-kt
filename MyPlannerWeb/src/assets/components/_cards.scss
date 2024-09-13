@@ -1,11 +1,12 @@
 :root {
 	--card-margin: #{$spacer-xl} 0;
 	--card-padding: #{$spacer-xxxl};
-	--card-padding-top: calc(var(--card-padding) / 1.2);
-	--card-border-radius: 32px;
+	--card-padding-top: calc(var(--card-padding) / 1.3);
+	--card-border-radius: #{$border-radius-l};
 
 	@media only screen and (max-width: $mobile-width-breakpoint) {
 		--card-padding: #{$spacer-xl};
+		--card-border-radius: #{$border-radius-m};
 	}
 }
 

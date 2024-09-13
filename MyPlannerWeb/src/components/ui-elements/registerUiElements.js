@@ -1,6 +1,6 @@
 import Toast from 'vue-toastification';
-import MpBackLink from './MpBackLink.vue';
 import MpButton from './buttons/MpButton.vue';
+import MpLinkButtonWithConfirm from './buttons/MpLinkButtonWithConfirm.vue';
 import MpForm from './form/MpForm.vue';
 import MpFormCheckbox from './form/MpFormCheckbox.vue';
 import MpFormInput from './form/MpFormInput.vue';
@@ -11,6 +11,7 @@ import MpCol from './grid/MpCol.vue';
 import MpRow from './grid/MpRow.vue';
 import LoadingIcon from './icons/LoadingIcon.vue';
 import MpIcon from './icons/MpIcon.vue';
+import MpBackLink from './MpBackLink.vue';
 import MpCard from './MpCard.vue';
 import MpDialog from './MpDialog.vue';
 import MpLink from './MpLink.vue';
@@ -18,6 +19,7 @@ import MpLink from './MpLink.vue';
 export default function registerUiElements(Vue) {
 	Vue.component('MpCard', MpCard);
 	Vue.component('MpButton', MpButton);
+	Vue.component('MpLinkButtonWithConfirm', MpLinkButtonWithConfirm);
 	Vue.component('MpIcon', MpIcon);
 	Vue.component('LoadingIcon', LoadingIcon);
 	Vue.component('MpDialog', MpDialog);

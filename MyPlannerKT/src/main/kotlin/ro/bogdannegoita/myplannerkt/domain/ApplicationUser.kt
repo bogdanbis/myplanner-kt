@@ -81,4 +81,9 @@ class ApplicationUser(
         loadedCreatedPlans = true
     }
 
+    fun deletePlan(id: UUID) {
+        dao.deletePlan(id)
+        createdPlans.removeIf { it.id == id }
+    }
+
 }

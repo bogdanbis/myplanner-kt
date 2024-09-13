@@ -1,5 +1,5 @@
 <template>
-	<div class="loading-icon"></div>
+	<span class="loading-icon"></span>
 </template>
 
 <script setup>

@@ -58,6 +58,11 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
         return plan?.let { PlanResponse(it) }
     }
 
+    @DeleteMapping("/{id}")
+    fun deletePlan(@AuthenticationPrincipal principal: UserDetails, @PathVariable id: UUID) {
+        user(principal).deletePlan(id)
+    }
+
     private fun planRequestToDto(request: PlanRequest): PlanDto
         = PlanDto(title = request.title, shortDescription = request.shortDescription,
         description = request.description, color = request.color, isPublic = request.isPublic,

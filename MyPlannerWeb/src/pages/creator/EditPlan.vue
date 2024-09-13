@@ -5,10 +5,22 @@
 	<MpCard>
 		<PlanForm :plan="planEdits" @submit="updatePlan">
 			<template #actions>
-				<MpButton v-show="hasChanges" @click="cancelChanges" class="secondary" :disabled="!hasChanges">
+				<MpLinkButtonWithConfirm
+					@confirm="deletePlan"
+					class="danger me-auto" with-icons
+					:busy="deleting"
+				>
+					Delete Plan
+				</MpLinkButtonWithConfirm>
+				<MpButton
+					v-show="hasChanges"
+					@click="cancelChanges"
+					class="secondary"
+					:disabled="!hasChanges || updating"
+				>
 					Cancel
 				</MpButton>
-				<MpButton type="submit" :disabled="!hasChanges || !hasRequiredFields">
+				<MpButton type="submit" :disabled="!hasChanges || !hasRequiredFields" :busy="updating">
 					Save
 				</MpButton>
 			</template>
@@ -18,12 +30,14 @@
 
 <script setup>
 import api from '@/api';
+import PlanForm from '@/components/plans/PlanForm.vue';
 import { useAuthStore } from '@/store/auth.js';
 import { isEqual } from 'lodash';
 import { computed, onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
-import PlanForm from '../../components/plans/PlanForm.vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useToast } from 'vue-toastification';
 
+const router = useRouter()
 const planId = useRoute().params.id;
 
 const authStore = useAuthStore();
@@ -41,6 +55,8 @@ onMounted(async () => {
 	if (user.value?.createdPlans == null)
 		await user.value?.fetchCreatedPlans();
 	plan.value = user.value.createdPlans.find(p => p.id === planId);
+	if (!plan.value)
+		router.push('/creator');
 	planEdits.value = { ...plan.value };
 })
 
@@ -51,14 +67,28 @@ const hasRequiredFields = computed(() => {
 			&& planEdits.value.isPublic != null && planEdits.value.color;
 })
 
+const updating = ref(false);
 const updatePlan = async () => {
+	updating.value = true;
 	if (!hasChanges.value || !hasRequiredFields.value)
 		return;
 	await api.put('/plans/' + planId, planEdits.value);
 	plan.value = { ...planEdits.value };
+	updating.value = false;
+	user.value.fetchCreatedPlans();
 }
 
 const cancelChanges = () => {
 	planEdits.value = { ...plan.value };
+}
+
+const deleting = ref(false);
+const toast = useToast()
+const deletePlan = async () => {
+	deleting.value = true;
+	await api.delete('/plans/' + planId);
+	toast('Plan deleted: ' + plan.value.title);
+	user.value.fetchCreatedPlans();
+	router.push('/creator');
 }
 </script>

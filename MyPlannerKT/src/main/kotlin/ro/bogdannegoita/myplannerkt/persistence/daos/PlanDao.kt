@@ -66,4 +66,8 @@ class PlanDao(
         val planEntity = findById(id)
         return taskDao.create(taskData, planEntity)
     }
+
+    fun delete(id: UUID) {
+        repository.deleteById(id)
+    }
 }

@@ -5,8 +5,8 @@
 	<MpCard>
 		<PlanForm :plan="plan" @submit="createPlan">
 			<template #actions>
-				<MpButton type="submit" :disabled="!hasRequiredFields">
-					Submit
+				<MpButton type="submit" :disabled="!hasRequiredFields" :busy="loading">
+					Save
 				</MpButton>
 			</template>
 		</PlanForm>
@@ -36,7 +36,9 @@ const hasRequiredFields = computed(() => {
 			&& plan.value.isPublic != null && plan.value.color;
 })
 
+const loading = ref(false);
 const createPlan = async () => {
+	loading.value = true;
 	if (!hasRequiredFields.value)
 		return;
 	await api.post('/plans/create', {

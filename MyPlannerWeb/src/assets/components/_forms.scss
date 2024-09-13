@@ -35,9 +35,9 @@
 
 	small {
 		color: var(--text-secondary);
-		padding-left: $spacer-s;
 		font-size: $font-size-s;
-		line-height: 2.5;
+		margin-top: $spacer-s;
+		margin-bottom: -$font-size-s * 1.2;
 	}
 
 	&:has(.large-input) {
