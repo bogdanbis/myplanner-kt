@@ -14,6 +14,46 @@
 
 .mp-form {
 	row-gap: $spacer-xxl;
+
+}
+
+.mp-form-section-title {
+	font-size: $font-size-m;
+	margin-bottom: 0;
+}
+
+.mp-form-subsection {
+	position: relative;
+	box-shadow: var(--box-shadow);
+	border-radius: $border-radius-s;
+	margin: 0 $spacer-m;
+	padding: $spacer-l;
+
+	@media only screen and (max-width: $mobile-width-breakpoint) {
+		margin-bottom: $spacer-m;
+	}
+
+	.change-index-container {
+		position: absolute;
+		top: $spacer-m;
+		right: $spacer-l;
+		display: flex;
+		flex-direction: row-reverse;
+		align-items: center;
+		gap: $spacer-m;
+
+		.hover-info {
+			color: var(--primary);
+			opacity: 0;
+			transition: opacity .2s ease-in-out;
+		}
+
+		&:hover .hover-info {
+			opacity: 1;
+			transition: opacity .2s ease-in-out;
+			transition-delay: .5s;
+		}
+	}
 }
 
 .mp-form-actions {

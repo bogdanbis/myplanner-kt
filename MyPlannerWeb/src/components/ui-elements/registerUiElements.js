@@ -5,6 +5,7 @@ import MpForm from './form/MpForm.vue';
 import MpFormCheckbox from './form/MpFormCheckbox.vue';
 import MpFormInput from './form/MpFormInput.vue';
 import MpFormNumberInput from './form/MpFormNumberInput.vue';
+import MpFormSectionTitle from './form/MpFormSectionTitle.vue';
 import MpFormSelect from './form/MpFormSelect.vue';
 import MpFormTextarea from './form/MpFormTextarea.vue';
 import MpCol from './grid/MpCol.vue';
@@ -28,6 +29,7 @@ export default function registerUiElements(Vue) {
 
 	// forms
 	Vue.component('MpForm', MpForm);
+	Vue.component('MpFormSectionTitle', MpFormSectionTitle)
 	Vue.component('MpFormCheckbox', MpFormCheckbox);
 	Vue.component('MpFormInput', MpFormInput);
 	Vue.component('MpFormNumberInput', MpFormNumberInput);

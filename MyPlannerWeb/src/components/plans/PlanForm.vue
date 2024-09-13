@@ -1,5 +1,5 @@
 <template>
-	<MpForm @submit="emit('submit')">
+	<MpForm @submit="emit('submit')" v-auto-animate>
 		<MpFormInput
 			v-model="plan.title"
 			placeholder="The Title"
@@ -34,6 +34,31 @@
 			v-model="plan.color"
 		/>
 
+		<MpFormSectionTitle>Tasks</MpFormSectionTitle>
+		<MpCol v-for="(task, index) in plan.tasks" :key="index" class="mp-form-subsection">
+			<div class="change-index-container">
+				<MpButton link icon="arrow-down" />
+				<MpButton link icon="arrow-up" />
+				<span class="hover-info">Move item</span>
+			</div>
+			<MpFormInput
+				:id="'task-title-' + index"
+				label="Title"
+				v-model="task.title"
+			/>
+			<MpFormTextarea
+				:id="'task-description-' + index"
+				label="Description"
+				v-model="task.description"
+			/>
+			<div class="mp-form-actions">
+				<MpButton link @click="removeTask(task)" icon="dash">Remove</MpButton>
+			</div>
+		</MpCol>
+		<MpCol cols="1">
+			<MpButton @click="addNewTask" icon="plus-circle">Task</MpButton>
+		</MpCol>
+
 		<slot></slot>
 		<template #actions>
 			<slot name="actions"></slot>
@@ -42,6 +67,7 @@
 </template>
 
 <script setup>
+
 const { plan } = defineProps({
 	plan: {
 		type: Object,
@@ -50,4 +76,18 @@ const { plan } = defineProps({
 })
 
 const emit = defineEmits(['submit']);
+
+const addNewTask = () => {
+	plan.tasks.push({
+		title: '',
+		description: '',
+	});
+	setTimeout(() => {
+		document.getElementById('task-title-' + (plan.tasks.length - 1)).scrollIntoView({ behavior: 'smooth' });
+	}, 250);
+}
+
+const removeTask = (task) => {
+	plan.tasks.splice(plan.tasks.indexOf(task), 1);
+}
 </script>

@@ -14,7 +14,7 @@
 				</MpLinkButtonWithConfirm>
 				<MpButton
 					v-show="hasChanges"
-					@click="cancelChanges"
+					@click="initChanges"
 					class="secondary"
 					:disabled="!hasChanges || updating"
 				>
@@ -49,15 +49,14 @@ const planEdits = ref({
 	shortDescription: '',
 	isPublic: '',
 	color: '#5856D6',
+	tasks: [],
 });
 
 onMounted(async () => {
-	if (user.value?.createdPlans == null)
-		await user.value?.fetchCreatedPlans();
-	plan.value = user.value.createdPlans.find(p => p.id === planId);
+	plan.value = await api.get('/plans/' + planId);
 	if (!plan.value)
 		router.push('/creator');
-	planEdits.value = { ...plan.value };
+	initChanges();
 })
 
 const hasChanges = computed(() => !isEqual(plan.value, planEdits.value))
@@ -74,12 +73,14 @@ const updatePlan = async () => {
 		return;
 	await api.put('/plans/' + planId, planEdits.value);
 	plan.value = { ...planEdits.value };
+	plan.value.tasks = [...planEdits.value.tasks];
 	updating.value = false;
 	user.value.fetchCreatedPlans();
 }
 
-const cancelChanges = () => {
+const initChanges = () => {
 	planEdits.value = { ...plan.value };
+	planEdits.value.tasks = [...plan.value.tasks];
 }
 
 const deleting = ref(false);

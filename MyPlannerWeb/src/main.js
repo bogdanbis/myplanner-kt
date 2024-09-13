@@ -1,4 +1,5 @@
 import '@/assets/main.scss'
+import { autoAnimatePlugin } from '@formkit/auto-animate/vue';
 import { createPinia } from 'pinia';
 import { createApp } from 'vue'
 import App from './App.vue'
@@ -13,5 +14,6 @@ registerUiElements(app)
 app
 		.use(pinia)
 		.use(router)
+		.use(autoAnimatePlugin)
 
 app.mount('#app')
