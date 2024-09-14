@@ -6,4 +6,6 @@ import ro.bogdannegoita.myplannerkt.persistence.entities.PlanProgressEntity
 import java.util.*
 
 @Repository
-interface PlanProgressRepository : JpaRepository<PlanProgressEntity, UUID>
+interface PlanProgressRepository : JpaRepository<PlanProgressEntity, UUID> {
+    fun countByPlanId(id: UUID): Int
+}

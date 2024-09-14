@@ -9,7 +9,9 @@
 			</span>
 			<br />
 			<span class="text-secondary">{{ plan.description }}</span>
-			<MpLink :to="'/my-plans/' + plan.id" class="m-top-m">Details</MpLink>
+			<template #actions>
+				<MpLink :to="'/my-plans/' + plan.id">Details</MpLink>
+			</template>
 		</MpCard>
 	</div>
 	<MpCard v-else>

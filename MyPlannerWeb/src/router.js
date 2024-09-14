@@ -1,3 +1,4 @@
+import PlanDetails from '@/pages/creator/PlanDetails.vue';
 import Home from '@/pages/tracker/Home.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
@@ -35,6 +36,11 @@ const router = createRouter({
 		{
 			path: '/creator/details/:id',
 			name: 'Plan Details',
+			component: PlanDetails,
+		},
+		{
+			path: '/creator/details/:id/edit',
+			name: 'Edit Plan',
 			component: EditPlan,
 		},
 		{

@@ -1,7 +1,7 @@
 <template>
-	<MpBackLink to="/creator">Created Plans</MpBackLink>
+	<MpBackLink :to="'/creator/details/' + plan.id">{{ plan.title }}</MpBackLink>
 	<h2>Edit Plan</h2>
-	<span class="page-subtitle">Make changes to your Plan. You can make these anytime you want.</span>
+	<span class="page-subtitle">Make changes to your Plan. You can make changes anytime you want.</span>
 	<MpCard>
 		<PlanForm :plan="planEdits" @submit="updatePlan">
 			<template #actions>
@@ -48,9 +48,9 @@ const planEdits = ref(new Plan());
 
 onMounted(async () => {
 	const planResponse = await api.get('/plans/' + planId);
-	plan.value = new Plan(planResponse);
-	if (!plan.value)
+	if (!planResponse)
 		router.push('/creator');
+	plan.value = new Plan(planResponse);
 	initChanges();
 })
 
@@ -66,14 +66,13 @@ const updatePlan = async () => {
 	updating.value = true;
 	if (!hasChanges.value || !hasRequiredFields.value)
 		return;
-	await api.put('/plans/' + planId, planEdits.value);
+	await api.put('/plans/' + plan.value.id, planEdits.value);
 	plan.value = new Plan(planEdits.value);
 	updating.value = false;
 	user.value.fetchCreatedPlans();
 }
 
 const initChanges = () => {
-	console.log(planEdits.value.tasks)
 	planEdits.value = new Plan(plan.value);
 }
 

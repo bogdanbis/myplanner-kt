@@ -19,9 +19,10 @@
 	}
 
 	.dialog-title {
+		color: var(--text-color);
 		font-size: $font-size-l;
 		display: flex;
-		margin-bottom: $spacer-l;
+		margin-bottom: $spacer-xxxl;
 
 		.dialog-close-btn {
 			background: none;

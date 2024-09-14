@@ -64,7 +64,6 @@
 .mp-form-actions {
 	display: flex;
 	justify-content: end;
-	margin-top: $spacer-m;
 	gap: $spacer-m;
 
 	@media only screen and (max-width: $mobile-width-breakpoint) {
@@ -75,7 +74,10 @@
 .mp-form-item-container {
 	display: flex;
 	flex-direction: column;
-	margin-bottom: $spacer-m + $spacer-s;
+
+	&.tall {
+		margin-bottom: $spacer-m + $spacer-s;
+	}
 
 	label {
 		margin-bottom: $spacer-m;

@@ -1,6 +1,6 @@
 <template>
 	<MpDialog ref="dialog" title="Log In" size="small">
-		<MpForm cols="1" @submit="logIn">
+		<MpForm cols="1" @submit.prevent="logIn">
 			<MpFormInput id="email" type="email" placeholder="Email" v-model="email" />
 			<MpFormInput id="password" type="password" placeholder="Password" v-model="password" />
 			<template #actions>

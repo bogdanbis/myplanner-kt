@@ -82,6 +82,16 @@ $layout-padding: $spacer-l;
 	}
 }
 
+.halved {
+	display: flex;
+	gap: $spacer-xl;
+
+	> * {
+		flex: 1 0;
+		min-width: calc($content-max-width * 0.3);
+	}
+}
+
 .page-subtitle {
 	display: block;
 	margin-top: -$spacer-l;

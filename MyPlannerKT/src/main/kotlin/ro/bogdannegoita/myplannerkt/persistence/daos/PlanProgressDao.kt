@@ -41,4 +41,8 @@ class PlanProgressDao(
         return repository.findById(id)
             .orElseThrow { EntityNotFoundException(PlanProgressEntity::class) }
     }
+
+    fun countByPlan(id: UUID): Int {
+        return repository.countByPlanId(id)
+    }
 }

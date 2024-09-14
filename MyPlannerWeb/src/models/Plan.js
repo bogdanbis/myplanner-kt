@@ -10,6 +10,9 @@ export default class Plan {
 	createdAt;
 	author;
 	tasks = [];
+	stats = {
+		numberOfParticipants: null,
+	};
 
 	constructor(plan) {
 		if (!plan) return;
@@ -22,5 +25,10 @@ export default class Plan {
 		this.createdAt = plan.createdAt;
 		this.author = plan.author;
 		this.tasks = plan.tasks?.map(t => new Task(t)) || [];
+		if (plan.stats) {
+			this.stats = {
+				numberOfParticipants: plan.stats.numberOfParticipants,
+			};
+		}
 	}
 }

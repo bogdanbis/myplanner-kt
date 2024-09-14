@@ -7,10 +7,7 @@ import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.commons.PlanProgressDto
 import ro.bogdannegoita.myplannerkt.commons.TaskDto
 import ro.bogdannegoita.myplannerkt.commons.TaskProgressDto
-import ro.bogdannegoita.myplannerkt.domain.Plan
-import ro.bogdannegoita.myplannerkt.domain.PlanProgress
-import ro.bogdannegoita.myplannerkt.domain.Task
-import ro.bogdannegoita.myplannerkt.domain.TaskProgress
+import ro.bogdannegoita.myplannerkt.domain.*
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanProgressDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.TaskDao
@@ -45,5 +42,9 @@ class DomainFactory(
 
     fun taskProgress(data: TaskProgressDto, task: Task): TaskProgress {
         return TaskProgress(data, task, taskProgressDao)
+    }
+
+    fun planStats(plan: Plan): PlanStats {
+        return PlanStats(plan, planDao)
     }
 }

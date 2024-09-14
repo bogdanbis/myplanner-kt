@@ -34,6 +34,12 @@ class Plan(
             return field
         }
         private set
+    var stats: PlanStats? = null
+        get() {
+            loadStats()
+            return field
+        }
+        private set
 
     fun update(data: PlanDto, tasks: List<TaskDto>? = null) {
         title = data.title
@@ -73,6 +79,14 @@ class Plan(
             return
         tasks = dao.getTasks(id).map(domainFactory::task).toSortedSet()
         loadedTasks = true
+    }
+
+    private var loadedStats = false
+    fun loadStats() {
+        if (loadedStats)
+            return
+        stats = domainFactory.planStats(this)
+        loadedStats = false
     }
 
     override fun compareTo(other: Plan) = other.createdAt.compareTo(createdAt)

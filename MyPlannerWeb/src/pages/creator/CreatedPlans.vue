@@ -5,7 +5,9 @@
 		<MpLink icon="plus-circle" to="/creator/new">Create a new Plan</MpLink>
 		<MpCard v-for="plan in user.createdPlans" :title="plan.title">
 			<span class="text-secondary">{{ plan.description }}</span>
-			<MpLink :to="'/creator/details/' + plan.id" class="m-top-m">Details</MpLink>
+			<template #actions>
+				<MpLink :to="'/creator/details/' + plan.id">Manage</MpLink>
+			</template>
 		</MpCard>
 	</div>
 	<MpCard v-else>
