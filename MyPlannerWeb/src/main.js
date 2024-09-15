@@ -1,10 +1,11 @@
-import '@/assets/main.scss'
+import './assets/main.scss'
 import { autoAnimatePlugin } from '@formkit/auto-animate/vue';
 import { createPinia } from 'pinia';
 import { createApp } from 'vue'
 import App from './App.vue'
 import registerUiElements from './components/ui-elements/registerUiElements.js';
 import router from './router.js';
+import { formatDate } from './utils/dateFormatter.js';
 
 const pinia = createPinia()
 const app = createApp(App)
@@ -15,5 +16,7 @@ app
 		.use(pinia)
 		.use(router)
 		.use(autoAnimatePlugin)
+
+app.config.globalProperties.$date = formatDate;
 
 app.mount('#app')
