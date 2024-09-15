@@ -93,7 +93,7 @@ const addNewTask = () => {
 
 const removeTask = (task) => {
 	plan.tasks.splice(plan.tasks.indexOf(task), 1);
-	tasks.value.forEach((t, i) => t.index = i + 1);
+	tasks.value.forEach((t, i) => t.index = i);
 }
 
 const moveTaskUp = (task) => {
