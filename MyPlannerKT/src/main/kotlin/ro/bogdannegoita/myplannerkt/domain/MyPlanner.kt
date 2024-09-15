@@ -8,6 +8,7 @@ import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
 import ro.bogdannegoita.myplannerkt.domain.factories.myPlannerCache
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
+import java.time.LocalDateTime
 import java.util.*
 
 @Component
@@ -46,6 +47,7 @@ class MyPlanner(
     }
 
     fun createPlan(user: ApplicationUser, planData: PlanDto, tasks: List<TaskDto>? = null): Plan {
+        planData.lastModifiedAt = LocalDateTime.now()
         val plan = user.createPlan(planData, tasks)
         if (plan.isPublic)
             publishPlan(plan)

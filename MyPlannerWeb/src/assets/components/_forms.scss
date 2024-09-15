@@ -15,6 +15,11 @@
 .mp-form {
 	row-gap: $spacer-xxl;
 
+	&.tall {
+		.mp-form-item-container {
+			margin-bottom: $spacer-m + $spacer-s;
+		}
+	}
 }
 
 .mp-form-section {
@@ -74,10 +79,6 @@
 .mp-form-item-container {
 	display: flex;
 	flex-direction: column;
-
-	&.tall {
-		margin-bottom: $spacer-m + $spacer-s;
-	}
 
 	label {
 		margin-bottom: $spacer-m;

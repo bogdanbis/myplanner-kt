@@ -8,6 +8,7 @@ export default class Plan {
 	color = '#5856D6';
 	isPublic = false;
 	createdAt;
+	lastModifiedAt;
 	author;
 	tasks = [];
 	stats = {
@@ -23,6 +24,7 @@ export default class Plan {
 		this.color = plan.color;
 		this.isPublic = plan.isPublic;
 		this.createdAt = plan.createdAt;
+		this.lastModifiedAt = plan.lastModifiedAt;
 		this.author = plan.author;
 		this.tasks = plan.tasks?.map(t => new Task(t)) || [];
 		if (plan.stats) {

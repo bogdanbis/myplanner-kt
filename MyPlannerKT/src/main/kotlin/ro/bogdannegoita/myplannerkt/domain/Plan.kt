@@ -7,6 +7,7 @@ import ro.bogdannegoita.myplannerkt.commons.TaskDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
 import ro.bogdannegoita.myplannerkt.events.PlanUpdatedEvent
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
+import java.time.LocalDateTime
 import java.util.*
 
 class Plan(
@@ -22,6 +23,7 @@ class Plan(
     var color by data::color
     var isPublic by data::isPublic
     val createdAt by data::createdAt
+    var lastModifiedAt by data::lastModifiedAt
     var author: ApplicationUserDto? = null
         get() {
             loadAuthor()
@@ -47,6 +49,7 @@ class Plan(
         description = data.description
         color = data.color
         isPublic = data.isPublic
+        lastModifiedAt = LocalDateTime.now()
         eventPublisher.publishEvent(PlanUpdatedEvent(this, this))
         dao.update(id, this.data)
         tasks?.forEach { task ->

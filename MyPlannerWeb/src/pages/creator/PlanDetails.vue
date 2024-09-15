@@ -8,7 +8,8 @@
 			<span>Participants in total: <b>{{ plan.stats.numberOfParticipants }}</b></span>
 		</MpCard>
 		<MpCard title="Details">
-			<p>Created at: <b>{{ $date(plan.createdAt) }}</b></p>
+			<p>Last modified: <b>{{ $date(plan.lastModifiedAt) }}</b></p>
+			<p>Created: {{ $date(plan.createdAt) }}</p>
 			<p>Tasks: <b>{{ plan.tasks.length }}</b></p>
 			<template #actions>
 				<MpLink :to="'/creator/details/' + plan.id + '/edit'">Edit</MpLink>

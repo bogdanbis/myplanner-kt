@@ -16,6 +16,7 @@ class PlanEntity(
     var color: String? = null,
     var isPublic: Boolean? = null,
     var createdAt: LocalDateTime? = null,
+    var lastModifiedAt: LocalDateTime? = null,
 
     @ManyToOne(fetch = LAZY)
     var author: ApplicationUserEntity? = null,

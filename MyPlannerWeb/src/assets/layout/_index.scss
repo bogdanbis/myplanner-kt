@@ -84,7 +84,8 @@ $layout-padding: $spacer-l;
 
 .halved {
 	display: flex;
-	gap: $spacer-xl;
+	flex-wrap: wrap;
+	column-gap: $spacer-xl;
 
 	> * {
 		flex: 1 0;

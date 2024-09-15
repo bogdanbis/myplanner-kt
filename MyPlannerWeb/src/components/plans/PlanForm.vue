@@ -1,5 +1,5 @@
 <template>
-	<MpForm @submit="emit('submit')">
+	<MpForm @submit="emit('submit')" class="tall">
 		<MpFormInput
 			v-model="plan.title"
 			placeholder="The Title"

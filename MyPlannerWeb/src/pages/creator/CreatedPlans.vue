@@ -2,7 +2,7 @@
 	<div v-if="user?.email">
 		<h2>Created Plans</h2>
 		<span class="page-subtitle">Plans that you have created. Add a new one or edit an existing one.</span>
-		<MpLink icon="plus-circle" to="/creator/new">Create a new Plan</MpLink>
+		<MpLink icon="plus-circle" to="/creator/new" class="m-bottom-l">Create a new Plan</MpLink>
 		<MpCard v-for="plan in user.createdPlans" :title="plan.title">
 			<span class="text-secondary">{{ plan.description }}</span>
 			<template #actions>

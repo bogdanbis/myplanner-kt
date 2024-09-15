@@ -34,10 +34,7 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
     @PostMapping("/create")
     fun createPlan(@AuthenticationPrincipal principal: UserDetails, @RequestBody request: PlanRequest)
             : PlanSimpleResponse? {
-        val planData = PlanDto(title = request.title, shortDescription = request.shortDescription,
-            description = request.description, color = request.color, isPublic = request.isPublic,
-            createdAt = LocalDateTime.now())
-        val plan = myPlanner.createPlan(user(principal), planData, request.tasks)
+        val plan = myPlanner.createPlan(user(principal), planRequestToDto(request), request.tasks)
         return PlanSimpleResponse(plan)
     }
 
@@ -66,5 +63,5 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
     private fun planRequestToDto(request: PlanRequest): PlanDto
         = PlanDto(title = request.title, shortDescription = request.shortDescription,
         description = request.description, color = request.color, isPublic = request.isPublic,
-        createdAt = LocalDateTime.now())
+        createdAt = LocalDateTime.now(), lastModifiedAt = LocalDateTime.now())
 }

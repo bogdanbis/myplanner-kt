@@ -59,6 +59,7 @@ class MyPlannerTest @Autowired constructor(
             "A stunning natural phenomenon where vibrant ribbons of green, purple, and pink lights dance across the polar skies. This occurs when charged solar particles collide with Earth's magnetic field, producing a breathtaking celestial display, most commonly seen in the northern and southern regions during winter months.",
             "RED",
             true,
+            LocalDateTime.parse("2024-01-01T16:50:50"),
             LocalDateTime.parse("2024-01-01T16:50:50"))
         val plan2 = PlanDto(UUID.randomUUID(),
             "Sand Dunes",
@@ -66,14 +67,16 @@ class MyPlannerTest @Autowired constructor(
             "Sculpted by wind over time, sand dunes form vast landscapes of gently sloping hills and sharp crests, often found in deserts and along coastal areas. These ever-changing formations provide habitats for various species and are a testament to the constant movement of Earth's surface materials.",
             "BLUE",
             true,
-            LocalDateTime.parse("2024-01-02T16:50:50"))
+            LocalDateTime.parse("2024-01-02T16:50:50"),
+            LocalDateTime.parse("2024-01-01T16:50:50"))
         val plan3 = PlanDto(UUID.randomUUID(),
             "Bioluminescent Plankton",
             "Tiny marine organisms that emit a soft",
             "These microscopic marine organisms light up the ocean in dazzling blue and green glows. When agitated by motion, they emit light through a chemical reaction, creating surreal, glowing waves at night. This bioluminescence serves both defensive and communicative purposes for the plankton, making coastal waters shimmer beautifully.",
             "GREEN",
             true,
-            LocalDateTime.parse("2024-01-03T16:50:50"))
+            LocalDateTime.parse("2024-01-03T16:50:50"),
+            LocalDateTime.parse("2024-01-01T16:50:50"))
 
         every { planDao.getPublicPlans() } returns listOf(plan1, plan2, plan3)
 
@@ -94,6 +97,7 @@ class MyPlannerTest @Autowired constructor(
             "A stunning natural phenomenon where vibrant ribbons of green, purple, and pink lights dance across the polar skies. This occurs when charged solar particles collide with Earth's magnetic field, producing a breathtaking celestial display, most commonly seen in the northern and southern regions during winter months.",
             "RED",
             true,
+            LocalDateTime.parse("2024-01-01T16:50:50"),
             LocalDateTime.parse("2024-01-01T16:50:50"))
 
         every { planDao.getById(planId) } returns plan

@@ -11,4 +11,5 @@ data class PlanDto(
     var color: String,
     var isPublic: Boolean,
     val createdAt: LocalDateTime,
+    var lastModifiedAt: LocalDateTime,
 )

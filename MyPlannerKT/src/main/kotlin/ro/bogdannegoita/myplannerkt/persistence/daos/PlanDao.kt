@@ -57,6 +57,7 @@ class PlanDao(
         entity.description = data.description
         entity.color = data.color
         entity.isPublic = data.isPublic
+        entity.lastModifiedAt = data.lastModifiedAt
         repository.save(entity)
     }
 
