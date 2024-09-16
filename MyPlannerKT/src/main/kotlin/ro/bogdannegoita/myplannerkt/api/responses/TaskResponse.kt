@@ -7,5 +7,4 @@ class TaskResponse(task: Task) {
     val title = task.title
     val description = task.description
     val index = task.index
-    val completedTaskCount = task.completedTaskCount
 }

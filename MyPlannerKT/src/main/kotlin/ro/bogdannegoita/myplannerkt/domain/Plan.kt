@@ -24,18 +24,21 @@ class Plan(
     var isPublic by data::isPublic
     val createdAt by data::createdAt
     var lastModifiedAt by data::lastModifiedAt
+
     var author: ApplicationUserDto? = null
         get() {
             loadAuthor()
             return field
         }
         private set
+
     var tasks: SortedSet<Task> = sortedSetOf()
         get() {
             loadTasks()
             return field
         }
         private set
+
     var stats: PlanStats? = null
         get() {
             loadStats()
@@ -85,7 +88,7 @@ class Plan(
     }
 
     private var loadedStats = false
-    fun loadStats() {
+    private fun loadStats() {
         if (loadedStats)
             return
         stats = domainFactory.planStats(this)

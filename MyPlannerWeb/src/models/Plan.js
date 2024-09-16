@@ -13,6 +13,7 @@ export default class Plan {
 	tasks = [];
 	stats = {
 		numberOfParticipants: null,
+		completedTaskCount: null,
 	};
 
 	constructor(plan) {
@@ -30,6 +31,7 @@ export default class Plan {
 		if (plan.stats) {
 			this.stats = {
 				numberOfParticipants: plan.stats.numberOfParticipants,
+				completedTaskCount: plan.stats.completedTaskCount,
 			};
 		}
 	}

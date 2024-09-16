@@ -5,7 +5,8 @@
 
 	<div class="halved">
 		<MpCard title="Stats">
-			<MpInlineValue label="Participants in total" :value="plan.stats.numberOfParticipants" />
+			<MpInlineValue label="Participants" :value="plan.stats.numberOfParticipants" />
+			<MpInlineValue label="Tasks completed by others" :value="plan.stats.completedTaskCount" />
 		</MpCard>
 		<MpCard title="Details">
 			<MpInlineValue label="Last modified" :value="$date(plan.lastModifiedAt)" />
