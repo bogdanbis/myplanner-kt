@@ -8,7 +8,7 @@ class TaskProgress(
     private val data: TaskProgressDto,
     val task: Task,
     private val dao: TaskProgressDao
-) {
+): Comparable<TaskProgress> {
     val id: UUID = data.id!!
     var completed by data::completed
 
@@ -17,4 +17,6 @@ class TaskProgress(
         dao.update(id, this.data)
         return this
     }
+
+    override fun compareTo(other: TaskProgress) = task.compareTo(other.task)
 }

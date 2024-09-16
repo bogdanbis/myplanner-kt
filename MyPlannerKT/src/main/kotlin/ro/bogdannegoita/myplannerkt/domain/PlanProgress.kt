@@ -14,7 +14,7 @@ class PlanProgress(
 ) : Comparable<PlanProgress> {
     val id = data.id!!
     val acquiredAt by data::acquiredAt
-    var tasks: MutableList<TaskProgress> = mutableListOf()
+    var tasks: SortedSet<TaskProgress> = sortedSetOf()
         get() {
             loadTasks()
             return field
@@ -35,7 +35,7 @@ class PlanProgress(
                 val taskProgress = domainFactory.taskProgress(taskDto, task!!)
                 taskProgress
             }
-            .toMutableList()
+            .toSortedSet()
         loadedTasks = true
     }
 

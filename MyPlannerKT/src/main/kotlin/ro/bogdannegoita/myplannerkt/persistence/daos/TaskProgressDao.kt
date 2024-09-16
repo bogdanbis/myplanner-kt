@@ -37,4 +37,8 @@ class TaskProgressDao(private val repository: TaskProgressRepository) {
         entity.completed = data.completed
         repository.save(entity)
     }
+
+    fun countCompletedTasks(taskId: UUID): Int {
+        return repository.countByTaskIdAndCompletedTrue(taskId)
+    }
 }

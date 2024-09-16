@@ -10,7 +10,10 @@ import ro.bogdannegoita.myplannerkt.persistence.repositories.TaskRepository
 import java.util.*
 
 @Component
-class TaskDao(private val repository: TaskRepository) {
+class TaskDao(
+    private val repository: TaskRepository,
+    private val taskProgressDao: TaskProgressDao
+) {
     private val dtoMapper = DtoMapper()
 
     fun create(data: TaskDto, plan: PlanEntity): TaskDto {
@@ -34,5 +37,9 @@ class TaskDao(private val repository: TaskRepository) {
     fun findById(id: UUID): TaskEntity {
         return repository.findById(id)
             .orElseThrow { EntityNotFoundException(TaskEntity::class) }
+    }
+
+    fun countCompletedTasks(id: UUID): Int {
+        return taskProgressDao.countCompletedTasks(id)
     }
 }

@@ -8,4 +8,5 @@ import java.util.*
 @Repository
 interface TaskProgressRepository : JpaRepository<TaskProgressEntity, UUID> {
     fun findAllByPlanId(id: UUID): List<TaskProgressEntity>
+    fun countByTaskIdAndCompletedTrue(id: UUID): Int
 }

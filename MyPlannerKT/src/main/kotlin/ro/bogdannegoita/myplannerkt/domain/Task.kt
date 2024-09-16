@@ -19,5 +19,7 @@ class Task(
         dao.update(id, this.data)
     }
 
+    val completedTaskCount get(): Int = dao.countCompletedTasks(id)
+
     override fun compareTo(other: Task) = index.compareTo(other.index)
 }
