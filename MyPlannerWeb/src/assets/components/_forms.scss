@@ -25,7 +25,7 @@
 .mp-form-section {
 	display: flex;
 	flex-direction: column;
-	row-gap: $spacer-xxl;
+	row-gap: $spacer-xl;
 }
 
 .mp-form-section-title {
@@ -193,6 +193,7 @@
 		border: 1px solid var(--border-color);
 		appearance: none;
 		background-color: white;
+		transition: background-color .2s;
 
 		&:checked {
 			background-image: var(--checkbox-background-image);

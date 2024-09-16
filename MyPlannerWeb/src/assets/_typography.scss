@@ -1,5 +1,5 @@
 h1, h2, h3, h4, h5, h6 {
-	font-weight: 500;
+	//font-weight: 500;
 }
 
 h1 {
@@ -22,10 +22,20 @@ p, span, a {
 	line-height: 1.5;
 }
 
+.text-normal {
+	color: var(--text-color) !important;
+}
+
 .text-primary {
 	color: var(--primary) !important;
 }
 
 .text-secondary {
 	color: var(--text-secondary) !important;
+}
+
+@for $i from 3 through 7 {
+	.fw-#{$i}00 {
+		font-weight: #{$i}00;
+	}
 }

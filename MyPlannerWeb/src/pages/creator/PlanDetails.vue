@@ -1,16 +1,17 @@
 <template>
 	<MpBackLink to="/creator">Created Plans</MpBackLink>
 	<h2>{{ plan.title }}</h2>
-	<span class="page-subtitle">View stats about your plan & manage your plan's data.</span>
+	<span class="page-subtitle">View stats about your plan or manage your plan details.</span>
 
 	<div class="halved">
 		<MpCard title="Stats">
-			<span>Participants in total: <b>{{ plan.stats.numberOfParticipants }}</b></span>
+			<MpInlineValue label="Participants in total" :value="plan.stats.numberOfParticipants" />
 		</MpCard>
 		<MpCard title="Details">
-			<p>Last modified: <b>{{ $date(plan.lastModifiedAt) }}</b></p>
-			<p>Created: {{ $date(plan.createdAt) }}</p>
-			<p>Tasks: <b>{{ plan.tasks.length }}</b></p>
+			<MpInlineValue label="Last modified" :value="$date(plan.lastModifiedAt)" />
+			<MpInlineValue label="Created" :value="$date(plan.createdAt)" />
+			<MpInlineValue label="Number of tasks" :value="plan.tasks.length" />
+
 			<template #actions>
 				<MpLink :to="'/creator/details/' + plan.id + '/edit'">Edit</MpLink>
 			</template>

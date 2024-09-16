@@ -16,6 +16,7 @@ import MpIcon from './icons/MpIcon.vue';
 import MpBackLink from './MpBackLink.vue';
 import MpCard from './MpCard.vue';
 import MpDialog from './MpDialog.vue';
+import MpInlineValue from './MpInlineValue.vue';
 import MpLink from './MpLink.vue';
 
 export default function registerUiElements(Vue) {
@@ -27,6 +28,7 @@ export default function registerUiElements(Vue) {
 	Vue.component('MpDialog', MpDialog);
 	Vue.component('MpLink', MpLink);
 	Vue.component('MpBackLink', MpBackLink);
+	Vue.component('MpInlineValue', MpInlineValue);
 
 	// forms
 	Vue.component('MpForm', MpForm);
