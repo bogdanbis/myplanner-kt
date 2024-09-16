@@ -6,4 +6,6 @@ import ro.bogdannegoita.myplannerkt.persistence.entities.TaskProgressEntity
 import java.util.*
 
 @Repository
-interface TaskProgressRepository : JpaRepository<TaskProgressEntity, UUID>
+interface TaskProgressRepository : JpaRepository<TaskProgressEntity, UUID> {
+    fun findAllByPlanId(id: UUID): List<TaskProgressEntity>
+}

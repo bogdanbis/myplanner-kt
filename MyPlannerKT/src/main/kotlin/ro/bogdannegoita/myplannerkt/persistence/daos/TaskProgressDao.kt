@@ -28,6 +28,10 @@ class TaskProgressDao(private val repository: TaskProgressRepository) {
             .orElseThrow { EntityNotFoundException(TaskProgressEntity::class) }
     }
 
+    fun findByPlanProgressId(id: UUID): List<TaskProgressDto> {
+        return repository.findAllByPlanId(id).map(dtoMapper::taskProgressDto)
+    }
+
     fun update(id: UUID, data: TaskProgressDto) {
         val entity = findById(id)
         entity.completed = data.completed

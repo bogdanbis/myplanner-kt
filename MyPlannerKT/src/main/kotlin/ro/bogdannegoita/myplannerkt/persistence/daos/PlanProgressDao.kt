@@ -34,7 +34,7 @@ class PlanProgressDao(
     }
 
     fun getTasks(id: UUID): List<TaskProgressDto> {
-        return findById(id).tasks.map(dtoMapper::taskProgressDto)
+        return taskProgressDao.findByPlanProgressId(id)
     }
 
     fun findById(id: UUID): PlanProgressEntity {

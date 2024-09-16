@@ -13,7 +13,7 @@
 	<MpCard v-else>
 		<span>We don't know who you are. 🧐<br />
 			Log in to see your plans.</span>
-		<LogInButton redirect-to="/my-plans" class="m-top-l" />
+		<LogInButton redirect-to="/creator" class="m-top-l" />
 	</MpCard>
 </template>
 
