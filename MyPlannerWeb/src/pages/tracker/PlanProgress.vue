@@ -5,7 +5,7 @@
 
 	<MpCard>
 		<b class="text-secondary">About</b>
-		<p>{{ plan.description }}</p>
+		<p><MpMultilineText :text="plan.description" /></p>
 
 		<MpFormSection title="Tasks">
 			<div v-for="taskProgress in planProgress.tasks" :key="taskProgress" class="mp-form-subsection">
