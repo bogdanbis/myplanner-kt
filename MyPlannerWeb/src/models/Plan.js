@@ -1,4 +1,4 @@
-import Task from './Task.js';
+import Step from './Step.js';
 
 export default class Plan {
 	id;
@@ -10,10 +10,10 @@ export default class Plan {
 	createdAt;
 	lastModifiedAt;
 	author;
-	tasks = [];
+	steps = [];
 	stats = {
 		numberOfParticipants: null,
-		completedTaskCount: null,
+		completedStepsCount: null,
 	};
 
 	constructor(plan) {
@@ -27,11 +27,11 @@ export default class Plan {
 		this.createdAt = plan.createdAt;
 		this.lastModifiedAt = plan.lastModifiedAt;
 		this.author = plan.author;
-		this.tasks = plan.tasks?.map(t => new Task(t)) || [];
+		this.steps = plan.steps?.map(t => new Step(t)) || [];
 		if (plan.stats) {
 			this.stats = {
 				numberOfParticipants: plan.stats.numberOfParticipants,
-				completedTaskCount: plan.stats.completedTaskCount,
+				completedStepsCount: plan.stats.completedStepsCount,
 			};
 		}
 	}

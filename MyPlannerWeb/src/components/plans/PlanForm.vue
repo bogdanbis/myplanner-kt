@@ -34,30 +34,30 @@
 			v-model="plan.color"
 		/>
 
-		<MpFormSection title="Tasks" v-auto-animate>
-			<MpCol v-for="(task, index) in tasks" :key="task" class="mp-form-subsection">
+		<MpFormSection title="Steps" v-auto-animate>
+			<MpCol v-for="(step, index) in steps" :key="step" class="mp-form-subsection">
 				<div class="change-index-container">
-					<MpButton v-if="index < (tasks.length - 1)" link icon="arrow-down" @click="moveTaskDown(task)" />
-					<MpButton v-if="index > 0" link icon="arrow-up" @click="moveTaskUp(task)" />
+					<MpButton v-if="index < (steps.length - 1)" link icon="arrow-down" @click="moveStepDown(step)" />
+					<MpButton v-if="index > 0" link icon="arrow-up" @click="moveStepUp(step)" />
 					<span class="hover-info">Move item</span>
 				</div>
 				<MpFormInput
-					:id="'task-title-' + index"
+					:id="'step-title-' + index"
 					label="Title"
-					v-model="task.title"
+					v-model="step.title"
 				/>
 				<MpFormTextarea
-					:id="'task-description-' + index"
+					:id="'step-description-' + index"
 					label="Description"
-					v-model="task.description"
+					v-model="step.description"
 				/>
 				<div class="mp-form-actions">
-					<MpButton link @click="removeTask(task)" icon="dash" class="ms-auto">Remove</MpButton>
+					<MpButton link @click="removeStep(step)" icon="dash" class="ms-auto">Remove</MpButton>
 				</div>
 			</MpCol>
 		</MpFormSection>
 		<MpCol cols="1">
-			<MpButton @click="addNewTask" icon="plus-circle">Task</MpButton>
+			<MpButton @click="addNewStep" icon="plus-circle">Step</MpButton>
 		</MpCol>
 
 		<slot></slot>
@@ -69,7 +69,7 @@
 
 <script setup>
 
-import Task from '@/models/Task.js';
+import Step from '@/models/Step.js';
 import { sortBy } from 'lodash';
 import { computed } from 'vue';
 
@@ -82,33 +82,33 @@ const { plan } = defineProps({
 
 const emit = defineEmits(['submit']);
 
-const tasks = computed(() => sortBy(plan.tasks, 'index'));
+const steps = computed(() => sortBy(plan.steps, 'index'));
 
-const addNewTask = () => {
-	plan.tasks.push(new Task({ index: plan.tasks.length }));
+const addNewStep = () => {
+	plan.steps.push(new Step({ index: plan.steps.length }));
 	setTimeout(() => {
-		document.getElementById('task-title-' + (plan.tasks.length - 1)).scrollIntoView({ behavior: 'smooth' });
+		document.getElementById('step-title-' + (plan.steps.length - 1)).scrollIntoView({ behavior: 'smooth' });
 	}, 250);
 }
 
-const removeTask = (task) => {
-	plan.tasks.splice(plan.tasks.indexOf(task), 1);
-	tasks.value.forEach((t, i) => t.index = i);
+const removeStep = (step) => {
+	plan.steps.splice(plan.steps.indexOf(step), 1);
+	steps.value.forEach((t, i) => t.index = i);
 }
 
-const moveTaskUp = (task) => {
-	if (task.index <= 0)
+const moveStepUp = (step) => {
+	if (step.index <= 0)
 		return;
-	const prevTask = tasks.value[tasks.value.indexOf(task) - 1];
-	prevTask.index++;
-	task.index--;
+	const prev = steps.value[steps.value.indexOf(step) - 1];
+	prev.index++;
+	step.index--;
 }
 
-const moveTaskDown = (task) => {
-	if (task.index >= tasks.value.length - 1)
+const moveStepDown = (step) => {
+	if (step.index >= steps.value.length - 1)
 		return;
-	const nextTask = tasks.value[tasks.value.indexOf(task) + 1];
-	nextTask.index--;
-	task.index++;
+	const next = steps.value[steps.value.indexOf(step) + 1];
+	next.index--;
+	step.index++;
 }
 </script>

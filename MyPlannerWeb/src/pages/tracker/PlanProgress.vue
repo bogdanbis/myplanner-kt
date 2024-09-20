@@ -7,15 +7,15 @@
 		<b class="text-secondary">About</b>
 		<p><MpMultilineText :text="plan.description" /></p>
 
-		<MpFormSection title="Tasks">
-			<div v-for="taskProgress in planProgress.tasks" :key="taskProgress" class="mp-form-subsection">
-				<span><b>{{ taskProgress.task.title }}</b></span>
-				<p>{{ taskProgress.task.description }}</p>
+		<MpFormSection title="Steps">
+			<div v-for="stepProgress in planProgress.steps" :key="stepProgress" class="mp-form-subsection">
+				<span><b>{{ stepProgress.step.title }}</b></span>
+				<p>{{ stepProgress.step.description }}</p>
 				<MpFormCheckbox
-					:id="'task-' + taskProgress.task.id + '-completed'"
+					:id="'step-' + stepProgress.step.id + '-completed'"
 					label="Completed"
-					v-model="taskProgress.completed"
-					@change="markAsCompleted(taskProgress.id)"
+					v-model="stepProgress.completed"
+					@change="markAsCompleted(stepProgress.id)"
 				/>
 			</div>
 		</MpFormSection>
@@ -45,7 +45,7 @@ onMounted(async () => {
 	planProgress.value = new PlanProgress(planResponse);
 })
 
-const markAsCompleted = async (taskId) => {
-	await api.put('/plans/acquired/' + planProgress.value.id + '/tasks/' + taskId, { completed: true });
+const markAsCompleted = async (stepId) => {
+	await api.put('/plans/acquired/' + planProgress.value.id + '/steps/' + stepId, { completed: true });
 }
 </script>

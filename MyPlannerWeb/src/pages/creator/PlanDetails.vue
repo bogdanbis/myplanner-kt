@@ -6,12 +6,12 @@
 	<div class="halved">
 		<MpCard title="Stats">
 			<MpInlineValue label="Participants" :value="plan.stats.numberOfParticipants" />
-			<MpInlineValue label="Tasks completed by others" :value="plan.stats.completedTaskCount" />
+			<MpInlineValue label="Steps completed by others" :value="plan.stats.completedStepsCount" />
 		</MpCard>
 		<MpCard title="Details">
 			<MpInlineValue label="Last modified" :value="$date(plan.lastModifiedAt)" />
 			<MpInlineValue label="Created" :value="$date(plan.createdAt)" />
-			<MpInlineValue label="Number of tasks" :value="plan.tasks.length" />
+			<MpInlineValue label="Number of steps" :value="plan.steps.length" />
 
 			<template #actions>
 				<MpLink :to="'/creator/details/' + plan.id + '/edit'">Edit</MpLink>
