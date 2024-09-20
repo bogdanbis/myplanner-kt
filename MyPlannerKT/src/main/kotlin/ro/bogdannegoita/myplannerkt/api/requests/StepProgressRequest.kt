@@ -1,5 +1,5 @@
 package ro.bogdannegoita.myplannerkt.api.requests
 
-class TaskProgressRequest(
+class StepProgressRequest(
     val completed: Boolean,
 )

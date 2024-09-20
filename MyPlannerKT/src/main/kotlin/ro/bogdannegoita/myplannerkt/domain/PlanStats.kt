@@ -7,12 +7,12 @@ class PlanStats(
     private val planDao: PlanDao,
 ) {
     val numberOfParticipants get() = planDao.getNumberOfAcquiredPlans(plan.id)
-    val completedTaskCount: Int get() {
-        if (plan.tasks.isEmpty())
+    val completedStepsCount: Int get() {
+        if (plan.steps.isEmpty())
             return 0
         var count = 0
-        for (task in plan.tasks)
-            count += task.completedTaskCount
+        for (step in plan.steps)
+            count += step.completedStepsCount
         return count
     }
 }

@@ -18,7 +18,7 @@ class PlanProgressEntity(
     var user: ApplicationUserEntity? = null,
 
     @OneToMany(mappedBy = "plan", fetch = LAZY, cascade = [ALL])
-    var tasks: MutableList<TaskProgressEntity> = mutableListOf(),
+    var steps: MutableList<StepProgressEntity> = mutableListOf(),
 
     @Id @GeneratedValue
     var id: UUID? = null

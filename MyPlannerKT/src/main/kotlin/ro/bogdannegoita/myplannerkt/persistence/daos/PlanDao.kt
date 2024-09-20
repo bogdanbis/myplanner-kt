@@ -3,8 +3,7 @@ package ro.bogdannegoita.myplannerkt.persistence.daos
 import org.springframework.stereotype.Component
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
-import ro.bogdannegoita.myplannerkt.commons.PlanProgressDto
-import ro.bogdannegoita.myplannerkt.commons.TaskDto
+import ro.bogdannegoita.myplannerkt.commons.StepDto
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.persistence.entities.ApplicationUserEntity
 import ro.bogdannegoita.myplannerkt.persistence.entities.PlanEntity
@@ -15,7 +14,7 @@ import java.util.*
 @Component
 class PlanDao(
     private val repository: PlanRepository,
-    private val taskDao: TaskDao,
+    private val stepDao: StepDao,
     private val planProgressDao: PlanProgressDao,
 ) {
     private val dtoMapper = DtoMapper()
@@ -61,13 +60,13 @@ class PlanDao(
         repository.save(entity)
     }
 
-    fun getTasks(id: UUID): Collection<TaskDto> {
-        return findById(id).tasks.map(dtoMapper::taskDto)
+    fun getSteps(id: UUID): Collection<StepDto> {
+        return findById(id).steps.map(dtoMapper::stepDto)
     }
 
-    fun addTask(id: UUID, taskData: TaskDto): TaskDto {
+    fun addStep(id: UUID, stepData: StepDto): StepDto {
         val planEntity = findById(id)
-        return taskDao.create(taskData, planEntity)
+        return stepDao.create(stepData, planEntity)
     }
 
     fun delete(id: UUID) {

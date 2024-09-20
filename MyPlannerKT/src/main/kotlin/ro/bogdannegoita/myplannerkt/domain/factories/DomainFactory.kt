@@ -5,21 +5,21 @@ import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.commons.PlanProgressDto
-import ro.bogdannegoita.myplannerkt.commons.TaskDto
-import ro.bogdannegoita.myplannerkt.commons.TaskProgressDto
+import ro.bogdannegoita.myplannerkt.commons.StepDto
+import ro.bogdannegoita.myplannerkt.commons.StepProgressDto
 import ro.bogdannegoita.myplannerkt.domain.*
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanProgressDao
-import ro.bogdannegoita.myplannerkt.persistence.daos.TaskDao
-import ro.bogdannegoita.myplannerkt.persistence.daos.TaskProgressDao
+import ro.bogdannegoita.myplannerkt.persistence.daos.StepDao
+import ro.bogdannegoita.myplannerkt.persistence.daos.StepProgressDao
 
 @Component
 @Scope("prototype")
 class DomainFactory(
     private val planDao: PlanDao,
-    private val taskDao: TaskDao,
+    private val stepDao: StepDao,
     private val planProgressDao: PlanProgressDao,
-    private val taskProgressDao: TaskProgressDao,
+    private val stepProgressDao: StepProgressDao,
     private val eventPublisher: ApplicationEventPublisher,
 ) {
     val registry = DomainRegistry()
@@ -32,16 +32,16 @@ class DomainFactory(
         return plan
     }
 
-    fun task(data: TaskDto): Task {
-        return Task(data, taskDao)
+    fun step(data: StepDto): Step {
+        return Step(data, stepDao)
     }
 
     fun planProgress(data: PlanProgressDto, plan: Plan): PlanProgress {
         return PlanProgress(data, plan, planProgressDao, this)
     }
 
-    fun taskProgress(data: TaskProgressDto, task: Task): TaskProgress {
-        return TaskProgress(data, task, taskProgressDao)
+    fun stepProgress(data: StepProgressDto, step: Step): StepProgress {
+        return StepProgress(data, step, stepProgressDao)
     }
 
     fun planStats(plan: Plan): PlanStats {

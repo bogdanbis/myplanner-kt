@@ -1,6 +1,6 @@
 package ro.bogdannegoita.myplannerkt.api.requests
 
-import ro.bogdannegoita.myplannerkt.commons.TaskDto
+import ro.bogdannegoita.myplannerkt.commons.StepDto
 
 class PlanRequest(
     val title: String,
@@ -8,5 +8,5 @@ class PlanRequest(
     val description: String,
     val color: String,
     val isPublic: Boolean,
-    val tasks: List<TaskDto>? = null,
+    val steps: List<StepDto>? = null,
 )

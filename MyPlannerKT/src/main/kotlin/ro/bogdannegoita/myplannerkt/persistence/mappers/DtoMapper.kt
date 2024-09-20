@@ -13,15 +13,15 @@ class DtoMapper {
             entity.color!!, entity.isPublic!!, entity.createdAt!!, entity.lastModifiedAt!!)
     }
 
-    fun taskDto(entity: TaskEntity): TaskDto {
-        return TaskDto(entity.id, entity.title!!, entity.description!!, entity.index!!)
+    fun stepDto(entity: StepEntity): StepDto {
+        return StepDto(entity.id, entity.title!!, entity.description!!, entity.index!!)
     }
 
     fun planProgressDto(entity: PlanProgressEntity): PlanProgressDto {
         return PlanProgressDto(entity.id, planDto(entity.plan!!), entity.acquiredAt!!)
     }
 
-    fun taskProgressDto(entity: TaskProgressEntity): TaskProgressDto {
-        return TaskProgressDto(entity.id, entity.completed!!, taskDto(entity.task!!))
+    fun stepProgressDto(entity: StepProgressEntity): StepProgressDto {
+        return StepProgressDto(entity.id, entity.completed!!, stepDto(entity.step!!))
     }
 }

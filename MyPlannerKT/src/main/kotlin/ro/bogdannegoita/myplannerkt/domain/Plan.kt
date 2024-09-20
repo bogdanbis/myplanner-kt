@@ -3,7 +3,7 @@ package ro.bogdannegoita.myplannerkt.domain
 import org.springframework.context.ApplicationEventPublisher
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
-import ro.bogdannegoita.myplannerkt.commons.TaskDto
+import ro.bogdannegoita.myplannerkt.commons.StepDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
 import ro.bogdannegoita.myplannerkt.events.PlanUpdatedEvent
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
@@ -32,9 +32,9 @@ class Plan(
         }
         private set
 
-    var tasks: SortedSet<Task> = sortedSetOf()
+    var steps: SortedSet<Step> = sortedSetOf()
         get() {
-            loadTasks()
+            loadSteps()
             return field
         }
         private set
@@ -46,7 +46,7 @@ class Plan(
         }
         private set
 
-    fun update(data: PlanDto, tasks: List<TaskDto>? = null) {
+    fun update(data: PlanDto, steps: List<StepDto>? = null) {
         title = data.title
         shortDescription = data.shortDescription
         description = data.description
@@ -55,20 +55,20 @@ class Plan(
         lastModifiedAt = LocalDateTime.now()
         eventPublisher.publishEvent(PlanUpdatedEvent(this, this))
         dao.update(id, this.data)
-        tasks?.forEach { task ->
-            val existingTask = this.tasks.find { it.id == task.id }
-            if (existingTask != null)
-                existingTask.update(task)
+        steps?.forEach { step ->
+            val existingStep = this.steps.find { it.id == step.id }
+            if (existingStep != null)
+                existingStep.update(step)
             else
-                addTask(task)
+                addStep(step)
         }
     }
 
-    private fun addTask(taskData: TaskDto): Task {
-        val persistedData = dao.addTask(id, taskData)
-        val task = domainFactory.task(persistedData)
-        tasks.add(task)
-        return task
+    private fun addStep(stepData: StepDto): Step {
+        val persistedData = dao.addStep(id, stepData)
+        val step = domainFactory.step(persistedData)
+        steps.add(step)
+        return step
     }
 
     private var loadedAuthor = false
@@ -79,12 +79,12 @@ class Plan(
         loadedAuthor = true
     }
 
-    private var loadedTasks = false
-    private fun loadTasks() {
-        if (loadedTasks)
+    private var loadedSteps = false
+    private fun loadSteps() {
+        if (loadedSteps)
             return
-        tasks = dao.getTasks(id).map(domainFactory::task).toSortedSet()
-        loadedTasks = true
+        steps = dao.getSteps(id).map(domainFactory::step).toSortedSet()
+        loadedSteps = true
     }
 
     private var loadedStats = false

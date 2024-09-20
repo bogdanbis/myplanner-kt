@@ -2,7 +2,7 @@ package ro.bogdannegoita.myplannerkt.domain
 
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
-import ro.bogdannegoita.myplannerkt.commons.TaskDto
+import ro.bogdannegoita.myplannerkt.commons.StepDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
 import java.util.*
@@ -40,17 +40,17 @@ class ApplicationUser(
         return planProgress
     }
 
-    fun createPlan(planData: PlanDto, tasks: List<TaskDto>? = null): Plan {
+    fun createPlan(planData: PlanDto, steps: List<StepDto>? = null): Plan {
         val persistedPlanData = dao.createPlan(planData, id)
         val plan = domainFactory.plan(persistedPlanData)
-        plan.update(plan.data, tasks)
+        plan.update(plan.data, steps)
         createdPlans.add(plan)
         return plan
     }
 
-    fun updatePlan(id: UUID, data: PlanDto, tasks: List<TaskDto>? = null): Plan? {
+    fun updatePlan(id: UUID, data: PlanDto, steps: List<StepDto>? = null): Plan? {
         val plan = createdPlans.find { it.id == id }
-        plan?.update(data, tasks)
+        plan?.update(data, steps)
         return plan
     }
 

@@ -4,5 +4,5 @@ import ro.bogdannegoita.myplannerkt.domain.PlanStats
 
 class PlanStatsResponse(stats: PlanStats) {
     val numberOfParticipants = stats.numberOfParticipants
-    val completedTaskCount = stats.completedTaskCount
+    val completedStepsCount = stats.completedStepsCount
 }

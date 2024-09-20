@@ -5,14 +5,15 @@ import jakarta.persistence.FetchType.LAZY
 import java.util.*
 
 @Entity
-@Table(name = "task")
-class TaskEntity(
-    var title: String? = null,
-    var description: String? = null,
-    var index: Int? = null,
+@Table(name = "step_progress")
+class StepProgressEntity(
+    var completed: Boolean? = null,
+
+    @ManyToOne
+    var plan: PlanProgressEntity? = null,
 
     @ManyToOne(fetch = LAZY)
-    var plan: PlanEntity? = null,
+    var step: StepEntity? = null,
 
     @Id @GeneratedValue
     var id: UUID? = null

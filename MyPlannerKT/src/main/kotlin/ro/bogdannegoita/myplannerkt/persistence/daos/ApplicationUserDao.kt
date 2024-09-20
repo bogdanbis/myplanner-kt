@@ -33,7 +33,7 @@ class ApplicationUserDao(
         val userEntity = findById(userId)
         val planEntity = planDao.findById(planId)
         val planProgressDto = planProgressDao.create(planEntity, userEntity)
-        planEntity.tasks.map { planProgressDao.createTaskProgress(it, planProgressDto.id!!) }
+        planEntity.steps.map { planProgressDao.createStepProgress(it, planProgressDto.id!!) }
         return planProgressDto
     }
 

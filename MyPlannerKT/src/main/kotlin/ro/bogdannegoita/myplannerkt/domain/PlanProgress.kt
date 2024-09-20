@@ -1,7 +1,7 @@
 package ro.bogdannegoita.myplannerkt.domain
 
 import ro.bogdannegoita.myplannerkt.commons.PlanProgressDto
-import ro.bogdannegoita.myplannerkt.commons.TaskProgressDto
+import ro.bogdannegoita.myplannerkt.commons.StepProgressDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanProgressDao
 import java.util.*
@@ -14,29 +14,29 @@ class PlanProgress(
 ) : Comparable<PlanProgress> {
     val id = data.id!!
     val acquiredAt by data::acquiredAt
-    var tasks: SortedSet<TaskProgress> = sortedSetOf()
+    var steps: SortedSet<StepProgress> = sortedSetOf()
         get() {
-            loadTasks()
+            loadSteps()
             return field
         }
         private set
 
-    fun updateTaskProgress(taskId: UUID, taskProgressData: TaskProgressDto): TaskProgress? {
-        return tasks.find { it.id == taskId }
-            ?.update(taskProgressData)
+    fun updateStepProgress(stepId: UUID, stepProgressData: StepProgressDto): StepProgress? {
+        return steps.find { it.id == stepId }
+            ?.update(stepProgressData)
     }
 
-    private var loadedTasks = false
-    private fun loadTasks() {
-        if (loadedTasks) return
-        tasks = dao.getTasks(id)
-            .map { taskDto ->
-                val task = plan.tasks.find { it.id == taskDto.task!!.id }
-                val taskProgress = domainFactory.taskProgress(taskDto, task!!)
-                taskProgress
+    private var loadedSteps = false
+    private fun loadSteps() {
+        if (loadedSteps) return
+        steps = dao.getSteps(id)
+            .map { dto ->
+                val step = plan.steps.find { it.id == dto.step!!.id }
+                val stepProgress = domainFactory.stepProgress(dto, step!!)
+                stepProgress
             }
             .toSortedSet()
-        loadedTasks = true
+        loadedSteps = true
     }
 
     override fun compareTo(other: PlanProgress) = other.acquiredAt.compareTo(acquiredAt)

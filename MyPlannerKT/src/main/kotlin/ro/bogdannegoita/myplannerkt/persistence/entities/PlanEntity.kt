@@ -22,7 +22,7 @@ class PlanEntity(
     var author: ApplicationUserEntity? = null,
 
     @OneToMany(mappedBy = "plan", fetch = LAZY, cascade = [ALL])
-    var tasks: MutableList<TaskEntity> = mutableListOf(),
+    var steps: MutableList<StepEntity> = mutableListOf(),
 
     @OneToMany(mappedBy = "plan", fetch = LAZY)
     var acquiredPlans: MutableList<PlanProgressEntity> = mutableListOf(),
