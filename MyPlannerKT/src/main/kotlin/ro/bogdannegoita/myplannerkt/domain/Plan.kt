@@ -53,7 +53,6 @@ class Plan(
         color = data.color
         isPublic = data.isPublic
         lastModifiedAt = LocalDateTime.now()
-        eventPublisher.publishEvent(PlanUpdatedEvent(this, this))
         dao.update(id, this.data)
         steps?.forEach { step ->
             val existingStep = this.steps.find { it.id == step.id }
@@ -62,6 +61,7 @@ class Plan(
             else
                 addStep(step)
         }
+        eventPublisher.publishEvent(PlanUpdatedEvent(this, this))
     }
 
     private fun addStep(stepData: StepDto): Step {
