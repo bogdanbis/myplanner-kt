@@ -38,4 +38,12 @@ class PlanProgressController(myPlanner: MyPlanner) : BaseController(myPlanner) {
         val stepProgress = user(principal).getAcquiredPlan(id)?.updateStepProgress(stepId, data)
         return stepProgress?.let { StepProgressResponse(it) }
     }
+
+    @PutMapping("/{id}/sync")
+    fun sync(@AuthenticationPrincipal principal: UserDetails, @PathVariable id: UUID): PlanProgressResponse? {
+        val planProgress = user(principal).getAcquiredPlan(id)
+            ?: return null
+        planProgress.sync()
+        return PlanProgressResponse(planProgress)
+    }
 }

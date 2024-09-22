@@ -51,7 +51,7 @@ export default class Api {
 				});
 	}
 
-	async post(resource, body = null, config = undefined, handle = true) {
+	async post(resource, body = undefined, config = undefined, handle = true) {
 		return await this.caller
 				.post(resource, body, config)
 				.then(res => res.data)
@@ -62,7 +62,7 @@ export default class Api {
 				});
 	}
 
-	async put(resource, body, config = undefined) {
+	async put(resource, body = undefined, config = undefined) {
 		return await this.caller
 				.put(resource, body, config)
 				.then(res => res.data)

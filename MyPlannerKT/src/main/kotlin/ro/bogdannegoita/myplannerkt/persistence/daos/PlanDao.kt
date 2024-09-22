@@ -44,6 +44,7 @@ class PlanDao(
             color = data.color,
             isPublic = data.isPublic,
             createdAt = data.createdAt,
+            lastModifiedAt = data.createdAt,
             author = author,
         )
         return dtoMapper.planDto(repository.save(entity))

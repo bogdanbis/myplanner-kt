@@ -10,6 +10,7 @@ import java.util.*
 @Table(name = "plan_progress")
 class PlanProgressEntity(
     var acquiredAt: LocalDateTime? = null,
+    var lastSyncedPlan: LocalDateTime? = null,
 
     @ManyToOne(fetch = LAZY)
     var plan: PlanEntity? = null,

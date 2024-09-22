@@ -1,4 +1,5 @@
 import Step from './Step.js';
+import ApplicationUser from './ApplicationUser.js';
 
 export default class Plan {
 	id;
@@ -9,7 +10,7 @@ export default class Plan {
 	isPublic = false;
 	createdAt;
 	lastModifiedAt;
-	author;
+	author = new ApplicationUser();
 	steps = [];
 	stats = {
 		numberOfParticipants: null,
@@ -26,7 +27,7 @@ export default class Plan {
 		this.isPublic = plan.isPublic;
 		this.createdAt = plan.createdAt;
 		this.lastModifiedAt = plan.lastModifiedAt;
-		this.author = plan.author;
+		this.author = new ApplicationUser(plan.author);
 		this.steps = plan.steps?.map(t => new Step(t)) || [];
 		if (plan.stats) {
 			this.stats = {

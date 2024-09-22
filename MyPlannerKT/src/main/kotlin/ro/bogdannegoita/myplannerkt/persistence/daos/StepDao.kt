@@ -12,7 +12,7 @@ import java.util.*
 @Component
 class StepDao(
     private val repository: StepRepository,
-    private val stepProgressDao: StepProgressDao
+    private val stepProgressDao: StepProgressDao,
 ) {
     private val dtoMapper = DtoMapper()
 

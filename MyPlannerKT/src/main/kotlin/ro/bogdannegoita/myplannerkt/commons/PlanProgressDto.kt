@@ -7,4 +7,5 @@ data class PlanProgressDto(
     val id: UUID? = null,
     val plan: PlanDto,
     val acquiredAt: LocalDateTime,
+    var lastSyncedPlan: LocalDateTime,
 )

@@ -21,8 +21,8 @@ class DomainFactory(
     private val planProgressDao: PlanProgressDao,
     private val stepProgressDao: StepProgressDao,
     private val eventPublisher: ApplicationEventPublisher,
+    private val registry: DomainRegistry,
 ) {
-    val registry = DomainRegistry()
 
     fun plan(data: PlanDto): Plan {
         if (registry.plans[data.id] != null)

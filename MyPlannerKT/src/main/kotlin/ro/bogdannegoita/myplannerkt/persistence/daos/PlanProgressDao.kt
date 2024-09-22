@@ -17,20 +17,29 @@ import java.util.*
 class PlanProgressDao(
     private val repository: PlanProgressRepository,
     private val stepProgressDao: StepProgressDao,
+    private val stepDao: StepDao,
 ) {
     private val dtoMapper = DtoMapper()
 
     fun create(planEntity: PlanEntity, userEntity: ApplicationUserEntity): PlanProgressDto {
-        val entity = PlanProgressEntity(
+        var entity = PlanProgressEntity(
             acquiredAt = LocalDateTime.now(),
             plan = planEntity,
             user = userEntity,
         )
-        return dtoMapper.planProgressDto(repository.save(entity))
+        entity = repository.save(entity)
+        planEntity.steps.forEach { createStepProgress(it, entity.id!!) }
+        return dtoMapper.planProgressDto(entity)
     }
 
     fun createStepProgress(stepEntity: StepEntity, planProgressId: UUID): StepProgressDto {
         return stepProgressDao.create(stepEntity, findById(planProgressId))
+    }
+
+    fun createStepProgress(stepId: UUID, planProgressId: UUID): StepProgressDto {
+        val planProgressEntity = findById(planProgressId)
+        val stepEntity = stepDao.findById(stepId)
+        return stepProgressDao.create(stepEntity, planProgressEntity)
     }
 
     fun getSteps(id: UUID): List<StepProgressDto> {
@@ -44,5 +53,15 @@ class PlanProgressDao(
 
     fun countByPlan(id: UUID): Int {
         return repository.countByPlanId(id)
+    }
+
+    fun deleteStep(stepProgressId: UUID) {
+        stepProgressDao.delete(stepProgressId)
+    }
+
+    fun update(id: UUID, data: PlanProgressDto): PlanProgressDto {
+        val entity = findById(id)
+        entity.lastSyncedPlan = data.lastSyncedPlan
+        return dtoMapper.planProgressDto(repository.save(entity))
     }
 }

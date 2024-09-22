@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
+import ro.bogdannegoita.myplannerkt.domain.factories.DomainRegistry
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
@@ -23,10 +24,12 @@ import kotlin.test.assertEquals
 class MyPlannerTest @Autowired constructor(
     domainProvider: ObjectProvider<ApplicationUser>,
     domainFactory: DomainFactory,
+
 ) {
     private val userDao = mockk<ApplicationUserDao>()
     private val planDao = mockk<PlanDao>()
-    private val myPlanner = MyPlanner(domainProvider, userDao, planDao, domainFactory)
+    private val domainRegistry = mockk<DomainRegistry>()
+    private val myPlanner = MyPlanner(domainProvider, userDao, planDao, domainFactory, domainRegistry)
 
     @Test
     fun `should load the user with given email`() {

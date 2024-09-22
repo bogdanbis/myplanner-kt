@@ -3,6 +3,11 @@
 	<h2>{{ plan.title }}</h2>
 	<span class="page-subtitle">{{ plan.shortDescription }}</span>
 
+	<div v-if="planProgress.updateAvailable" class="m-bottom-xxl">
+		<p class="text-primary fw-600">{{ plan.author.fullName }} has made some changes. Sync to use the latest version.</p>
+		<MpButton @click="syncWithPlan">Sync</MpButton>
+	</div>
+
 	<MpCard>
 		<b class="text-secondary">About</b>
 		<p><MpMultilineText :text="plan.description" /></p>
@@ -32,8 +37,6 @@ import { useRoute, useRouter } from 'vue-router';
 const router = useRouter()
 const planId = useRoute().params.id;
 
-const authStore = useAuthStore();
-const user = computed(() => authStore.user);
 const planProgress = ref(new PlanProgress());
 
 const plan = computed(() => planProgress.value.plan);
@@ -42,10 +45,16 @@ onMounted(async () => {
 	const planResponse = await api.get('/plans/acquired/' + planId);
 	if (!planResponse)
 		router.push('/my-plans');
-	planProgress.value = new PlanProgress(planResponse);
+	else
+		planProgress.value = new PlanProgress(planResponse);
 })
 
 const markAsCompleted = async (stepId) => {
 	await api.put('/plans/acquired/' + planProgress.value.id + '/steps/' + stepId, { completed: true });
+}
+
+const syncWithPlan = async () => {
+	const response = await api.put('/plans/acquired/' + planId + '/sync');
+	planProgress.value = new PlanProgress(response);
 }
 </script>

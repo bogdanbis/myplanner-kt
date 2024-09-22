@@ -41,4 +41,8 @@ class StepProgressDao(private val repository: StepProgressRepository) {
     fun countCompletedSteps(stepId: UUID): Int {
         return repository.countByStepIdAndCompletedTrue(stepId)
     }
+
+    fun delete(id: UUID) {
+        repository.deleteById(id)
+    }
 }
