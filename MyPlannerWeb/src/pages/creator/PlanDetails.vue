@@ -6,7 +6,13 @@
 	<div class="halved">
 		<MpCard title="Stats">
 			<MpInlineValue label="Participants" :value="plan.stats.numberOfParticipants" />
-			<MpInlineValue label="Steps completed by others" :value="plan.stats.completedStepsCount" />
+			<MpInlineValue :value="plan.stats.completedStepsCount">
+				<template #label>
+					<span title="There can be a slight difference if not all participants are synced with the latest version.">
+						Steps completed by others <MpIcon icon="info-circle" class="text-primary" />
+					</span>
+				</template>
+			</MpInlineValue>
 		</MpCard>
 		<MpCard title="Details">
 			<MpInlineValue label="Last modified" :value="$date(plan.lastModifiedAt)" />

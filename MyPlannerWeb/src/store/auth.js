@@ -19,5 +19,9 @@ export const useAuthStore = defineStore('auth', {
 		requestLogin() {
 			this.requireLogin = true;
 		},
+		reset() {
+			api.logOut();
+			this.$reset();
+		},
 	},
 })

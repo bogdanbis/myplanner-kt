@@ -10,10 +10,10 @@
 	</MpButton>
 	<div v-else :id="id" class="mp-button-confirm-container">
 		<MpButton @click="showConfirm = false" :icon="cancelIcon" link class="dark">
-			Cancel
+			{{ cancelText }}
 		</MpButton>
 		<MpButton @click="confirm" :icon="confirmIcon" link class="danger" :busy="busy">
-			Confirm
+			{{ confirmText }}
 		</MpButton>
 	</div>
 </template>
@@ -27,6 +27,16 @@ const props = defineProps({
 		type: Boolean,
 		required: false,
 		default: false,
+	},
+	cancelText: {
+		type: String,
+		required: false,
+		default: 'Cancel',
+	},
+	confirmText: {
+		type: String,
+		required: false,
+		default: 'Confirm',
 	},
 	id: {
 		required: false,

@@ -2,12 +2,12 @@
 	<div v-if="user?.email">
 		<h2>My Plans</h2>
 		<span class="page-subtitle">The plans you got from other creators.</span>
+
 		<MpCard v-for="{ plan, id } in user.acquiredPlans" :title="plan.title">
 			<span class="mp-card-subtitle">
 				<MpIcon icon="person-fill" />
 				{{ plan.author?.firstName + ' ' + plan.author?.lastName }}
 			</span>
-			<br />
 			<span class="text-secondary">{{ plan.description }}</span>
 			<template #actions>
 				<MpLink :to="'/my-plans/' + id">View progress</MpLink>

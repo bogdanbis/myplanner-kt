@@ -4,7 +4,6 @@
 			<MpIcon icon="person-fill" />
 			{{ plan.author.firstName + ' ' + plan.author.lastName }}
 		</span>
-		<br />
 		<span class="text-secondary">{{ plan.description }}</span>
 		<template #actions>
 			<MpButton

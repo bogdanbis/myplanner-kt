@@ -2,7 +2,7 @@
 	<label v-if="label" :for="id" class="mp-label">{{ computedLabel }}</label>
 	<input
 		v-model="value"
-		:class="{ 'monospaced': monospaced }"
+		:class="{ 'monospaced': monospaced, 'large-input': large, 'unlabeled-input': unlabeled }"
 		:id="id"
 		:required="required"
 		:type="type"
@@ -26,6 +26,11 @@ export default {
 			type: String,
 			required: false,
 		},
+		large: {
+			type: Boolean,
+			required: false,
+			default: false,
+		},
 		monospaced: {
 			type: Boolean,
 			required: false,
@@ -40,6 +45,11 @@ export default {
 			type: String,
 			required: false,
 			default: 'text',
+		},
+		unlabeled: {
+			type: Boolean,
+			required: false,
+			default: false,
 		},
 	},
 

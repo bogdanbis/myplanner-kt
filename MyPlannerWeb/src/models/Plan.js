@@ -10,6 +10,7 @@ export default class Plan {
 	isPublic = false;
 	createdAt;
 	lastModifiedAt;
+	numberOfParticipants;
 	author = new ApplicationUser();
 	steps = [];
 	stats = {
@@ -27,6 +28,7 @@ export default class Plan {
 		this.isPublic = plan.isPublic;
 		this.createdAt = plan.createdAt;
 		this.lastModifiedAt = plan.lastModifiedAt;
+		this.numberOfParticipants = plan.numberOfParticipants;
 		this.author = new ApplicationUser(plan.author);
 		this.steps = plan.steps?.map(t => new Step(t)) || [];
 		if (plan.stats) {

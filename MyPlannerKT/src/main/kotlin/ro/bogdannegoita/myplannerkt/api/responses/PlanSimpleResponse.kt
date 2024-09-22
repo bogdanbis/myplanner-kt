@@ -12,4 +12,5 @@ open class PlanSimpleResponse(plan: Plan) {
     val createdAt = plan.createdAt
     val lastModifiedAt = plan.lastModifiedAt
     val author = plan.author
+    val numberOfParticipants = plan.stats?.numberOfParticipants
 }

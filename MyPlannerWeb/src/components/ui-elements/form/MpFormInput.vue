@@ -3,10 +3,12 @@
 		<MpInput
 			:id="id"
 			:label="label"
+			:large="large"
 			:monospaced="monospaced"
 			:placeholder="placeholder"
 			:required="required"
 			:type="type"
+			:unlabeled="unlabeled"
 			v-bind="$attrs"
 		/>
 		<small v-if="info"><MpIcon icon="info-circle" class="me-2" />{{ info }}</small>
@@ -24,10 +26,6 @@ export default {
 	inheritAttrs: false,
 	components: { MpIcon, MpCol, MpInput },
 	props: {
-		id: {
-			type: String,
-			required: true,
-		},
 		cols: {
 			type: [String, Number],
 			required: false,
@@ -36,33 +34,47 @@ export default {
 			type: [String, Number],
 			required: false,
 		},
+		description: {
+			type: String,
+			required: false,
+		},
+		id: {
+			type: String,
+			required: true,
+		},
+		info: {
+			type: String,
+			required: false,
+		},
 		label: {
 			type: String,
 			required: false,
+		},
+		large: {
+			type: Boolean,
+			required: false,
+			default: false,
 		},
 		monospaced: {
 			type: Boolean,
 			required: false,
 			default: false,
 		},
-		description: {
-			type: String,
-			required: false,
-		},
-		info: {
-			type: String,
-			required: false,
-		},
 		placeholder: {
 			type: String,
 			required: false,
+		},
+		required: {
+			type: Boolean,
+			required: false,
+			default: false,
 		},
 		type: {
 			type: String,
 			required: false,
 			default: 'text',
 		},
-		required: {
+		unlabeled: {
 			type: Boolean,
 			required: false,
 			default: false,

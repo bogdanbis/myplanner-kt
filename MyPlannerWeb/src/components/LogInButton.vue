@@ -16,19 +16,13 @@
 <script setup>
 import Api from '@/api/Api.js';
 import api from '@/api/index.js';
+import { useAuthStore } from '@/store/auth.js';
 import { ref, useTemplateRef, watch } from 'vue';
+import { useRoute } from 'vue-router';
 import { useToast } from 'vue-toastification';
-import { useAuthStore } from '../store/auth.js';
-
-const props = defineProps({
-	redirectTo: {
-		type: String,
-		required: false,
-		default: '/',
-	},
-});
 
 const authStore = useAuthStore();
+const route = useRoute();
 
 const toast = useToast()
 const loading = ref(false);
@@ -44,7 +38,7 @@ const logIn = async () => {
 	loading.value = true;
 	try {
 		await api.logIn(email.value, password.value);
-		window.location = props.redirectTo;
+		window.location = route.fullPath;
 	} catch (e) {
 		const error_type = e.response?.data.error_type;
 		if (error_type === 'user_not_found')

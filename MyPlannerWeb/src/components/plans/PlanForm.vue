@@ -4,7 +4,7 @@
 			v-model="plan.title"
 			placeholder="The Title"
 			id="title"
-			class="large-input"
+			large unlabeled
 			description="Be concise. We recommend no more than 10 words."
 		/>
 		<MpFormTextarea

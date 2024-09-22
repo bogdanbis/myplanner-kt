@@ -24,6 +24,7 @@ class PlanProgressDao(
     fun create(planEntity: PlanEntity, userEntity: ApplicationUserEntity): PlanProgressDto {
         var entity = PlanProgressEntity(
             acquiredAt = LocalDateTime.now(),
+            lastSyncedPlan = planEntity.lastModifiedAt,
             plan = planEntity,
             user = userEntity,
         )

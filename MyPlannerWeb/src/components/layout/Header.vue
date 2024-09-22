@@ -6,7 +6,7 @@
 			</div>
 			<div class="left-side">
 				<LogInButton v-if="!user?.email" />
-				<span v-else><MpIcon icon="person-circle" /> {{ user.firstName }}</span>
+				<UserInfoButton v-else />
 			</div>
 		</div>
 		<div class="logo-container">
@@ -20,6 +20,7 @@ import { APP_TITLE } from '@/router.js';
 import { useAuthStore } from '@/store/auth.js';
 import { computed } from 'vue';
 import LogInButton from '../LogInButton.vue';
+import UserInfoButton from '../UserInfoButton.vue';
 
 const emit = defineEmits(['show-sidebar']);
 
