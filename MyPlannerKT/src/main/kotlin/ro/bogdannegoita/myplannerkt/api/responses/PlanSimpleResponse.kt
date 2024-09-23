@@ -11,6 +11,6 @@ open class PlanSimpleResponse(plan: Plan) {
     val isPublic = plan.isPublic
     val createdAt = plan.createdAt
     val lastModifiedAt = plan.lastModifiedAt
-    val author = plan.author
+    val author = ApplicationUserResponse(plan.author!!)
     val numberOfParticipants = plan.stats?.numberOfParticipants
 }

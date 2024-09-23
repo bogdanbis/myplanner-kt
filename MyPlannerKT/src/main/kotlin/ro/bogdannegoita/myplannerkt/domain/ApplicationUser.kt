@@ -10,7 +10,7 @@ import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
 import java.util.*
 
 class ApplicationUser(
-    data: ApplicationUserDto,
+    val data: ApplicationUserDto,
     private val dao: ApplicationUserDao,
     private val domainFactory: DomainFactory,
     private val eventPublisher: ApplicationEventPublisher,

@@ -16,7 +16,7 @@ class ApplicationUserController(myPlanner: MyPlanner) : BaseController(myPlanner
     fun whoami(@AuthenticationPrincipal principal: UserDetails): ApplicationUserResponse {
         try {
             val user = myPlanner.loadUser(principal.username)
-            return ApplicationUserResponse(user)
+            return ApplicationUserResponse(user.data)
         } catch (e: EntityNotFoundException) {
             throw UserNotFoundException()
         }

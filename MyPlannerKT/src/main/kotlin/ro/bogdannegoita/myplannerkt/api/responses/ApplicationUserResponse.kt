@@ -1,10 +1,10 @@
 package ro.bogdannegoita.myplannerkt.api.responses
 
-import ro.bogdannegoita.myplannerkt.domain.ApplicationUser
+import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 
-class ApplicationUserResponse(user: ApplicationUser) {
-    val id = user.id
-    val email = user.email
-    val firstName = user.firstName
-    val lastName = user.lastName
+class ApplicationUserResponse(data: ApplicationUserDto) {
+    val id = data.id
+    val email = data.email
+    val firstName = data.firstName
+    val lastName = data.lastName
 }
