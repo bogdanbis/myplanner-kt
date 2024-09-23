@@ -77,4 +77,8 @@ class PlanDao(
     fun getNumberOfAcquiredPlans(id: UUID): Int {
         return planProgressDao.countByPlan(id)
     }
+
+    fun removeStep(stepId: UUID) {
+        stepDao.delete(stepId)
+    }
 }

@@ -2,8 +2,8 @@
 	<MpFormSection
 		:title="isRoot ? 'Steps' : 'Sub steps'"
 		:smaller-title="!isRoot"
-		:collapsible="!isRoot"
 		:start-collapsed="!isRoot"
+		collapsible
 		v-auto-animate
 	>
 		<MpCol v-for="(step, index) in steps" :key="step" class="mp-form-subsection">

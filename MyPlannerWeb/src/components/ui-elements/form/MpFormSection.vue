@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const { collapsible, startCollapsed } = defineProps({
 	collapsible: {

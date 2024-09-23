@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
-import ro.bogdannegoita.myplannerkt.domain.factories.DomainRegistry
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
@@ -28,8 +27,7 @@ class MyPlannerTest @Autowired constructor(
 ) {
     private val userDao = mockk<ApplicationUserDao>()
     private val planDao = mockk<PlanDao>()
-    private val domainRegistry = mockk<DomainRegistry>()
-    private val myPlanner = MyPlanner(domainProvider, userDao, planDao, domainFactory, domainRegistry)
+    private val myPlanner = MyPlanner(domainProvider, userDao, planDao, domainFactory)
 
     @Test
     fun `should load the user with given email`() {

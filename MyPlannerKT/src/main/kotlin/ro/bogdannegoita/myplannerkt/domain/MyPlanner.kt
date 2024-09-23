@@ -1,12 +1,14 @@
 package ro.bogdannegoita.myplannerkt.domain
 
 import org.springframework.beans.factory.ObjectProvider
+import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.commons.StepDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
-import ro.bogdannegoita.myplannerkt.domain.factories.DomainRegistry
 import ro.bogdannegoita.myplannerkt.domain.factories.myPlannerCache
+import ro.bogdannegoita.myplannerkt.events.PlanDeletedEvent
+import ro.bogdannegoita.myplannerkt.events.PlanUpdatedEvent
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
 import java.time.LocalDateTime
@@ -18,11 +20,10 @@ class MyPlanner(
     private val userDao: ApplicationUserDao,
     private val planDao: PlanDao,
     private val domainFactory: DomainFactory,
-    private val registry: DomainRegistry,
 ) {
 
     private val users = myPlannerCache<String, ApplicationUser>()
-    private val publicPlansRegistry by registry::publicPlans
+    private val publicPlansRegistry = mutableMapOf<UUID, Plan>()
 
     fun loadUser(email: String): ApplicationUser {
         var user = users.getOrNull(email)
@@ -56,11 +57,24 @@ class MyPlanner(
         return plan
     }
 
-    fun publishPlan(plan: Plan) {
+    @EventListener
+    fun handlePlanUpdated(event: PlanUpdatedEvent) {
+        if (event.plan.isPublic)
+            publishPlan(event.plan)
+        else
+            unpublishPlan(event.plan)
+    }
+
+    @EventListener
+    fun handlePlanDeleted(event: PlanDeletedEvent) {
+        publicPlansRegistry.remove(event.id)
+    }
+
+    private fun publishPlan(plan: Plan) {
         publicPlansRegistry[plan.id] = plan
     }
 
-    fun unpublishPlan(plan: Plan) {
+    private fun unpublishPlan(plan: Plan) {
         publicPlansRegistry.remove(plan.id)
     }
 

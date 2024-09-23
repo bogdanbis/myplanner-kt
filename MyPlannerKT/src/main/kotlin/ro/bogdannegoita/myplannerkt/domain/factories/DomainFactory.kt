@@ -25,9 +25,10 @@ class DomainFactory(
 ) {
 
     fun plan(data: PlanDto): Plan {
-        if (registry.plans[data.id] != null)
-            return registry.plans[data.id]!!
-        val plan = Plan(data, planDao, this, eventPublisher)
+        var plan = registry.plans.getOrNull(data.id!!)
+        if (plan != null)
+            return plan
+        plan = Plan(data, planDao, this, eventPublisher)
         registry.plans[plan.id] = plan
         return plan
     }

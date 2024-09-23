@@ -80,7 +80,7 @@ class Plan(
     }
 
     private fun removeStep(step: Step) {
-        dao.delete(step.id)
+        dao.removeStep(step.id)
         steps.remove(step)
     }
 

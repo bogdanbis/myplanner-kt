@@ -1,9 +1,11 @@
 package ro.bogdannegoita.myplannerkt.domain
 
+import org.springframework.context.ApplicationEventPublisher
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.commons.StepDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
+import ro.bogdannegoita.myplannerkt.events.PlanDeletedEvent
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
 import java.util.*
 
@@ -11,6 +13,7 @@ class ApplicationUser(
     data: ApplicationUserDto,
     private val dao: ApplicationUserDao,
     private val domainFactory: DomainFactory,
+    private val eventPublisher: ApplicationEventPublisher,
 ) {
     val id: UUID = data.id!!
     val email: String = data.email
@@ -62,6 +65,12 @@ class ApplicationUser(
         return createdPlans.find { it.id == id }
     }
 
+    fun deletePlan(id: UUID) {
+        dao.deletePlan(id)
+        createdPlans.removeIf { it.id == id }
+        eventPublisher.publishEvent(PlanDeletedEvent(this, id))
+    }
+
     private var loadedAcquiredPlans = false
     private fun loadAcquiredPlans() {
         if (loadedAcquiredPlans)
@@ -80,10 +89,4 @@ class ApplicationUser(
             .toSortedSet()
         loadedCreatedPlans = true
     }
-
-    fun deletePlan(id: UUID) {
-        dao.deletePlan(id)
-        createdPlans.removeIf { it.id == id }
-    }
-
 }
