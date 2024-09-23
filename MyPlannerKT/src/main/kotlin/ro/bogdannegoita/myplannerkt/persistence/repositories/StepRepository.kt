@@ -4,4 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import ro.bogdannegoita.myplannerkt.persistence.entities.StepEntity
 import java.util.*
 
-interface StepRepository : JpaRepository<StepEntity, UUID>
+interface StepRepository : JpaRepository<StepEntity, UUID> {
+    fun findAllByParentStepId(id: UUID): List<StepEntity>
+}

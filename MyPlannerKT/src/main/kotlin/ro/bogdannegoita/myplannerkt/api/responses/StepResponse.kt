@@ -7,4 +7,5 @@ class StepResponse(step: Step) {
     val title = step.title
     val description = step.description
     val index = step.index
+    val steps = step.steps.map(::StepResponse)
 }

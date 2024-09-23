@@ -54,14 +54,22 @@ class Plan(
         isPublic = data.isPublic
         lastModifiedAt = LocalDateTime.now()
         dao.update(id, this.data)
-        steps?.forEach { step ->
+        if (steps != null)
+            updateSteps(steps)
+        eventPublisher.publishEvent(PlanUpdatedEvent(this, this))
+    }
+
+    private fun updateSteps(steps: List<StepDto>) {
+        this.steps.filter { step -> steps.none { it.id == step.id } }
+            .forEach { removeStep(it) }
+
+        steps.forEach { step ->
             val existingStep = this.steps.find { it.id == step.id }
             if (existingStep != null)
-                existingStep.update(step)
+                existingStep.update(step, step.steps)
             else
                 addStep(step)
         }
-        eventPublisher.publishEvent(PlanUpdatedEvent(this, this))
     }
 
     private fun addStep(stepData: StepDto): Step {
@@ -69,6 +77,11 @@ class Plan(
         val step = domainFactory.step(persistedData)
         steps.add(step)
         return step
+    }
+
+    private fun removeStep(step: Step) {
+        dao.delete(step.id)
+        steps.remove(step)
     }
 
     private var loadedAuthor = false

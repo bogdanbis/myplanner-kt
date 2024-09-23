@@ -7,4 +7,5 @@ data class StepDto(
     var title: String,
     var description: String,
     var index: Int,
+    val steps: List<StepDto>? = null,
 )

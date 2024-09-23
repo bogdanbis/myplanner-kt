@@ -17,13 +17,32 @@ class StepDao(
     private val dtoMapper = DtoMapper()
 
     fun create(data: StepDto, plan: PlanEntity): StepDto {
-        val entity = StepEntity(
+        var entity = StepEntity(
             title = data.title,
             description = data.description,
             index = data.index,
             plan = plan,
         )
-        return dtoMapper.stepDto(repository.save(entity))
+        entity = repository.save(entity)
+        data.steps?.forEach { createSubstep(it, entity) }
+        return dtoMapper.stepDto(entity)
+    }
+
+    fun createSubstep(data: StepDto, parentStepId: UUID): StepDto {
+        val parentStep = findById(parentStepId)
+        return createSubstep(data, parentStep)
+    }
+
+    private fun createSubstep(data: StepDto, parentStep: StepEntity): StepDto {
+        var entity = StepEntity(
+            title = data.title,
+            description = data.description,
+            index = data.index,
+            parentStep = parentStep,
+        )
+        entity = repository.save(entity)
+        data.steps?.forEach { createSubstep(it, entity) }
+        return dtoMapper.stepDto(entity)
     }
 
     fun update(id: UUID, data: StepDto) {
@@ -39,7 +58,16 @@ class StepDao(
             .orElseThrow { EntityNotFoundException(StepEntity::class) }
     }
 
+    fun findByStepId(id: UUID): List<StepDto> {
+        return repository.findAllByParentStepId(id)
+            .map { dtoMapper.stepDto(it) }
+    }
+
     fun countCompletedSteps(id: UUID): Int {
         return stepProgressDao.countCompletedSteps(id)
+    }
+
+    fun delete(id: UUID) {
+        repository.deleteById(id)
     }
 }

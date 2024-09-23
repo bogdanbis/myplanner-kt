@@ -63,5 +63,5 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
     private fun planRequestToDto(request: PlanRequest): PlanDto
         = PlanDto(title = request.title, shortDescription = request.shortDescription,
         description = request.description, color = request.color, isPublic = request.isPublic,
-        createdAt = LocalDateTime.now(), lastModifiedAt = LocalDateTime.now())
+        createdAt = LocalDateTime.now(), lastModifiedAt = LocalDateTime.now(), )
 }

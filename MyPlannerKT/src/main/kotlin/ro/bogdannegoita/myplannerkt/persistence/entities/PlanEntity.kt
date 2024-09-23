@@ -21,7 +21,7 @@ class PlanEntity(
     @ManyToOne(fetch = LAZY)
     var author: ApplicationUserEntity? = null,
 
-    @OneToMany(mappedBy = "plan", fetch = LAZY, cascade = [ALL])
+    @OneToMany(mappedBy = "plan", fetch = LAZY, cascade = [ALL], orphanRemoval = true)
     var steps: MutableList<StepEntity> = mutableListOf(),
 
     @OneToMany(mappedBy = "plan", fetch = LAZY)

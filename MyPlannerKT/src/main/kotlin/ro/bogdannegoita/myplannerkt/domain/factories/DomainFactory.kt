@@ -33,7 +33,7 @@ class DomainFactory(
     }
 
     fun step(data: StepDto): Step {
-        return Step(data, stepDao)
+        return Step(data, stepDao, this)
     }
 
     fun planProgress(data: PlanProgressDto, plan: Plan): PlanProgress {
