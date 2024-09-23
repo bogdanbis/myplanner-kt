@@ -29,8 +29,32 @@
 }
 
 .mp-form-section-title {
+	display: flex;
+	width: fit-content;
 	font-size: $font-size-m2;
+	font-weight: bold;
 	margin-bottom: 0;
+
+	&.smaller-title {
+		font-size: $font-size-2;
+	}
+
+	&.collapsible {
+		@extend .clickable;
+		font-weight: 500 !important;
+		color: var(--primary);
+	}
+
+	.bi {
+		margin-top: -1px;
+		margin-right: $spacer-xs;
+		transition: transform .2s ease-in;
+	}
+
+	&.collapsed .bi {
+		transform: rotate(-90deg);
+		transition: transform .2s ease-in-out;
+	}
 }
 
 .mp-form-subsection {
@@ -45,7 +69,7 @@
 
 	.change-index-container {
 		position: absolute;
-		top: $spacer-m;
+		top: $spacer-xs;
 		right: $spacer-l;
 		display: flex;
 		flex-direction: row-reverse;
@@ -81,7 +105,8 @@
 	flex-direction: column;
 
 	label {
-		margin-bottom: $spacer-m;
+		margin-bottom: $spacer-xs;
+		margin-left: $spacer-xs;
 		font-weight: 500;
 	}
 

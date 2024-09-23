@@ -30,7 +30,6 @@ const authStore = useAuthStore();
 const user = computed(() => authStore.user);
 
 onMounted(async () => {
-	if (user.value?.createdPlans == null)
-		await user.value?.fetchCreatedPlans();
+	await user.value?.fetchCreatedPlans();
 })
 </script>

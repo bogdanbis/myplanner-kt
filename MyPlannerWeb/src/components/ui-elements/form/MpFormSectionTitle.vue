@@ -1,6 +1,38 @@
 <template>
-	<MpCol cols="1"><h4 class="mp-form-section-title"><slot /></h4></MpCol>
+	<MpCol cols="1">
+		<span
+			class="mp-form-section-title"
+			:class="{ collapsible: collapsible, collapsed: collapsed, 'smaller-title': smaller }"
+			@click="toggleCollapsed"
+		>
+			<MpIcon v-if="collapsible" icon="chevron-down" />
+			<slot />
+		</span>
+	</MpCol>
 </template>
 
 <script setup>
+const emit = defineEmits(['collapsed-changed']);
+
+defineProps({
+	collapsible: {
+		type: Boolean,
+		required: false,
+		default: false,
+	},
+	collapsed: {
+		type: Boolean,
+		required: false,
+		default: false,
+	},
+	smaller: {
+		type: Boolean,
+		required: false,
+		default: false,
+	},
+});
+
+const toggleCollapsed = () => {
+	emit('collapsed-changed');
+};
 </script>

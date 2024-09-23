@@ -32,17 +32,14 @@
 import api from '@/api';
 import PlanForm from '@/components/plans/PlanForm.vue';
 import Plan from '@/models/Plan.js';
-import { useAuthStore } from '@/store/auth.js';
 import { isEqual } from 'lodash';
 import { computed, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
 
-const router = useRouter()
+const router = useRouter();
 const planId = useRoute().params.id;
 
-const authStore = useAuthStore();
-const user = computed(() => authStore.user);
 const plan = ref(new Plan());
 const planEdits = ref(new Plan());
 
@@ -69,7 +66,6 @@ const updatePlan = async () => {
 	await api.put('/plans/' + plan.value.id, planEdits.value);
 	plan.value = new Plan(planEdits.value);
 	updating.value = false;
-	user.value.fetchCreatedPlans();
 }
 
 const initChanges = () => {
@@ -82,7 +78,6 @@ const deletePlan = async () => {
 	deleting.value = true;
 	await api.delete('/plans/' + planId);
 	toast('Plan deleted: ' + plan.value.title);
-	user.value.fetchCreatedPlans();
 	router.push('/creator');
 }
 </script>
