@@ -45,10 +45,6 @@ class MyPlanner(
         return publicPlansRegistry[id]
     }
 
-    fun getPlan(user: ApplicationUser, id: UUID): Plan? {
-        return getPublicPlan(id) ?: user.getCreatedPlan(id)
-    }
-
     fun createPlan(user: ApplicationUser, planData: PlanDto, steps: List<StepDto>? = null): Plan {
         planData.lastModifiedAt = LocalDateTime.now()
         val plan = user.createPlan(planData, steps)

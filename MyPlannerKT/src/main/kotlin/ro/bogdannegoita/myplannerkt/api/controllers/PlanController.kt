@@ -22,13 +22,18 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
     }
 
     @GetMapping("/{id}")
-    fun getPlanById(@AuthenticationPrincipal principal: UserDetails, @PathVariable id: UUID): PlanResponse? {
-        return myPlanner.getPlan(user(principal), id)?.let(::PlanResponse)
+    fun getPublicInfo(@PathVariable id: UUID): PlanSimpleResponse? {
+        return myPlanner.getPublicPlan(id)?.let(::PlanSimpleResponse)
     }
 
     @GetMapping("/created")
     fun getCreatedPlans(@AuthenticationPrincipal principal: UserDetails): List<PlanSimpleResponse> {
         return user(principal).createdPlans.map(::PlanSimpleResponse)
+    }
+
+    @GetMapping("/created/{id}")
+    fun getCreatedPlan(@AuthenticationPrincipal principal: UserDetails, @PathVariable id: UUID): PlanResponse? {
+        return user(principal).getCreatedPlan(id)?.let(::PlanResponse)
     }
 
     @PostMapping("/create")
@@ -60,8 +65,9 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
         user(principal).deletePlan(id)
     }
 
-    private fun planRequestToDto(request: PlanRequest): PlanDto
-        = PlanDto(title = request.title, shortDescription = request.shortDescription,
+    private fun planRequestToDto(request: PlanRequest): PlanDto = PlanDto(
+        title = request.title, shortDescription = request.shortDescription,
         description = request.description, color = request.color, isPublic = request.isPublic,
-        createdAt = LocalDateTime.now(), lastModifiedAt = LocalDateTime.now(), )
+        createdAt = LocalDateTime.now(), lastModifiedAt = LocalDateTime.now(),
+    )
 }
