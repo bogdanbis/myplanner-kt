@@ -1,5 +1,5 @@
 <template>
-	<MpBackLink :to="'/creator/details/' + plan.id">{{ plan.title }}</MpBackLink>
+	<MpBackLink :to="'/creator/details/' + plan.id">Manage</MpBackLink>
 	<h2>Edit Plan</h2>
 	<span class="page-subtitle">Make changes to your Plan. You can make changes anytime you want.</span>
 	<MpCard>
@@ -63,8 +63,9 @@ const updatePlan = async () => {
 	updating.value = true;
 	if (!hasChanges.value || !hasRequiredFields.value)
 		return;
-	await api.put('/plans/' + plan.value.id, planEdits.value);
-	plan.value = new Plan(planEdits.value);
+	const planResponse = await api.put('/plans/' + plan.value.id, planEdits.value);
+	plan.value = new Plan(planResponse);
+	planEdits.value = new Plan(planResponse);
 	updating.value = false;
 }
 

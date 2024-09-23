@@ -6,17 +6,22 @@
 		</span>
 		<span class="text-secondary">{{ plan.description }}</span>
 		<template #actions>
-			<MpButton
-				v-if="!plan.acquired"
-				@click="acquirePlan(plan)"
-				:busy="loading"
-			>
-				Get
-			</MpButton>
-			<span v-else class="text-primary">
-				You have this plan
-				<MpIcon icon="check-lg" />
-			</span>
+			<div v-if="plan.author.email !== user?.email">
+				<MpButton
+					v-if="!plan.acquired"
+					@click="acquirePlan(plan)"
+					:busy="loading"
+				>
+					Get
+				</MpButton>
+				<span v-else class="text-primary">
+					You have this plan
+					<MpIcon icon="check-lg" />
+				</span>
+			</div>
+			<div v-else>
+				<MpLink :to="'/creator/details/' + plan.id">Manage</MpLink>
+			</div>
 		</template>
 	</MpCard>
 </template>
