@@ -57,6 +57,10 @@ class StepDao(
             .orElseThrow { EntityNotFoundException(StepEntity::class) }
     }
 
+    fun findByPlanId(id: UUID): List<StepDto> {
+        return repository.findAllByPlanId(id).map(dtoMapper::stepDto)
+    }
+
     fun getSteps(id: UUID): List<StepDto> {
         return repository.findAllByParentStepId(id)
             .map { dtoMapper.stepDto(it) }
