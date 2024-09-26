@@ -2,7 +2,7 @@
 	<MpFormSection
 		:title="isRoot ? 'Steps' : 'Sub steps'"
 		:smaller-title="!isRoot"
-		:start-collapsed="!isRoot"
+		:start-collapsed="stepsContainer.id"
 		collapsible
 		v-auto-animate
 	>
@@ -13,12 +13,12 @@
 				<span class="hover-info">Move item</span>
 			</div>
 			<MpFormInput
-				:id="'step-title-' + index"
+				:id="'step-title-' + step.id"
 				label="Title"
 				v-model="step.title"
 			/>
 			<MpFormTextarea
-				:id="'step-description-' + index"
+				:id="'step-description-' + step.id"
 				label="Description"
 				v-model="step.description"
 			/>

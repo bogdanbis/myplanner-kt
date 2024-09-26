@@ -3,7 +3,7 @@
 	<h2>Edit Plan</h2>
 	<span class="page-subtitle">Make changes to your Plan. You can make changes anytime you want.</span>
 	<MpCard>
-		<PlanForm :plan="planEdits" @submit="updatePlan">
+		<PlanForm :plan="planEdits" @submit="updatePlan" :loading>
 			<template #actions>
 				<MpLinkButtonWithConfirm
 					@confirm="deletePlan"
@@ -42,6 +42,7 @@ const planId = useRoute().params.id;
 
 const plan = ref(new Plan());
 const planEdits = ref(new Plan());
+const loading = ref(true);
 
 onMounted(async () => {
 	const planResponse = await api.get('/plans/created/' + planId);
@@ -49,6 +50,7 @@ onMounted(async () => {
 		router.push('/creator');
 	plan.value = new Plan(planResponse);
 	initChanges();
+	loading.value = false;
 })
 
 const hasChanges = computed(() => !isEqual(plan.value, planEdits.value))

@@ -35,6 +35,7 @@
 		/>
 
 		<StepsFormSection
+			v-if="!loading"
 			:steps-container="plan"
 			is-root
 		/>
@@ -50,10 +51,15 @@
 import Plan from '@/models/Plan.js';
 import StepsFormSection from './StepsFormSection.vue';
 
-const { plan } = defineProps({
+defineProps({
 	plan: {
 		type: Plan,
 		required: true,
+	},
+	loading: {
+		type: Boolean,
+		required: false,
+		default: false,
 	},
 })
 

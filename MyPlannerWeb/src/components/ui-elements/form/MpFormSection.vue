@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { useCollapse } from '@/composables/collapse.js';
 
 const { collapsible, startCollapsed } = defineProps({
 	collapsible: {
@@ -28,7 +28,7 @@ const { collapsible, startCollapsed } = defineProps({
 		default: false,
 	},
 	startCollapsed: {
-		type: Boolean,
+		type: [Boolean, String],
 		required: false,
 		default: false,
 	},
@@ -38,10 +38,5 @@ const { collapsible, startCollapsed } = defineProps({
 	},
 })
 
-const collapsed = ref(startCollapsed);
-
-const toggleCollapsed = () => {
-	if (!collapsible) return;
-	collapsed.value = !collapsed.value;
-}
+const { collapsed, toggleCollapsed } = useCollapse(collapsible, startCollapsed)
 </script>

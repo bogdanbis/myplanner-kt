@@ -12,6 +12,7 @@
 		<b class="text-secondary">About</b>
 		<p><MpMultilineText :text="plan.description" /></p>
 		<StepProgressFormSection
+			v-if="!loading"
 			:steps-container="planProgress"
 			:plan-progress-id="planProgress.id"
 			is-root
@@ -23,7 +24,6 @@
 import api from '@/api/index.js';
 import StepProgressFormSection from '@/components/plan-progress/StepProgressFormSection.vue';
 import PlanProgress from '@/models/PlanProgress.js';
-import { useAuthStore } from '@/store/auth.js';
 import { computed, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -31,6 +31,7 @@ const router = useRouter()
 const planId = useRoute().params.id;
 
 const planProgress = ref(new PlanProgress());
+const loading = ref(true);
 
 const plan = computed(() => planProgress.value.plan);
 
@@ -40,6 +41,7 @@ onMounted(async () => {
 		router.push('/my-plans');
 	else
 		planProgress.value = new PlanProgress(planResponse);
+	loading.value = false;
 })
 
 const syncWithPlan = async () => {

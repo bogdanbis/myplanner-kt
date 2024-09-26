@@ -2,7 +2,7 @@
 	<MpFormSection
 		:title="isRoot ? 'Steps' : 'Sub steps'"
 		:smaller-title="!isRoot"
-		:start-collapsed="!isRoot"
+		:start-collapsed="stepsContainer.id"
 		collapsible
 		v-auto-animate
 	>
@@ -32,6 +32,11 @@ import PlanProgress from '@/models/PlanProgress.js';
 import StepProgress from '@/models/StepProgress.js';
 
 const props = defineProps({
+	isRoot: {
+		type: Boolean,
+		required: false,
+		default: false,
+	},
 	planProgressId: {
 		type: String,
 		required: false,
@@ -39,11 +44,6 @@ const props = defineProps({
 	stepsContainer: {
 		type: [PlanProgress, StepProgress],
 		required: true,
-	},
-	isRoot: {
-		type: Boolean,
-		required: false,
-		default: false,
 	},
 });
 
