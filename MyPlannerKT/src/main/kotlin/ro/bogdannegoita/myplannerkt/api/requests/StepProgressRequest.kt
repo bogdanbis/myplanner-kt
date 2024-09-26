@@ -1,5 +1,8 @@
 package ro.bogdannegoita.myplannerkt.api.requests
 
+import ro.bogdannegoita.myplannerkt.commons.StepProgressDto
+
 class StepProgressRequest(
     val completed: Boolean,
+    val steps: List<StepProgressDto>? = null,
 )

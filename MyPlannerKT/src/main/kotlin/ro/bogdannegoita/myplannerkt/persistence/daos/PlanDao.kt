@@ -62,6 +62,7 @@ class PlanDao(
     }
 
     fun getSteps(id: UUID): Collection<StepDto> {
+        // TODO: use StepProgressDao
         return findById(id).steps.map(dtoMapper::stepDto)
     }
 

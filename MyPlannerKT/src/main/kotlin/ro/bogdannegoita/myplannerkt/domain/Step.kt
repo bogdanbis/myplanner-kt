@@ -3,11 +3,13 @@ package ro.bogdannegoita.myplannerkt.domain
 import ro.bogdannegoita.myplannerkt.commons.StepDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
 import ro.bogdannegoita.myplannerkt.persistence.daos.StepDao
+import ro.bogdannegoita.myplannerkt.persistence.daos.StepProgressDao
 import java.util.*
 
 class Step(
     private val data: StepDto,
     private val dao: StepDao,
+    private val stepProgressDao: StepProgressDao,
     private val domainFactory: DomainFactory,
 ) : Comparable<Step> {
     val id = data.id!!
@@ -21,6 +23,7 @@ class Step(
             return field
         }
 
+    // TODO: remove steps parameter
     fun update(data: StepDto, steps: Collection<StepDto>? = null) {
         title = data.title
         description = data.description
@@ -31,8 +34,10 @@ class Step(
     }
 
     private fun updateSteps(steps: Collection<StepDto>) {
-        this.steps.filter { step -> steps.none { it.id == step.id } }
-            .forEach { removeStep(it) }
+        this.steps.forEach { step ->
+            if (steps.none { it.id == step.id })
+                removeStep(step)
+        }
 
         steps.forEach { step ->
             val existingStep = this.steps.find { it.id == step.id }
@@ -43,11 +48,10 @@ class Step(
         }
     }
 
-    private fun addStep(stepData: StepDto): Step {
-        val persistedData = dao.createSubstep(stepData, id)
+    private fun addStep(stepData: StepDto) {
+        val persistedData = dao.addSubstep(stepData, id)
         val step = domainFactory.step(persistedData)
         steps.add(step)
-        return step
     }
 
     private fun removeStep(step: Step) {
@@ -55,15 +59,13 @@ class Step(
         steps.remove(step)
     }
 
-    val completedStepsCount get(): Int = dao.countCompletedSteps(id)
+    val completedStepsCount get(): Int = stepProgressDao.countCompletedSteps(id)
 
     private var loadedSteps = false
     private fun loadSteps() {
         if (loadedSteps)
             return
-        steps = dao.findByStepId(id)
-            .map { domainFactory.step(it) }
-            .toSortedSet()
+        steps = dao.getSteps(id).map(domainFactory::step).toSortedSet()
         loadedSteps = true
     }
 

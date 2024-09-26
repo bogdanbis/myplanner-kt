@@ -12,6 +12,7 @@ import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanProgressDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.StepDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.StepProgressDao
+import java.util.UUID
 
 @Component
 @Scope("prototype")
@@ -24,6 +25,8 @@ class DomainFactory(
     private val registry: DomainRegistry,
 ) {
 
+    val stepProgressRegistry: MutableMap<UUID, StepProgress> = mutableMapOf()
+
     fun plan(data: PlanDto): Plan {
         var plan = registry.plans.getOrNull(data.id!!)
         if (plan != null)
@@ -34,7 +37,7 @@ class DomainFactory(
     }
 
     fun step(data: StepDto): Step {
-        return Step(data, stepDao, this)
+        return Step(data, stepDao, stepProgressDao, this)
     }
 
     fun planProgress(data: PlanProgressDto, plan: Plan): PlanProgress {
@@ -42,7 +45,7 @@ class DomainFactory(
     }
 
     fun stepProgress(data: StepProgressDto, step: Step): StepProgress {
-        return StepProgress(data, step, stepProgressDao)
+        return StepProgress(data, step, stepProgressDao, this)
     }
 
     fun planStats(plan: Plan): PlanStats {

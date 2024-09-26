@@ -9,4 +9,5 @@ import java.util.*
 interface StepProgressRepository : JpaRepository<StepProgressEntity, UUID> {
     fun findAllByPlanId(id: UUID): List<StepProgressEntity>
     fun countByStepIdAndCompletedTrue(id: UUID): Int
+    fun findAllByParentStepId(id: UUID): List<StepProgressEntity>
 }

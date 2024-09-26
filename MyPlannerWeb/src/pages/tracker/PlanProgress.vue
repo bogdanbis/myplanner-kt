@@ -11,24 +11,17 @@
 	<MpCard>
 		<b class="text-secondary">About</b>
 		<p><MpMultilineText :text="plan.description" /></p>
-
-		<MpFormSection title="Steps">
-			<div v-for="stepProgress in planProgress.steps" :key="stepProgress" class="mp-form-subsection">
-				<span><b>{{ stepProgress.step.title }}</b></span>
-				<p>{{ stepProgress.step.description }}</p>
-				<MpFormCheckbox
-					:id="'step-' + stepProgress.step.id + '-completed'"
-					label="Completed"
-					v-model="stepProgress.completed"
-					@change="markAsCompleted(stepProgress.id)"
-				/>
-			</div>
-		</MpFormSection>
+		<StepProgressFormSection
+			:steps-container="planProgress"
+			:plan-progress-id="planProgress.id"
+			is-root
+		/>
 	</MpCard>
 </template>
 
 <script setup>
 import api from '@/api/index.js';
+import StepProgressFormSection from '@/components/plan-progress/StepProgressFormSection.vue';
 import PlanProgress from '@/models/PlanProgress.js';
 import { useAuthStore } from '@/store/auth.js';
 import { computed, onMounted, ref } from 'vue';
@@ -48,10 +41,6 @@ onMounted(async () => {
 	else
 		planProgress.value = new PlanProgress(planResponse);
 })
-
-const markAsCompleted = async (stepId) => {
-	await api.put('/plans/acquired/' + planProgress.value.id + '/steps/' + stepId, { completed: true });
-}
 
 const syncWithPlan = async () => {
 	const response = await api.put('/plans/acquired/' + planId + '/sync');

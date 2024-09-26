@@ -11,16 +11,42 @@ import ro.bogdannegoita.myplannerkt.persistence.repositories.StepProgressReposit
 import java.util.*
 
 @Component
-class StepProgressDao(private val repository: StepProgressRepository) {
+class StepProgressDao(
+    private val repository: StepProgressRepository,
+    private val stepDao: StepDao,
+) {
     private val dtoMapper = DtoMapper()
 
     fun create(stepEntity: StepEntity, planProgressEntity: PlanProgressEntity): StepProgressDto {
-        val entity = StepProgressEntity(
+        var entity = StepProgressEntity(
             completed = false,
             step = stepEntity,
             plan = planProgressEntity,
         )
-        return dtoMapper.stepProgressDto(repository.save(entity))
+        entity = repository.save(entity)
+        stepEntity.steps.forEach { createSubstep(entity, it) }
+        return dtoMapper.stepProgressDto(entity)
+    }
+
+    fun addSubstep(parentStepId: UUID, stepId: UUID): StepProgressDto {
+        val parentStep = findById(parentStepId)
+        val step = stepDao.findById(stepId)
+        return createSubstep(parentStep, step)
+    }
+
+    private fun createSubstep(parentStep: StepProgressEntity, step: StepEntity): StepProgressDto {
+        var entity = StepProgressEntity(
+            completed = false,
+            step = step,
+            parentStep = parentStep,
+        )
+        entity = repository.save(entity)
+        step.steps.forEach { createSubstep(entity, it) }
+        return dtoMapper.stepProgressDto(entity)
+    }
+
+    fun getById(id: UUID): StepProgressDto {
+        return dtoMapper.stepProgressDto(findById(id))
     }
 
     fun findById(id: UUID): StepProgressEntity {
@@ -30,6 +56,11 @@ class StepProgressDao(private val repository: StepProgressRepository) {
 
     fun findByPlanProgressId(id: UUID): List<StepProgressDto> {
         return repository.findAllByPlanId(id).map(dtoMapper::stepProgressDto)
+    }
+
+    fun getSteps(id: UUID): List<StepProgressDto> {
+        return repository.findAllByParentStepId(id)
+            .map(dtoMapper::stepProgressDto)
     }
 
     fun update(id: UUID, data: StepProgressDto) {

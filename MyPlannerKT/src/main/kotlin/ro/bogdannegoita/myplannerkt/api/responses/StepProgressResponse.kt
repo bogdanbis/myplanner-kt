@@ -6,4 +6,5 @@ class StepProgressResponse(stepProgress: StepProgress) {
     val id = stepProgress.id
     val completed = stepProgress.completed
     val step = StepResponse(stepProgress.step)
+    val steps = stepProgress.steps.map(::StepProgressResponse)
 }

@@ -23,29 +23,50 @@ class PlanProgress(
         }
         private set
 
+    private val stepProgressRegistry by domainFactory::stepProgressRegistry
+
     fun updateStepProgress(stepId: UUID, stepProgressData: StepProgressDto): StepProgress? {
-        return steps.find { it.id == stepId }
-            ?.update(stepProgressData)
+        return getStep(stepId)?.update(stepProgressData)
     }
 
     fun sync() {
-        // delete steps that are not present anymore
-        steps.filter { stepProgress -> plan.steps.none { it.id == stepProgress.step.id } }
-            .forEach {
-                dao.deleteStep(it.id)
-                steps.remove(it)
-            }
-
-        // add new steps
         plan.steps.forEach { step ->
-            if (steps.none { step.id == it.step.id }) {
-                val newStepProgressData = dao.createStepProgress(step.id, id)
-                steps.add(domainFactory.stepProgress(newStepProgressData, step))
-            }
+            if (steps.none { step.id == it.step.id })
+                addStep(step)
         }
+        steps.forEach { stepProgress ->
+            if (plan.steps.none { it.id == stepProgress.step.id })
+                removeStep(stepProgress)
+            else
+                stepProgress.sync()
+        }
+        steps = steps.toSortedSet()
 
         lastSyncedPlan = plan.lastModifiedAt
         dao.update(id, data)
+    }
+
+    private fun addStep(step: Step) {
+        val newStepProgressData = dao.createStepProgress(step.id, id)
+        steps.add(domainFactory.stepProgress(newStepProgressData, step))
+    }
+
+    private fun removeStep(step: StepProgress) {
+        dao.removeStep(step.id)
+        steps.remove(step)
+    }
+
+    private fun getStep(id: UUID): StepProgress? {
+        if (stepProgressRegistry[id] != null)
+            return stepProgressRegistry[id]
+        for (step in steps) {
+            if (step.id == id)
+                return step
+            val substep = step.steps.find { it.id == id }
+            if (substep != null)
+                return substep
+        }
+        return null
     }
 
     private var loadedSteps = false
@@ -56,6 +77,7 @@ class PlanProgress(
             .map { dto ->
                 val step = plan.steps.find { it.id == dto.step!!.id }
                 val stepProgress = domainFactory.stepProgress(dto, step!!)
+                stepProgressRegistry[stepProgress.id] = stepProgress
                 stepProgress
             }
             .toSortedSet()

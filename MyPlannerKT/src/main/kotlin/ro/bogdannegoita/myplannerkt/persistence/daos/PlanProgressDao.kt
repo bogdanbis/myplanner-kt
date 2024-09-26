@@ -56,7 +56,7 @@ class PlanProgressDao(
         return repository.countByPlanId(id)
     }
 
-    fun deleteStep(stepProgressId: UUID) {
+    fun removeStep(stepProgressId: UUID) {
         stepProgressDao.delete(stepProgressId)
     }
 

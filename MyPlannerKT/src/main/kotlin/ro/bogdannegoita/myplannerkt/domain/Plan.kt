@@ -60,8 +60,10 @@ class Plan(
     }
 
     private fun updateSteps(steps: List<StepDto>) {
-        this.steps.filter { step -> steps.none { it.id == step.id } }
-            .forEach { removeStep(it) }
+        this.steps.forEach { step ->
+            if (steps.none { it.id == step.id })
+                removeStep(step)
+        }
 
         steps.forEach { step ->
             val existingStep = this.steps.find { it.id == step.id }
@@ -72,11 +74,10 @@ class Plan(
         }
     }
 
-    private fun addStep(stepData: StepDto): Step {
+    private fun addStep(stepData: StepDto) {
         val persistedData = dao.addStep(id, stepData)
         val step = domainFactory.step(persistedData)
         steps.add(step)
-        return step
     }
 
     private fun removeStep(step: Step) {

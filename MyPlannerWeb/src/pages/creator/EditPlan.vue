@@ -44,7 +44,7 @@ const plan = ref(new Plan());
 const planEdits = ref(new Plan());
 
 onMounted(async () => {
-	const planResponse = await api.get('/plans/' + planId);
+	const planResponse = await api.get('/plans/created/' + planId);
 	if (!planResponse)
 		router.push('/creator');
 	plan.value = new Plan(planResponse);

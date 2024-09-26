@@ -12,7 +12,6 @@ import java.util.*
 @Component
 class StepDao(
     private val repository: StepRepository,
-    private val stepProgressDao: StepProgressDao,
 ) {
     private val dtoMapper = DtoMapper()
 
@@ -28,7 +27,7 @@ class StepDao(
         return dtoMapper.stepDto(entity)
     }
 
-    fun createSubstep(data: StepDto, parentStepId: UUID): StepDto {
+    fun addSubstep(data: StepDto, parentStepId: UUID): StepDto {
         val parentStep = findById(parentStepId)
         return createSubstep(data, parentStep)
     }
@@ -58,13 +57,9 @@ class StepDao(
             .orElseThrow { EntityNotFoundException(StepEntity::class) }
     }
 
-    fun findByStepId(id: UUID): List<StepDto> {
+    fun getSteps(id: UUID): List<StepDto> {
         return repository.findAllByParentStepId(id)
             .map { dtoMapper.stepDto(it) }
-    }
-
-    fun countCompletedSteps(id: UUID): Int {
-        return stepProgressDao.countCompletedSteps(id)
     }
 
     fun delete(id: UUID) {
