@@ -10,7 +10,7 @@ class StepProgress(
     val step: Step,
     private val dao: StepProgressDao,
     private val domainFactory: DomainFactory,
-) : Comparable<StepProgress> {
+) : StepProgressContainer(data.id!!, dao, domainFactory), Comparable<StepProgress> {
     val id: UUID = data.id!!
     var completed by data::completed
 
@@ -34,27 +34,7 @@ class StepProgress(
     }
 
     fun sync() {
-        step.steps.forEach { step ->
-            if (steps.none { step.id == it.step.id })
-                addStep(step)
-        }
-        steps.forEach { stepProgress ->
-            if (step.steps.none { it.id == stepProgress.step.id })
-                removeStep(stepProgress)
-            else
-                stepProgress.sync()
-        }
-        steps = steps.toSortedSet()
-    }
-
-    private fun addStep(step: Step) {
-        val newStepProgressData = dao.addSubstep(id, step.id)
-        steps.add(domainFactory.stepProgress(newStepProgressData, step))
-    }
-
-    private fun removeStep(step: StepProgress) {
-        dao.delete(step.id)
-        steps.remove(step)
+        steps = sync(steps, step.steps)
     }
 
     private var loadedSteps = false

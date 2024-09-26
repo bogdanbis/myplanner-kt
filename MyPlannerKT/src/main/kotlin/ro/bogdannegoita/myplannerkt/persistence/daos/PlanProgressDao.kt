@@ -18,7 +18,7 @@ class PlanProgressDao(
     private val repository: PlanProgressRepository,
     private val stepProgressDao: StepProgressDao,
     private val stepDao: StepDao,
-) {
+) : StepProgressContainerDao {
     private val dtoMapper = DtoMapper()
 
     fun create(planEntity: PlanEntity, userEntity: ApplicationUserEntity): PlanProgressDto {
@@ -29,16 +29,16 @@ class PlanProgressDao(
             user = userEntity,
         )
         entity = repository.save(entity)
-        planEntity.steps.forEach { createStepProgress(it, entity.id!!) }
+        planEntity.steps.forEach { addStepProgress(it, entity.id!!) }
         return dtoMapper.planProgressDto(entity)
     }
 
-    fun createStepProgress(stepEntity: StepEntity, planProgressId: UUID): StepProgressDto {
+    fun addStepProgress(stepEntity: StepEntity, planProgressId: UUID): StepProgressDto {
         return stepProgressDao.create(stepEntity, findById(planProgressId))
     }
 
-    fun createStepProgress(stepId: UUID, planProgressId: UUID): StepProgressDto {
-        val planProgressEntity = findById(planProgressId)
+    override fun addStepProgress(stepContainerId: UUID, stepId: UUID): StepProgressDto {
+        val planProgressEntity = findById(stepContainerId)
         val stepEntity = stepDao.findById(stepId)
         return stepProgressDao.create(stepEntity, planProgressEntity)
     }
@@ -56,8 +56,8 @@ class PlanProgressDao(
         return repository.countByPlanId(id)
     }
 
-    fun removeStep(stepProgressId: UUID) {
-        stepProgressDao.delete(stepProgressId)
+    override fun removeStepProgress(id: UUID) {
+        stepProgressDao.removeStepProgress(id)
     }
 
     fun update(id: UUID, data: PlanProgressDto): PlanProgressDto {

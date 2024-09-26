@@ -11,7 +11,7 @@ class PlanProgress(
     val plan: Plan,
     private val dao: PlanProgressDao,
     private val domainFactory: DomainFactory,
-) : Comparable<PlanProgress> {
+) : StepProgressContainer(data.id!!, dao, domainFactory), Comparable<PlanProgress> {
     val id = data.id!!
     val acquiredAt by data::acquiredAt
     var lastSyncedPlan by data::lastSyncedPlan
@@ -30,30 +30,9 @@ class PlanProgress(
     }
 
     fun sync() {
-        plan.steps.forEach { step ->
-            if (steps.none { step.id == it.step.id })
-                addStep(step)
-        }
-        steps.forEach { stepProgress ->
-            if (plan.steps.none { it.id == stepProgress.step.id })
-                removeStep(stepProgress)
-            else
-                stepProgress.sync()
-        }
-        steps = steps.toSortedSet()
-
+        steps = sync(steps, plan.steps)
         lastSyncedPlan = plan.lastModifiedAt
         dao.update(id, data)
-    }
-
-    private fun addStep(step: Step) {
-        val newStepProgressData = dao.createStepProgress(step.id, id)
-        steps.add(domainFactory.stepProgress(newStepProgressData, step))
-    }
-
-    private fun removeStep(step: StepProgress) {
-        dao.removeStep(step.id)
-        steps.remove(step)
     }
 
     private fun getStep(id: UUID): StepProgress? {

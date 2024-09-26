@@ -14,7 +14,7 @@ import java.util.*
 class StepProgressDao(
     private val repository: StepProgressRepository,
     private val stepDao: StepDao,
-) {
+) : StepProgressContainerDao {
     private val dtoMapper = DtoMapper()
 
     fun create(stepEntity: StepEntity, planProgressEntity: PlanProgressEntity): StepProgressDto {
@@ -28,8 +28,8 @@ class StepProgressDao(
         return dtoMapper.stepProgressDto(entity)
     }
 
-    fun addSubstep(parentStepId: UUID, stepId: UUID): StepProgressDto {
-        val parentStep = findById(parentStepId)
+    override fun addStepProgress(stepContainerId: UUID, stepId: UUID): StepProgressDto {
+        val parentStep = findById(stepContainerId)
         val step = stepDao.findById(stepId)
         return createSubstep(parentStep, step)
     }
@@ -43,10 +43,6 @@ class StepProgressDao(
         entity = repository.save(entity)
         step.steps.forEach { createSubstep(entity, it) }
         return dtoMapper.stepProgressDto(entity)
-    }
-
-    fun getById(id: UUID): StepProgressDto {
-        return dtoMapper.stepProgressDto(findById(id))
     }
 
     fun findById(id: UUID): StepProgressEntity {
@@ -73,7 +69,7 @@ class StepProgressDao(
         return repository.countByStepIdAndCompletedTrue(stepId)
     }
 
-    fun delete(id: UUID) {
+    override fun removeStepProgress(id: UUID) {
         repository.deleteById(id)
     }
 }

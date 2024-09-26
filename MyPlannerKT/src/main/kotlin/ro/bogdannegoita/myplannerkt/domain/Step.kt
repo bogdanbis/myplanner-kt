@@ -11,7 +11,7 @@ class Step(
     private val dao: StepDao,
     private val stepProgressDao: StepProgressDao,
     private val domainFactory: DomainFactory,
-) : Comparable<Step> {
+) : StepContainer(data.id!!, dao, domainFactory), Comparable<Step> {
     val id = data.id!!
     var title by data::title
     var description by data::description
@@ -28,34 +28,8 @@ class Step(
         description = data.description
         index = data.index
         if (data.steps != null)
-            updateSteps(data.steps)
+            updateSteps(steps, data.steps)
         dao.update(id, this.data)
-    }
-
-    private fun updateSteps(steps: Collection<StepDto>) {
-        this.steps.forEach { step ->
-            if (steps.none { it.id == step.id })
-                removeStep(step)
-        }
-
-        steps.forEach { step ->
-            val existingStep = this.steps.find { it.id == step.id }
-            if (existingStep != null)
-                existingStep.update(step)
-            else
-                addStep(step)
-        }
-    }
-
-    private fun addStep(stepData: StepDto) {
-        val persistedData = dao.addSubstep(stepData, id)
-        val step = domainFactory.step(persistedData)
-        steps.add(step)
-    }
-
-    private fun removeStep(step: Step) {
-        dao.delete(step.id)
-        steps.remove(step)
     }
 
     val completedStepsCount get(): Int = stepProgressDao.countCompletedSteps(id)

@@ -12,7 +12,7 @@ import java.util.*
 @Component
 class StepDao(
     private val repository: StepRepository,
-) {
+) : StepContainerDao {
     private val dtoMapper = DtoMapper()
 
     fun create(data: StepDto, plan: PlanEntity): StepDto {
@@ -27,8 +27,8 @@ class StepDao(
         return dtoMapper.stepDto(entity)
     }
 
-    fun addSubstep(data: StepDto, parentStepId: UUID): StepDto {
-        val parentStep = findById(parentStepId)
+    override fun addStep(containerId: UUID, data: StepDto): StepDto {
+        val parentStep = findById(containerId)
         return createSubstep(data, parentStep)
     }
 
@@ -66,7 +66,7 @@ class StepDao(
             .map { dtoMapper.stepDto(it) }
     }
 
-    fun delete(id: UUID) {
+    override fun removeStep(id: UUID) {
         repository.deleteById(id)
     }
 }

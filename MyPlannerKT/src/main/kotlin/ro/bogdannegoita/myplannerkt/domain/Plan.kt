@@ -15,7 +15,7 @@ class Plan(
     private val dao: PlanDao,
     private val domainFactory: DomainFactory,
     private val eventPublisher: ApplicationEventPublisher,
-) : Comparable<Plan> {
+) : StepContainer(data.id!!, dao, domainFactory), Comparable<Plan> {
     val id = data.id!!
     var title by data::title
     var shortDescription by data::shortDescription
@@ -55,34 +55,8 @@ class Plan(
         lastModifiedAt = LocalDateTime.now()
         dao.update(id, this.data)
         if (data.steps != null)
-            updateSteps(data.steps)
+            updateSteps(steps, data.steps)
         eventPublisher.publishEvent(PlanUpdatedEvent(this, this))
-    }
-
-    private fun updateSteps(steps: List<StepDto>) {
-        this.steps.forEach { step ->
-            if (steps.none { it.id == step.id })
-                removeStep(step)
-        }
-
-        steps.forEach { step ->
-            val existingStep = this.steps.find { it.id == step.id }
-            if (existingStep != null)
-                existingStep.update(step)
-            else
-                addStep(step)
-        }
-    }
-
-    private fun addStep(stepData: StepDto) {
-        val persistedData = dao.addStep(id, stepData)
-        val step = domainFactory.step(persistedData)
-        steps.add(step)
-    }
-
-    private fun removeStep(step: Step) {
-        dao.removeStep(step.id)
-        steps.remove(step)
     }
 
     private var loadedAuthor = false

@@ -16,7 +16,7 @@ class PlanDao(
     private val repository: PlanRepository,
     private val stepDao: StepDao,
     private val planProgressDao: PlanProgressDao,
-) {
+) : StepContainerDao {
     private val dtoMapper = DtoMapper()
 
     fun getPublicPlans(): List<PlanDto> {
@@ -65,9 +65,9 @@ class PlanDao(
         return stepDao.findByPlanId(id)
     }
 
-    fun addStep(id: UUID, stepData: StepDto): StepDto {
-        val planEntity = findById(id)
-        return stepDao.create(stepData, planEntity)
+    override fun addStep(containerId: UUID, data: StepDto): StepDto {
+        val planEntity = findById(containerId)
+        return stepDao.create(data, planEntity)
     }
 
     fun delete(id: UUID) {
@@ -78,7 +78,7 @@ class PlanDao(
         return planProgressDao.countByPlan(id)
     }
 
-    fun removeStep(stepId: UUID) {
-        stepDao.delete(stepId)
+    override fun removeStep(id: UUID) {
+        stepDao.removeStep(id)
     }
 }
