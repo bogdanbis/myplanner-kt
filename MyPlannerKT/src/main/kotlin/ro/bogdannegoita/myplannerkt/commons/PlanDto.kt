@@ -12,4 +12,5 @@ data class PlanDto(
     var isPublic: Boolean,
     val createdAt: LocalDateTime,
     var lastModifiedAt: LocalDateTime,
+    val steps: List<StepDto>? = null,
 )

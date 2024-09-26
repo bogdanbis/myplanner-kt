@@ -39,7 +39,7 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
     @PostMapping("/create")
     fun createPlan(@AuthenticationPrincipal principal: UserDetails, @RequestBody request: PlanRequest)
             : PlanSimpleResponse? {
-        val plan = myPlanner.createPlan(user(principal), planRequestToDto(request), request.steps)
+        val plan = myPlanner.createPlan(user(principal), planRequestToDto(request))
         return PlanSimpleResponse(plan)
     }
 
@@ -55,8 +55,7 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
         @PathVariable id: UUID,
         @RequestBody request: PlanRequest
     ): PlanResponse? {
-        val planData = planRequestToDto(request)
-        val plan = user(principal).updatePlan(id, planData, request.steps)
+        val plan = user(principal).updatePlan(id, planRequestToDto(request))
         return plan?.let { PlanResponse(it) }
     }
 
@@ -69,5 +68,6 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
         title = request.title, shortDescription = request.shortDescription,
         description = request.description, color = request.color, isPublic = request.isPublic,
         createdAt = LocalDateTime.now(), lastModifiedAt = LocalDateTime.now(),
+        steps = request.steps
     )
 }

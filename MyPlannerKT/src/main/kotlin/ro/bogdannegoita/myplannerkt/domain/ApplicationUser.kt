@@ -43,17 +43,17 @@ class ApplicationUser(
         return planProgress
     }
 
-    fun createPlan(planData: PlanDto, steps: List<StepDto>? = null): Plan {
+    fun createPlan(planData: PlanDto): Plan {
         val persistedPlanData = dao.createPlan(planData, id)
         val plan = domainFactory.plan(persistedPlanData)
-        plan.update(plan.data, steps)
+        plan.update(plan.data)
         createdPlans.add(plan)
         return plan
     }
 
-    fun updatePlan(id: UUID, data: PlanDto, steps: List<StepDto>? = null): Plan? {
+    fun updatePlan(id: UUID, data: PlanDto): Plan? {
         val plan = createdPlans.find { it.id == id }
-        plan?.update(data, steps)
+        plan?.update(data)
         return plan
     }
 

@@ -45,9 +45,9 @@ class MyPlanner(
         return publicPlansRegistry[id]
     }
 
-    fun createPlan(user: ApplicationUser, planData: PlanDto, steps: List<StepDto>? = null): Plan {
+    fun createPlan(user: ApplicationUser, planData: PlanDto): Plan {
         planData.lastModifiedAt = LocalDateTime.now()
-        val plan = user.createPlan(planData, steps)
+        val plan = user.createPlan(planData)
         if (plan.isPublic)
             publishPlan(plan)
         return plan

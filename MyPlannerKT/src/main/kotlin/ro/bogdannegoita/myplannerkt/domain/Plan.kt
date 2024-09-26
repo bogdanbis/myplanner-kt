@@ -46,7 +46,7 @@ class Plan(
         }
         private set
 
-    fun update(data: PlanDto, steps: List<StepDto>? = null) {
+    fun update(data: PlanDto) {
         title = data.title
         shortDescription = data.shortDescription
         description = data.description
@@ -54,8 +54,8 @@ class Plan(
         isPublic = data.isPublic
         lastModifiedAt = LocalDateTime.now()
         dao.update(id, this.data)
-        if (steps != null)
-            updateSteps(steps)
+        if (data.steps != null)
+            updateSteps(data.steps)
         eventPublisher.publishEvent(PlanUpdatedEvent(this, this))
     }
 
@@ -68,7 +68,7 @@ class Plan(
         steps.forEach { step ->
             val existingStep = this.steps.find { it.id == step.id }
             if (existingStep != null)
-                existingStep.update(step, step.steps)
+                existingStep.update(step)
             else
                 addStep(step)
         }

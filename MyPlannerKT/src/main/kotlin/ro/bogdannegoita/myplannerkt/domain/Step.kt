@@ -23,13 +23,12 @@ class Step(
             return field
         }
 
-    // TODO: remove steps parameter
-    fun update(data: StepDto, steps: Collection<StepDto>? = null) {
+    fun update(data: StepDto) {
         title = data.title
         description = data.description
         index = data.index
-        if (steps != null)
-            updateSteps(steps)
+        if (data.steps != null)
+            updateSteps(data.steps)
         dao.update(id, this.data)
     }
 
@@ -42,7 +41,7 @@ class Step(
         steps.forEach { step ->
             val existingStep = this.steps.find { it.id == step.id }
             if (existingStep != null)
-                existingStep.update(step, step.steps)
+                existingStep.update(step)
             else
                 addStep(step)
         }
