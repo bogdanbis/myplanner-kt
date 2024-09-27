@@ -20,7 +20,7 @@
 				:id="'step-' + stepProgress.step.id + '-completed'"
 				label="Completed"
 				v-model="stepProgress.completed"
-				@change="markAsCompleted(stepProgress.id)"
+				@change="markAsCompleted(stepProgress)"
 			/>
 		</div>
 	</MpFormSection>
@@ -47,7 +47,8 @@ const props = defineProps({
 	},
 });
 
-const markAsCompleted = async (stepId) => {
-	await api.put('/plans/acquired/' + props.planProgressId + '/steps/' + stepId, { completed: true });
+const markAsCompleted = async (stepProgress) => {
+	await api.put('/plans/acquired/' + props.planProgressId + '/steps/' + stepProgress.id,
+			{ completed: stepProgress.completed });
 }
 </script>

@@ -7,5 +7,6 @@ class PlanProgressResponse(planProgress: PlanProgress) {
     val plan = PlanSimpleResponse(planProgress.plan)
     val acquiredAt = planProgress.acquiredAt
     val lastSyncedPlan = planProgress.lastSyncedPlan
+    val completed = planProgress.completed
     val steps = planProgress.steps.map(::StepProgressResponse)
 }

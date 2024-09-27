@@ -11,17 +11,10 @@ class PlanProgress(
     val plan: Plan,
     private val dao: PlanProgressDao,
     private val domainFactory: DomainFactory,
-) : StepProgressContainer(data.id!!, dao, domainFactory), Comparable<PlanProgress> {
-    val id = data.id!!
+) : StepProgressContainer(data.id!!, data.completed, null, dao, domainFactory), Comparable<PlanProgress> {
+
     val acquiredAt by data::acquiredAt
     var lastSyncedPlan by data::lastSyncedPlan
-
-    var steps: SortedSet<StepProgress> = sortedSetOf()
-        get() {
-            loadSteps()
-            return field
-        }
-        private set
 
     private val stepProgressRegistry by domainFactory::stepProgressRegistry
 
@@ -49,13 +42,13 @@ class PlanProgress(
     }
 
     private var loadedSteps = false
-    private fun loadSteps() {
+    override fun loadSteps() {
         if (loadedSteps) return
         steps = dao.getSteps(id)
             .filter { dto -> plan.steps.any { it.id == dto.step!!.id } }
             .map { dto ->
                 val step = plan.steps.find { it.id == dto.step!!.id }
-                val stepProgress = domainFactory.stepProgress(dto, step!!)
+                val stepProgress = domainFactory.stepProgress(dto, this, step!!)
                 stepProgressRegistry[stepProgress.id] = stepProgress
                 stepProgress
             }

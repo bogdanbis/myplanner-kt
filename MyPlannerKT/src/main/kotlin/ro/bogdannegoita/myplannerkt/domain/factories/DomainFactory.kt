@@ -44,8 +44,8 @@ class DomainFactory(
         return PlanProgress(data, plan, planProgressDao, this)
     }
 
-    fun stepProgress(data: StepProgressDto, step: Step): StepProgress {
-        return StepProgress(data, step, stepProgressDao, this)
+    fun stepProgress(data: StepProgressDto, parent: StepProgressContainer, step: Step): StepProgress {
+        return StepProgress(data, step, parent, stepProgressDao, this)
     }
 
     fun planStats(plan: Plan): PlanStats {

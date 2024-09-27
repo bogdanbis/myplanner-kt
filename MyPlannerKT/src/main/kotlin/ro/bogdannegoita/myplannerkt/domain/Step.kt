@@ -22,6 +22,7 @@ class Step(
             loadSteps()
             return field
         }
+        private set
 
     fun update(data: StepDto) {
         title = data.title

@@ -11,6 +11,7 @@ import java.util.*
 class PlanProgressEntity(
     var acquiredAt: LocalDateTime? = null,
     var lastSyncedPlan: LocalDateTime? = null,
+    var completed: Boolean? = null,
 
     @ManyToOne(fetch = LAZY)
     var plan: PlanEntity? = null,

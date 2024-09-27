@@ -60,9 +60,16 @@ class PlanProgressDao(
         stepProgressDao.removeStepProgress(id)
     }
 
-    fun update(id: UUID, data: PlanProgressDto): PlanProgressDto {
+    fun update(id: UUID, data: PlanProgressDto) {
         val entity = findById(id)
         entity.lastSyncedPlan = data.lastSyncedPlan
-        return dtoMapper.planProgressDto(repository.save(entity))
+        entity.completed = data.completed
+        repository.save(entity)
+    }
+
+    override fun updateCompleted(id: UUID, completed: Boolean) {
+        val entity = findById(id)
+        entity.completed = completed
+        repository.save(entity)
     }
 }

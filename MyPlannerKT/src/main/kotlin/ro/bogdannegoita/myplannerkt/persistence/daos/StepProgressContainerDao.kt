@@ -5,5 +5,6 @@ import java.util.*
 
 interface StepProgressContainerDao {
     fun addStepProgress(stepContainerId: UUID, stepId: UUID): StepProgressDto
+    fun updateCompleted(id: UUID, completed: Boolean)
     fun removeStepProgress(id: UUID)
 }
