@@ -13,7 +13,7 @@
 				<span class="hover-info">Move item</span>
 			</div>
 			<MpFormInput
-				:id="'step-title-' + step.id"
+				:id="'step-title-' + (step.id || index)"
 				label="Title"
 				v-model="step.title"
 			/>
@@ -23,7 +23,7 @@
 				v-model="step.description"
 			/>
 
-			<StepsFormSection v-if="step.steps.length" :steps-container="step" />
+			<StepsFormSection :steps-container="step" />
 
 			<div class="mp-form-actions">
 				<MpButton link @click="removeStep(step)" icon="dash" class="ms-auto">Remove</MpButton>
@@ -31,7 +31,9 @@
 		</MpCol>
 
 		<MpCol cols="1">
-			<MpButton @click="addNewStep" icon="plus-circle">{{ isRoot ? 'Step' : 'Sub step' }}</MpButton>
+			<MpButton @click="addNewStep" icon="plus-circle" :link="!isRoot" :class="{ 'm-left-xs': !isRoot }">
+				{{ isRoot ? 'Step' : 'Sub step' }}
+			</MpButton>
 		</MpCol>
 	</MpFormSection>
 </template>
@@ -58,7 +60,8 @@ const steps = computed(() => _sortBy(stepsContainer.steps, 'index'));
 const addNewStep = () => {
 	stepsContainer.steps.push(new Step({ index: stepsContainer.steps.length }));
 	setTimeout(() => {
-		document.getElementById('step-title-' + (stepsContainer.steps.length - 1)).scrollIntoView({ behavior: 'smooth' });
+		document.getElementById('step-title-' + (stepsContainer.steps.length - 1))
+				.scrollIntoView({ behavior: 'smooth' });
 	}, 250);
 }
 
