@@ -37,7 +37,7 @@ class PlanDao(
     }
 
     fun create(data: PlanDto, author: ApplicationUserEntity): PlanDto {
-        val entity = PlanEntity(
+        var entity = PlanEntity(
             title = data.title,
             shortDescription = data.shortDescription,
             description = data.description,
@@ -47,7 +47,9 @@ class PlanDao(
             lastModifiedAt = data.createdAt,
             author = author,
         )
-        return dtoMapper.planDto(repository.save(entity))
+        entity = repository.save(entity)
+        data.steps?.forEach { stepDao.create(it, entity) }
+        return dtoMapper.planDto(entity)
     }
 
     fun update(id: UUID, data: PlanDto) {

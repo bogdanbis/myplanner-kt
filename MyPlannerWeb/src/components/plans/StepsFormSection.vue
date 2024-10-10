@@ -1,12 +1,18 @@
 <template>
 	<MpFormSection
+		v-if="steps.length > 0"
 		:title="isRoot ? 'Steps' : 'Sub steps'"
 		:smaller-title="!isRoot"
 		:start-collapsed="stepsContainer.id"
 		collapsible
 		v-auto-animate
 	>
-		<MpCol v-for="(step, index) in steps" :key="step" class="mp-form-subsection">
+		<MpCol
+			v-for="(step, index) in steps"
+			:key="step"
+			class="mp-form-subsection"
+			:class="{ 'mp-form-root-section': isRoot }"
+		>
 			<div class="change-index-container">
 				<MpButton v-if="index < (steps.length - 1)" link icon="arrow-down" @click="moveStepDown(step)" />
 				<MpButton v-if="index > 0" link icon="arrow-up" @click="moveStepUp(step)" />
@@ -36,6 +42,11 @@
 			</MpButton>
 		</MpCol>
 	</MpFormSection>
+	<MpCol v-else cols="1">
+		<MpButton @click="addNewStep" icon="plus-circle" :link="!isRoot" :class="{ 'm-left-xs': !isRoot }">
+			{{ isRoot ? 'Step' : 'Sub step' }}
+		</MpButton>
+	</MpCol>
 </template>
 
 <script setup>

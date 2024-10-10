@@ -6,7 +6,12 @@
 		collapsible
 		v-auto-animate
 	>
-		<div v-for="stepProgress in stepsContainer.steps" :key="stepProgress" class="mp-form-subsection">
+		<div
+			v-for="stepProgress in stepsContainer.steps"
+			:key="stepProgress"
+			class="mp-form-subsection"
+			:class="{ 'mp-form-root-section': isRoot }"
+		>
 			<span><b>{{ stepProgress.step.title }}</b></span>
 			<p>{{ stepProgress.step.description }}</p>
 

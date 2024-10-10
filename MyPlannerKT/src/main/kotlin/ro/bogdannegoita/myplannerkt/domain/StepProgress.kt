@@ -22,6 +22,7 @@ class StepProgress(
         if (steps.isEmpty()) {
             completed = data.completed
             dao.updateCompleted(id, completed)
+            step.stepCompleted()
         }
         parent?.stepChanged()
         return this
@@ -29,6 +30,11 @@ class StepProgress(
 
     fun sync() {
         steps = sync(steps, step.steps)
+    }
+
+    override fun stepChanged() {
+        super.stepChanged()
+        step.stepCompleted()
     }
 
     private var loadedSteps = false

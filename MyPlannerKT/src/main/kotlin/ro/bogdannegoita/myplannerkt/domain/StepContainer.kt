@@ -11,10 +11,8 @@ open class StepContainer(
     private val domainFactory: DomainFactory,
 ) {
     protected fun updateSteps(steps: SortedSet<Step>, newSteps: List<StepDto>) {
-        steps.forEach { step ->
-            if (steps.none { it.id == step.id })
-                removeStep(steps, step)
-        }
+        steps.filter { step -> newSteps.none { it.id == step.id } }
+            .forEach { step -> removeStep(steps, step) }
 
         newSteps.forEach { step ->
             val existingStep = steps.find { it.id == step.id }

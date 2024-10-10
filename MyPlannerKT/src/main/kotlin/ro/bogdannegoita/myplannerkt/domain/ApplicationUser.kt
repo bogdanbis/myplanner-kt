@@ -3,7 +3,6 @@ package ro.bogdannegoita.myplannerkt.domain
 import org.springframework.context.ApplicationEventPublisher
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
-import ro.bogdannegoita.myplannerkt.commons.StepDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
 import ro.bogdannegoita.myplannerkt.events.PlanDeletedEvent
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
@@ -46,7 +45,6 @@ class ApplicationUser(
     fun createPlan(planData: PlanDto): Plan {
         val persistedPlanData = dao.createPlan(planData, id)
         val plan = domainFactory.plan(persistedPlanData)
-        plan.update(plan.data)
         createdPlans.add(plan)
         return plan
     }

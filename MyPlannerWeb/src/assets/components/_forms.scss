@@ -58,7 +58,7 @@
 
 .mp-form-subsection {
 	position: relative;
-	box-shadow: var(--box-shadow);
+	border: solid 1px var(--border-color);
 	border-radius: $border-radius-s;
 	padding: $spacer-l;
 
@@ -87,6 +87,11 @@
 			transition-delay: .5s;
 		}
 	}
+}
+
+.mp-form-root-section {
+	border: none;
+	box-shadow: var(--box-shadow);
 }
 
 .mp-form-actions {

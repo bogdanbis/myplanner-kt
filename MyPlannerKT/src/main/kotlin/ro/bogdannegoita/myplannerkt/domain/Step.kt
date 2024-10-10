@@ -16,6 +16,8 @@ class Step(
     var title by data::title
     var description by data::description
     var index by data::index
+    var completedStepsCount by data::completedStepsCount
+        private set
 
     var steps: SortedSet<Step> = sortedSetOf()
         get() {
@@ -28,12 +30,17 @@ class Step(
         title = data.title
         description = data.description
         index = data.index
-        if (data.steps != null)
+        if (data.steps != null) {
             updateSteps(steps, data.steps)
+            completedStepsCount = stepProgressDao.countCompletedSteps(id)
+        }
         dao.update(id, this.data)
     }
 
-    val completedStepsCount get(): Int = stepProgressDao.countCompletedSteps(id)
+    fun stepCompleted() {
+        completedStepsCount = stepProgressDao.countCompletedSteps(id)
+        dao.update(id, data)
+    }
 
     private var loadedSteps = false
     private fun loadSteps() {

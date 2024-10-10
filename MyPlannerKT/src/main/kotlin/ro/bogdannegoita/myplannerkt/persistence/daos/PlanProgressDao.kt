@@ -25,6 +25,7 @@ class PlanProgressDao(
         var entity = PlanProgressEntity(
             acquiredAt = LocalDateTime.now(),
             lastSyncedPlan = planEntity.lastModifiedAt,
+            completed = false,
             plan = planEntity,
             user = userEntity,
         )

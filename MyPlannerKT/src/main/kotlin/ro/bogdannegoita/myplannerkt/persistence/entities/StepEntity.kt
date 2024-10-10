@@ -11,15 +11,19 @@ class StepEntity(
     var title: String? = null,
     var description: String? = null,
     var index: Int? = null,
+    var completedStepsCount: Int? = null,
 
     @ManyToOne(fetch = LAZY)
     var plan: PlanEntity? = null,
 
-    @OneToMany(mappedBy = "parentStep", cascade = [ALL], fetch = LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "parentStep", cascade = [ALL], fetch = LAZY)
     var steps: MutableList<StepEntity> = mutableListOf(),
 
     @ManyToOne(fetch = LAZY)
     var parentStep: StepEntity? = null,
+
+    @OneToMany(mappedBy = "step", cascade = [ALL], fetch = LAZY)
+    var stepsProgress: MutableList<StepProgressEntity> = mutableListOf(),
 
     @Id @GeneratedValue
     var id: UUID? = null

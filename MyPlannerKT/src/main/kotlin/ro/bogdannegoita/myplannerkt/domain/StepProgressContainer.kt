@@ -21,23 +21,22 @@ abstract class StepProgressContainer(
         }
         protected set
 
-    fun stepChanged() {
+    open fun stepChanged() {
         completed = steps.all { it.completed }
         dao.updateCompleted(id, completed)
         parent?.stepChanged()
     }
 
     fun sync(stepsProgress: SortedSet<StepProgress>, steps: SortedSet<Step>): SortedSet<StepProgress> {
-        steps.forEach { step ->
-            if (stepsProgress.none { step.id == it.step.id })
-                addStep(stepsProgress, step)
-        }
+        stepsProgress.filter { sp -> steps.none { it.id == sp.step.id } }
+            .forEach { sp -> removeStepProgress(stepsProgress, sp) }
 
-        stepsProgress.forEach { stepProgress ->
-            if (steps.none { it.id == stepProgress.step.id })
-                removeStep(stepsProgress, stepProgress)
+        steps.forEach { step ->
+            val existingStepProgress = stepsProgress.find { it.step.id == step.id }
+            if (existingStepProgress != null)
+                existingStepProgress.sync()
             else
-                stepProgress.sync()
+                addStep(stepsProgress, step)
         }
 
         return stepsProgress.toSortedSet()
@@ -48,7 +47,7 @@ abstract class StepProgressContainer(
         stepsProgress.add(domainFactory.stepProgress(newStepProgressData, this, step))
     }
 
-    private fun removeStep(stepsProgress: SortedSet<StepProgress>, step: StepProgress) {
+    private fun removeStepProgress(stepsProgress: SortedSet<StepProgress>, step: StepProgress) {
         dao.removeStepProgress(step.id)
         stepsProgress.remove(step)
     }

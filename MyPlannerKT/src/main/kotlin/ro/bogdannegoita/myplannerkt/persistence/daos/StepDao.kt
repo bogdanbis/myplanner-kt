@@ -20,6 +20,7 @@ class StepDao(
             title = data.title,
             description = data.description,
             index = data.index,
+            completedStepsCount = 0,
             plan = plan,
         )
         entity = repository.save(entity)
@@ -37,6 +38,7 @@ class StepDao(
             title = data.title,
             description = data.description,
             index = data.index,
+            completedStepsCount = 0,
             parentStep = parentStep,
         )
         entity = repository.save(entity)
@@ -49,6 +51,7 @@ class StepDao(
         entity.title = data.title
         entity.description = data.description
         entity.index = data.index
+        entity.completedStepsCount = data.completedStepsCount
         repository.save(entity)
     }
 
