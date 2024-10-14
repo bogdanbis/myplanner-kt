@@ -65,6 +65,10 @@ class Plan(
         eventPublisher.publishEvent(PlanUpdatedEvent(this, this))
     }
 
+    fun acquired() {
+        stats?.let { it.numberOfParticipants++ }
+    }
+
     fun getParticipantsProgress(): List<PlanProgress> {
         return acquiredPlans.toList()
     }
@@ -90,7 +94,7 @@ class Plan(
         if (loadedStats)
             return
         stats = domainFactory.planStats(this)
-        loadedStats = false
+        loadedStats = true
     }
 
     private var loadedAcquiredPlans = false

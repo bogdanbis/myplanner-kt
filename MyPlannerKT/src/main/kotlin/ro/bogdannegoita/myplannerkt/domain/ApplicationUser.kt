@@ -38,6 +38,7 @@ class ApplicationUser(
             return null
         val planProgressData = dao.acquirePlan(id, plan.id)
         val planProgress = domainFactory.planProgress(planProgressData, plan)
+        plan.acquired()
         acquiredPlans.add(planProgress)
         return planProgress
     }
