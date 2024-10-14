@@ -53,6 +53,10 @@ class PlanProgressDao(
             .orElseThrow { EntityNotFoundException(PlanProgressEntity::class) }
     }
 
+    fun findByPlanId(id: UUID): List<PlanProgressDto> {
+        return repository.findByPlanId(id).map(dtoMapper::planProgressDto)
+    }
+
     fun countByPlan(id: UUID): Int {
         return repository.countByPlanId(id)
     }

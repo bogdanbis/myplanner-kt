@@ -3,6 +3,7 @@ package ro.bogdannegoita.myplannerkt.persistence.daos
 import org.springframework.stereotype.Component
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
+import ro.bogdannegoita.myplannerkt.commons.PlanProgressDto
 import ro.bogdannegoita.myplannerkt.commons.StepDto
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.persistence.entities.ApplicationUserEntity
@@ -74,6 +75,10 @@ class PlanDao(
 
     fun delete(id: UUID) {
         repository.deleteById(id)
+    }
+
+    fun getAcquiredPlans(id: UUID): List<PlanProgressDto> {
+        return planProgressDao.findByPlanId(id)
     }
 
     fun getNumberOfAcquiredPlans(id: UUID): Int {

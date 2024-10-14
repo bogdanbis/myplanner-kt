@@ -7,5 +7,6 @@ import java.util.*
 
 @Repository
 interface PlanProgressRepository : JpaRepository<PlanProgressEntity, UUID> {
+    fun findByPlanId(id: UUID): List<PlanProgressEntity>
     fun countByPlanId(id: UUID): Int
 }

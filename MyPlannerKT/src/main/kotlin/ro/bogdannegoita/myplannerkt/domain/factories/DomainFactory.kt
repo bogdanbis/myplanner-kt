@@ -12,7 +12,7 @@ import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanProgressDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.StepDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.StepProgressDao
-import java.util.UUID
+import java.util.*
 
 @Component
 @Scope("prototype")
@@ -41,7 +41,12 @@ class DomainFactory(
     }
 
     fun planProgress(data: PlanProgressDto, plan: Plan): PlanProgress {
-        return PlanProgress(data, plan, planProgressDao, this)
+        var planProgress = registry.planProgress.getOrNull(data.id!!)
+        if (planProgress != null)
+            return planProgress
+        planProgress = PlanProgress(data, plan, planProgressDao, this)
+        registry.planProgress[planProgress.id] = planProgress
+        return planProgress
     }
 
     fun stepProgress(data: StepProgressDto, parent: StepProgressContainer, step: Step): StepProgress {

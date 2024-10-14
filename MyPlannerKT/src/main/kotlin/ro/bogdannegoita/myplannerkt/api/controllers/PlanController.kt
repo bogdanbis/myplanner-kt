@@ -36,6 +36,15 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
         return user(principal).getCreatedPlan(id)?.let(::PlanResponse)
     }
 
+    @GetMapping("/created/{id}/participants-progress")
+    fun getCreatedPlanParticipants(
+        @AuthenticationPrincipal principal: UserDetails,
+        @PathVariable id: UUID
+    ): List<PlanProgressResponse>? {
+        return user(principal).getCreatedPlan(id)?.getParticipantsProgress()
+            ?.map(::PlanProgressResponse)
+    }
+
     @PostMapping("/create")
     fun createPlan(@AuthenticationPrincipal principal: UserDetails, @RequestBody request: PlanRequest)
             : PlanSimpleResponse? {

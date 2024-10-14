@@ -3,7 +3,6 @@ package ro.bogdannegoita.myplannerkt.domain
 import org.springframework.context.ApplicationEventPublisher
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
-import ro.bogdannegoita.myplannerkt.commons.StepDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
 import ro.bogdannegoita.myplannerkt.events.PlanUpdatedEvent
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
@@ -46,6 +45,13 @@ class Plan(
         }
         private set
 
+    var acquiredPlans: SortedSet<PlanProgress> = sortedSetOf()
+        get() {
+            loadAcquiredPlans()
+            return field
+        }
+        private set
+
     fun update(data: PlanDto) {
         title = data.title
         shortDescription = data.shortDescription
@@ -57,6 +63,10 @@ class Plan(
         if (data.steps != null)
             updateSteps(steps, data.steps)
         eventPublisher.publishEvent(PlanUpdatedEvent(this, this))
+    }
+
+    fun getParticipantsProgress(): List<PlanProgress> {
+        return acquiredPlans.toList()
     }
 
     private var loadedAuthor = false
@@ -81,6 +91,16 @@ class Plan(
             return
         stats = domainFactory.planStats(this)
         loadedStats = false
+    }
+
+    private var loadedAcquiredPlans = false
+    private fun loadAcquiredPlans() {
+        if (loadedAcquiredPlans)
+            return
+        acquiredPlans = dao.getAcquiredPlans(id)
+            .map { domainFactory.planProgress(it, this) }
+            .toSortedSet()
+        loadedAcquiredPlans = true
     }
 
     override fun compareTo(other: Plan) = other.createdAt.compareTo(createdAt)
