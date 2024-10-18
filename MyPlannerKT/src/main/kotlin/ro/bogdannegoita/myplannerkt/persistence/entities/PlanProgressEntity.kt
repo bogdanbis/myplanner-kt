@@ -12,6 +12,7 @@ class PlanProgressEntity(
     var acquiredAt: LocalDateTime? = null,
     var lastSyncedPlan: LocalDateTime? = null,
     var completed: Boolean? = null,
+    var comment: String? = null,
 
     @ManyToOne(fetch = LAZY)
     var plan: PlanEntity? = null,

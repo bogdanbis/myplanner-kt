@@ -69,6 +69,7 @@ class PlanProgressDao(
         val entity = findById(id)
         entity.lastSyncedPlan = data.lastSyncedPlan
         entity.completed = data.completed
+        entity.comment = data.comment
         repository.save(entity)
     }
 

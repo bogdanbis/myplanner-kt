@@ -20,7 +20,7 @@ class DtoMapper {
 
     fun planProgressDto(entity: PlanProgressEntity): PlanProgressDto {
         return PlanProgressDto(entity.id, planDto(entity.plan!!), entity.acquiredAt!!, entity.lastSyncedPlan!!,
-            entity.completed!!)
+            entity.completed!!, entity.comment)
     }
 
     fun stepProgressDto(entity: StepProgressEntity): StepProgressDto {

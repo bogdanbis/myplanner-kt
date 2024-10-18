@@ -9,4 +9,5 @@ data class PlanProgressDto(
     val acquiredAt: LocalDateTime,
     var lastSyncedPlan: LocalDateTime,
     var completed: Boolean,
+    var comment: String?,
 )

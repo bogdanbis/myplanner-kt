@@ -3,6 +3,7 @@ package ro.bogdannegoita.myplannerkt.api.controllers
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
+import ro.bogdannegoita.myplannerkt.api.requests.PlanProgressRequest
 import ro.bogdannegoita.myplannerkt.api.requests.StepProgressRequest
 import ro.bogdannegoita.myplannerkt.api.responses.PlanProgressResponse
 import ro.bogdannegoita.myplannerkt.api.responses.StepProgressResponse
@@ -25,6 +26,17 @@ class PlanProgressController(myPlanner: MyPlanner) : BaseController(myPlanner) {
         @PathVariable id: UUID,
     ): PlanProgressResponse? {
         return user(principal).getAcquiredPlan(id)?.let { PlanProgressResponse(it) }
+    }
+
+    @PutMapping("/{id}")
+    fun update(
+        @AuthenticationPrincipal principal: UserDetails,
+        @PathVariable id: UUID,
+        @RequestBody request: PlanProgressRequest,
+    ): PlanProgressResponse? {
+        val planProgress = user(principal).getAcquiredPlan(id) ?: return null
+        planProgress.update(request.comment)
+        return PlanProgressResponse(planProgress)
     }
 
     @PutMapping("/{id}/steps/{stepId}")

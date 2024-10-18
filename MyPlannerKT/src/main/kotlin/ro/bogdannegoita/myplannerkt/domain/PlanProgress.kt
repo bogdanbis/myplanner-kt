@@ -15,8 +15,14 @@ class PlanProgress(
 
     val acquiredAt by data::acquiredAt
     var lastSyncedPlan by data::lastSyncedPlan
+    var comment by data::comment
 
     private val stepProgressRegistry: MutableMap<UUID, StepProgress> = mutableMapOf()
+
+    fun update(comment: String?) {
+        this.comment = comment
+        dao.update(id, data)
+    }
 
     fun updateStepProgress(stepId: UUID, stepProgressData: StepProgressDto): StepProgress? {
         return getStep(stepId)?.update(stepProgressData)
