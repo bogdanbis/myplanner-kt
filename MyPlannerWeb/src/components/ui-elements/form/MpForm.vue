@@ -1,7 +1,7 @@
 <template>
 	<form :class="rowCols" class="mp-form row" @submit.prevent="$emit('submit', $event)">
 		<slot></slot>
-		<MpCol cols="1" class="mp-form-actions">
+		<MpCol v-if="$slots.actions" cols="1" class="mp-form-actions">
 			<slot name="actions"></slot>
 		</MpCol>
 	</form>

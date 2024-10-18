@@ -6,6 +6,7 @@ export default class PlanProgress {
 	plan = new Plan()
 	acquiredAt;
 	lastSyncedPlan;
+	comment;
 	steps = [];
 
 	constructor(planProgress) {
@@ -14,6 +15,7 @@ export default class PlanProgress {
 		this.plan = new Plan(planProgress.plan);
 		this.acquiredAt = planProgress.acquiredAt;
 		this.lastSyncedPlan = planProgress.lastSyncedPlan;
+		this.comment = planProgress.comment;
 		this.steps = planProgress.steps.map(step => new StepProgress(step));
 	}
 

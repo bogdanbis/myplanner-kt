@@ -12,20 +12,21 @@
 			class="mp-form-subsection"
 			:class="{ 'mp-form-root-section': isRoot }"
 		>
-			<span><b>{{ stepProgress.step.title }}</b></span>
-			<p>{{ stepProgress.step.description }}</p>
+			<MpFormCheckbox
+				v-if="stepProgress.steps.length === 0"
+				:id="'step-' + stepProgress.step.id + '-completed'"
+				:label="stepProgress.step.title"
+				v-model="stepProgress.completed"
+				@change="markAsCompleted(stepProgress)"
+				class="fw-700"
+			/>
+			<span v-else><b>{{ stepProgress.step.title }}</b></span>
+			<p class="text-secondary">{{ stepProgress.step.description }}</p>
 
 			<StepProgressFormSection
 				v-if="stepProgress.steps.length > 0"
 				:steps-container="stepProgress"
 				:plan-progress-id
-			/>
-			<MpFormCheckbox
-				v-else
-				:id="'step-' + stepProgress.step.id + '-completed'"
-				label="Completed"
-				v-model="stepProgress.completed"
-				@change="markAsCompleted(stepProgress)"
 			/>
 		</div>
 	</MpFormSection>

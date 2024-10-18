@@ -1,5 +1,5 @@
 <template>
-	<div class="mp-form-check">
+	<div class="mp-form-check" :class="$attrs.class">
 		<input
 			@change="updateValue"
 			@input="updateValue"

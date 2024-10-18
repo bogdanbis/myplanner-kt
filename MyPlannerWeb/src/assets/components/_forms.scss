@@ -13,7 +13,7 @@
 }
 
 .mp-form {
-	row-gap: $spacer-xxl;
+	row-gap: $spacer-xl;
 
 	&.tall {
 		.mp-form-item-container {
@@ -23,6 +23,7 @@
 }
 
 .mp-form-section {
+	margin-top: $spacer-l;
 	display: flex;
 	flex-direction: column;
 	row-gap: $spacer-xl;
