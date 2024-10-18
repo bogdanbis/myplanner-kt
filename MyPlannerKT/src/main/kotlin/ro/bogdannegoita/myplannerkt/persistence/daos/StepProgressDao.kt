@@ -59,6 +59,12 @@ class StepProgressDao(
             .map(dtoMapper::stepProgressDto)
     }
 
+    fun update(id: UUID, data: StepProgressDto) {
+        val entity = findById(id)
+        entity.comment = data.comment
+        repository.save(entity)
+    }
+
     override fun updateCompleted(id: UUID, completed: Boolean) {
         val entity = findById(id)
         entity.completed = completed

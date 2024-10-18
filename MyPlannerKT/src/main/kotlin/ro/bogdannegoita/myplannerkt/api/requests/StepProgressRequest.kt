@@ -4,5 +4,6 @@ import ro.bogdannegoita.myplannerkt.commons.StepProgressDto
 
 class StepProgressRequest(
     val completed: Boolean,
+    val comment: String? = null,
     val steps: List<StepProgressDto>? = null,
 )

@@ -22,6 +22,8 @@ abstract class StepProgressContainer(
         protected set
 
     open fun stepChanged() {
+        if (completed == steps.all { it.completed })
+            return
         completed = steps.all { it.completed }
         dao.updateCompleted(id, completed)
         parent?.stepChanged()

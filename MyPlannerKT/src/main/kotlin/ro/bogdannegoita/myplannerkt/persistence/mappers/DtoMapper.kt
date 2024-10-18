@@ -24,6 +24,6 @@ class DtoMapper {
     }
 
     fun stepProgressDto(entity: StepProgressEntity): StepProgressDto {
-        return StepProgressDto(entity.id, entity.completed!!, stepDto(entity.step!!))
+        return StepProgressDto(entity.id, entity.completed!!, entity.comment, stepDto(entity.step!!))
     }
 }

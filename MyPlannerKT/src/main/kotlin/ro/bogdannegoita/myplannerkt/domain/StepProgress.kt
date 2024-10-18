@@ -5,12 +5,14 @@ import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.persistence.daos.StepProgressDao
 
 class StepProgress(
-    data: StepProgressDto,
+    private val data: StepProgressDto,
     val step: Step,
     parent: StepProgressContainer,
     private val dao: StepProgressDao,
     private val domainProvider: DomainProvider,
 ) : StepProgressContainer(data.id!!, data.completed, parent, dao, domainProvider), Comparable<StepProgress> {
+
+    var comment by data::comment
 
     fun update(data: StepProgressDto): StepProgress {
         data.steps?.forEach { stepProgressData ->
@@ -19,9 +21,10 @@ class StepProgress(
         }
         if (steps.isEmpty()) {
             completed = data.completed
-            dao.updateCompleted(id, completed)
             step.stepCompleted()
         }
+        comment = data.comment
+        dao.update(id, StepProgressDto(id, completed, comment))
         parent?.stepChanged()
         return this
     }

@@ -9,6 +9,7 @@ import java.util.*
 @Table(name = "step_progress")
 class StepProgressEntity(
     var completed: Boolean? = null,
+    var comment: String? = null,
 
     @ManyToOne
     var plan: PlanProgressEntity? = null,

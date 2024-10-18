@@ -46,7 +46,7 @@ class PlanProgressController(myPlanner: MyPlanner) : BaseController(myPlanner) {
         @PathVariable stepId: UUID,
         @RequestBody request: StepProgressRequest,
     ): StepProgressResponse? {
-        val data = StepProgressDto(stepId, request.completed, null)
+        val data = StepProgressDto(stepId, request.completed, request.comment)
         val stepProgress = user(principal).getAcquiredPlan(id)?.updateStepProgress(stepId, data)
         return stepProgress?.let { StepProgressResponse(it) }
     }
