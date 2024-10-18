@@ -3,7 +3,7 @@ package ro.bogdannegoita.myplannerkt.domain
 import org.springframework.context.ApplicationEventPublisher
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
-import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
+import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.events.PlanUpdatedEvent
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
 import java.time.LocalDateTime
@@ -12,9 +12,9 @@ import java.util.*
 class Plan(
     val data: PlanDto,
     private val dao: PlanDao,
-    private val domainFactory: DomainFactory,
+    private val domainProvider: DomainProvider,
     private val eventPublisher: ApplicationEventPublisher,
-) : StepContainer(data.id!!, dao, domainFactory), Comparable<Plan> {
+) : StepContainer(data.id!!, dao, domainProvider), Comparable<Plan> {
     val id = data.id!!
     var title by data::title
     var shortDescription by data::shortDescription
@@ -85,7 +85,7 @@ class Plan(
     private fun loadSteps() {
         if (loadedSteps)
             return
-        steps = dao.getSteps(id).map(domainFactory::step).toSortedSet()
+        steps = dao.getSteps(id).map(domainProvider::step).toSortedSet()
         loadedSteps = true
     }
 
@@ -93,7 +93,7 @@ class Plan(
     private fun loadStats() {
         if (loadedStats)
             return
-        stats = domainFactory.planStats(this)
+        stats = domainProvider.planStats(this)
         loadedStats = true
     }
 
@@ -102,7 +102,7 @@ class Plan(
         if (loadedAcquiredPlans)
             return
         acquiredPlans = dao.getAcquiredPlans(id)
-            .map { domainFactory.planProgress(it, this) }
+            .map { domainProvider.planProgress(it, this) }
             .toSortedSet()
         loadedAcquiredPlans = true
     }

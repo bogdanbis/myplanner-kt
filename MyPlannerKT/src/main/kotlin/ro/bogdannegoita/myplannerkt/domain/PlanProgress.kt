@@ -2,7 +2,7 @@ package ro.bogdannegoita.myplannerkt.domain
 
 import ro.bogdannegoita.myplannerkt.commons.PlanProgressDto
 import ro.bogdannegoita.myplannerkt.commons.StepProgressDto
-import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
+import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanProgressDao
 import java.util.*
 
@@ -10,13 +10,13 @@ class PlanProgress(
     private val data: PlanProgressDto,
     val plan: Plan,
     private val dao: PlanProgressDao,
-    private val domainFactory: DomainFactory,
-) : StepProgressContainer(data.id!!, data.completed, null, dao, domainFactory), Comparable<PlanProgress> {
+    private val domainProvider: DomainProvider,
+) : StepProgressContainer(data.id!!, data.completed, null, dao, domainProvider), Comparable<PlanProgress> {
 
     val acquiredAt by data::acquiredAt
     var lastSyncedPlan by data::lastSyncedPlan
 
-    private val stepProgressRegistry by domainFactory::stepProgressRegistry
+    private val stepProgressRegistry: MutableMap<UUID, StepProgress> = mutableMapOf()
 
     fun updateStepProgress(stepId: UUID, stepProgressData: StepProgressDto): StepProgress? {
         return getStep(stepId)?.update(stepProgressData)
@@ -48,7 +48,7 @@ class PlanProgress(
             .filter { dto -> plan.steps.any { it.id == dto.step!!.id } }
             .map { dto ->
                 val step = plan.steps.find { it.id == dto.step!!.id }
-                val stepProgress = domainFactory.stepProgress(dto, this, step!!)
+                val stepProgress = domainProvider.stepProgress(dto, this, step!!)
                 stepProgressRegistry[stepProgress.id] = stepProgress
                 stepProgress
             }

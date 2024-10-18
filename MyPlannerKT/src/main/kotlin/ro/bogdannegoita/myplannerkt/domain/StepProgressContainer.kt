@@ -1,6 +1,6 @@
 package ro.bogdannegoita.myplannerkt.domain
 
-import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
+import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.persistence.daos.StepProgressContainerDao
 import java.util.*
 
@@ -9,7 +9,7 @@ abstract class StepProgressContainer(
     completed: Boolean,
     protected val parent: StepProgressContainer?,
     private val dao: StepProgressContainerDao,
-    private val domainFactory: DomainFactory,
+    private val domainFactory: DomainProvider,
 ) {
     var completed: Boolean = completed
         protected set

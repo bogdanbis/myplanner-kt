@@ -4,8 +4,7 @@ import org.springframework.beans.factory.ObjectProvider
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
-import ro.bogdannegoita.myplannerkt.commons.StepDto
-import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
+import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.domain.factories.myPlannerCache
 import ro.bogdannegoita.myplannerkt.events.PlanDeletedEvent
 import ro.bogdannegoita.myplannerkt.events.PlanUpdatedEvent
@@ -16,10 +15,10 @@ import java.util.*
 
 @Component
 class MyPlanner(
-    private val domainProvider: ObjectProvider<ApplicationUser>,
+    private val userBeanProvider: ObjectProvider<ApplicationUser>,
     private val userDao: ApplicationUserDao,
     private val planDao: PlanDao,
-    private val domainFactory: DomainFactory,
+    private val domainProvider: DomainProvider,
 ) {
 
     private val users = myPlannerCache<String, ApplicationUser>()
@@ -30,7 +29,7 @@ class MyPlanner(
         if (user != null)
             return user
         val userData = userDao.findByEmail(email)
-        user = domainProvider.getObject(userData)
+        user = userBeanProvider.getObject(userData)
         users[email] = user
         return user
     }
@@ -79,7 +78,7 @@ class MyPlanner(
         if (loadedPublicPlans) return
         planDao.getPublicPlans()
             .map {
-                val plan = domainFactory.plan(it)
+                val plan = domainProvider.plan(it)
                 publicPlansRegistry[plan.id] = plan
                 plan
             }
@@ -92,7 +91,7 @@ class MyPlanner(
             return
         val planDto = planDao.getById(id)
         if (planDto.isPublic)
-            publicPlansRegistry[id] = domainFactory.plan(planDto)
+            publicPlansRegistry[id] = domainProvider.plan(planDto)
     }
 
 }

@@ -12,7 +12,6 @@ import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanProgressDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.StepDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.StepProgressDao
-import java.util.*
 
 @Component
 @Scope("prototype")
@@ -22,35 +21,27 @@ class DomainFactory(
     private val planProgressDao: PlanProgressDao,
     private val stepProgressDao: StepProgressDao,
     private val eventPublisher: ApplicationEventPublisher,
-    private val registry: DomainRegistry,
 ) {
 
-    val stepProgressRegistry: MutableMap<UUID, StepProgress> = mutableMapOf()
-
-    fun plan(data: PlanDto): Plan {
-        var plan = registry.plans.getOrNull(data.id!!)
-        if (plan != null)
-            return plan
-        plan = Plan(data, planDao, this, eventPublisher)
-        registry.plans[plan.id] = plan
-        return plan
+    fun plan(data: PlanDto, provider: DomainProvider): Plan {
+        return Plan(data, planDao, provider, eventPublisher)
     }
 
-    fun step(data: StepDto): Step {
-        return Step(data, stepDao, stepProgressDao, this)
+    fun step(data: StepDto, provider: DomainProvider): Step {
+        return Step(data, stepDao, stepProgressDao, provider)
     }
 
-    fun planProgress(data: PlanProgressDto, plan: Plan): PlanProgress {
-        var planProgress = registry.planProgress.getOrNull(data.id!!)
-        if (planProgress != null)
-            return planProgress
-        planProgress = PlanProgress(data, plan, planProgressDao, this)
-        registry.planProgress[planProgress.id] = planProgress
-        return planProgress
+    fun planProgress(data: PlanProgressDto, plan: Plan, provider: DomainProvider): PlanProgress {
+        return PlanProgress(data, plan, planProgressDao, provider)
     }
 
-    fun stepProgress(data: StepProgressDto, parent: StepProgressContainer, step: Step): StepProgress {
-        return StepProgress(data, step, parent, stepProgressDao, this)
+    fun stepProgress(
+        data: StepProgressDto,
+        parent: StepProgressContainer,
+        step: Step,
+        provider: DomainProvider
+    ): StepProgress {
+        return StepProgress(data, step, parent, stepProgressDao, provider)
     }
 
     fun planStats(plan: Plan): PlanStats {

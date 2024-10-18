@@ -1,7 +1,7 @@
 package ro.bogdannegoita.myplannerkt.domain
 
 import ro.bogdannegoita.myplannerkt.commons.StepDto
-import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
+import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.persistence.daos.StepDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.StepProgressDao
 import java.util.*
@@ -10,8 +10,8 @@ class Step(
     private val data: StepDto,
     private val dao: StepDao,
     private val stepProgressDao: StepProgressDao,
-    private val domainFactory: DomainFactory,
-) : StepContainer(data.id!!, dao, domainFactory), Comparable<Step> {
+    private val domainProvider: DomainProvider,
+) : StepContainer(data.id!!, dao, domainProvider), Comparable<Step> {
     val id = data.id!!
     var title by data::title
     var description by data::description
@@ -46,7 +46,7 @@ class Step(
     private fun loadSteps() {
         if (loadedSteps)
             return
-        steps = dao.getSteps(id).map(domainFactory::step).toSortedSet()
+        steps = dao.getSteps(id).map(domainProvider::step).toSortedSet()
         loadedSteps = true
     }
 

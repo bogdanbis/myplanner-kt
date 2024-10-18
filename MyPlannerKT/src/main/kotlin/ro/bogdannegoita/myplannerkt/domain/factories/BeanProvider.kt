@@ -12,13 +12,13 @@ import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
 @Configuration
 class BeanProvider(
     private val eventPublisher: ApplicationEventPublisher,
-    private val factoryProvider: ObjectProvider<DomainFactory>,
+    private val domainProviderBeanProvider: ObjectProvider<DomainProvider>,
     private val applicationUserDaoProvider: ObjectProvider<ApplicationUserDao>,
 ) {
     @Bean
     @Scope("prototype")
     fun applicationUser(data: ApplicationUserDto): ApplicationUser {
-        return ApplicationUser(data, applicationUserDaoProvider.getObject(), factoryProvider.getObject(),
-            eventPublisher)
+        return ApplicationUser(data, applicationUserDaoProvider.getObject(),
+            domainProviderBeanProvider.getObject(), eventPublisher)
     }
 }

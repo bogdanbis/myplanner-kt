@@ -1,14 +1,14 @@
 package ro.bogdannegoita.myplannerkt.domain
 
 import ro.bogdannegoita.myplannerkt.commons.StepDto
-import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
+import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.persistence.daos.StepContainerDao
 import java.util.*
 
 open class StepContainer(
     private val id: UUID,
     private val dao: StepContainerDao,
-    private val domainFactory: DomainFactory,
+    private val domainProvider: DomainProvider,
 ) {
     protected fun updateSteps(steps: SortedSet<Step>, newSteps: List<StepDto>) {
         steps.filter { step -> newSteps.none { it.id == step.id } }
@@ -25,7 +25,7 @@ open class StepContainer(
 
     private fun addStep(steps: SortedSet<Step>, stepData: StepDto) {
         val persistedData = dao.addStep(id, stepData)
-        val step = domainFactory.step(persistedData)
+        val step = domainProvider.step(persistedData)
         steps.add(step)
     }
 

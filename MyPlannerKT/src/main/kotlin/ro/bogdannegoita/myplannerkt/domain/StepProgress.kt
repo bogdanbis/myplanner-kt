@@ -1,7 +1,7 @@
 package ro.bogdannegoita.myplannerkt.domain
 
 import ro.bogdannegoita.myplannerkt.commons.StepProgressDto
-import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
+import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.persistence.daos.StepProgressDao
 
 class StepProgress(
@@ -9,10 +9,8 @@ class StepProgress(
     val step: Step,
     parent: StepProgressContainer,
     private val dao: StepProgressDao,
-    private val domainFactory: DomainFactory,
-) : StepProgressContainer(data.id!!, data.completed, parent, dao, domainFactory), Comparable<StepProgress> {
-
-    private val stepProgressRegistry by domainFactory::stepProgressRegistry
+    private val domainProvider: DomainProvider,
+) : StepProgressContainer(data.id!!, data.completed, parent, dao, domainProvider), Comparable<StepProgress> {
 
     fun update(data: StepProgressDto): StepProgress {
         data.steps?.forEach { stepProgressData ->
@@ -45,9 +43,7 @@ class StepProgress(
             .filter { dto -> step.steps.any { it.id == dto.step!!.id } }
             .map { dto ->
                 val step = step.steps.find { it.id == dto.step!!.id }
-                val stepProgress = domainFactory.stepProgress(dto, this, step!!)
-                stepProgressRegistry[stepProgress.id] = stepProgress
-                stepProgress
+                domainProvider.stepProgress(dto, this, step!!)
             }
             .toSortedSet()
         loadedSteps = true

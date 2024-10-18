@@ -3,7 +3,7 @@ package ro.bogdannegoita.myplannerkt.domain
 import org.springframework.context.ApplicationEventPublisher
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
-import ro.bogdannegoita.myplannerkt.domain.factories.DomainFactory
+import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.events.PlanDeletedEvent
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
 import java.util.*
@@ -11,7 +11,7 @@ import java.util.*
 class ApplicationUser(
     val data: ApplicationUserDto,
     private val dao: ApplicationUserDao,
-    private val domainFactory: DomainFactory,
+    private val domainProvider: DomainProvider,
     private val eventPublisher: ApplicationEventPublisher,
 ) {
     val id: UUID = data.id!!
@@ -37,7 +37,7 @@ class ApplicationUser(
         if (acquiredPlans.any { it.plan.id == plan.id })
             return null
         val planProgressData = dao.acquirePlan(id, plan.id)
-        val planProgress = domainFactory.planProgress(planProgressData, plan)
+        val planProgress = domainProvider.planProgress(planProgressData, plan)
         plan.acquired()
         acquiredPlans.add(planProgress)
         return planProgress
@@ -45,7 +45,7 @@ class ApplicationUser(
 
     fun createPlan(planData: PlanDto): Plan {
         val persistedPlanData = dao.createPlan(planData, id)
-        val plan = domainFactory.plan(persistedPlanData)
+        val plan = domainProvider.plan(persistedPlanData)
         createdPlans.add(plan)
         return plan
     }
@@ -75,7 +75,7 @@ class ApplicationUser(
         if (loadedAcquiredPlans)
             return
         acquiredPlans = dao.getAcquiredPlans(id)
-            .map { domainFactory.planProgress(it, domainFactory.plan(it.plan)) }
+            .map { domainProvider.planProgress(it, domainProvider.plan(it.plan)) }
             .toSortedSet()
         loadedAcquiredPlans = true
     }
@@ -84,7 +84,7 @@ class ApplicationUser(
     private fun loadCreatedPlans() {
         if (loadedCreatedPlans)
             return
-        createdPlans = dao.getCreatedPlans(id).map { domainFactory.plan(it) }
+        createdPlans = dao.getCreatedPlans(id).map { domainProvider.plan(it) }
             .toSortedSet()
         loadedCreatedPlans = true
     }
