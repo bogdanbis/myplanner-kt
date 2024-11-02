@@ -23,9 +23,13 @@ $button-padding-x: 32px;
 	transition: background-color .1s, box-shadow .2s, transform .1s;
 
 	&.secondary {
-		background: var(--secondary) !important;
+		background: var(--secondary);
 		color: var(--button-text-color);
 		box-shadow: var(--button-secondary-shadow);
+
+		&:disabled {
+			background: var(--secondary);
+		}
 	}
 
 	.button-icon {
