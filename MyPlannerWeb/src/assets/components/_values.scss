@@ -9,11 +9,9 @@
 	margin-left: -$horizontal-padding;
 	padding: $spacer-xs $horizontal-padding;
 	border-radius: $border-radius-xs;
-	transition: background-color .2s ease-in-out;
 
 	&:hover {
-		background-color: var(--background);
-		transition: background-color .2s ease-in-out;
+		background-color: var(--gray-6);
 	}
 
 	.mp-inline-label {

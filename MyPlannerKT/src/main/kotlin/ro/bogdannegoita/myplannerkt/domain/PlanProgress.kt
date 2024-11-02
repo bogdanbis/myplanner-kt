@@ -1,5 +1,6 @@
 package ro.bogdannegoita.myplannerkt.domain
 
+import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanProgressDto
 import ro.bogdannegoita.myplannerkt.commons.StepProgressDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
@@ -16,6 +17,7 @@ class PlanProgress(
     val acquiredAt by data::acquiredAt
     var lastSyncedPlan by data::lastSyncedPlan
     var comment by data::comment
+    val user: Lazy<ApplicationUserDto> = lazy { dao.getUser(id) }
 
     private val stepProgressRegistry: MutableMap<UUID, StepProgress> = mutableMapOf()
 

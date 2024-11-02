@@ -1,6 +1,7 @@
 package ro.bogdannegoita.myplannerkt.persistence.daos
 
 import org.springframework.stereotype.Component
+import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanProgressDto
 import ro.bogdannegoita.myplannerkt.commons.StepProgressDto
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
@@ -46,6 +47,10 @@ class PlanProgressDao(
 
     fun getSteps(id: UUID): List<StepProgressDto> {
         return stepProgressDao.findByPlanProgressId(id)
+    }
+
+    fun getUser(id: UUID): ApplicationUserDto {
+        return findById(id).user!!.let { dtoMapper.applicationUserDto(it) }
     }
 
     fun findById(id: UUID): PlanProgressEntity {

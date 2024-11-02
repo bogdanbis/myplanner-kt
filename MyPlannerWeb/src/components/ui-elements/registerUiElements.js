@@ -9,6 +9,7 @@ import MpFormSection from './form/MpFormSection.vue';
 import MpFormSectionTitle from './form/MpFormSectionTitle.vue';
 import MpFormSelect from './form/MpFormSelect.vue';
 import MpFormTextarea from './form/MpFormTextarea.vue';
+import MpSearch from './form/MpSearch.vue';
 import MpCol from './grid/MpCol.vue';
 import MpRow from './grid/MpRow.vue';
 import LoadingIcon from './icons/LoadingIcon.vue';
@@ -41,6 +42,7 @@ export default function registerUiElements(Vue) {
 	Vue.component('MpFormNumberInput', MpFormNumberInput);
 	Vue.component('MpFormSelect', MpFormSelect);
 	Vue.component('MpFormTextarea', MpFormTextarea);
+	Vue.component('MpSearch', MpSearch);
 
 	// grid
 	Vue.component('MpCol', MpCol);

@@ -4,6 +4,7 @@ import Plan from './Plan.js';
 export default class ApplicationUser {
 	firstName;
 	lastName;
+	name;
 	email;
 	acquiredPlans;
 
@@ -11,11 +12,8 @@ export default class ApplicationUser {
 		if (!logInResponse) return;
 		this.firstName = logInResponse.firstName;
 		this.lastName = logInResponse.lastName;
+		this.name = logInResponse.name;
 		this.email = logInResponse.email;
-	}
-
-	get fullName() {
-		return this.firstName + ' ' + this.lastName;
 	}
 
 	async fetchAcquiredPlans() {
