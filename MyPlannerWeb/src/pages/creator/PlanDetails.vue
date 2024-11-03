@@ -20,7 +20,7 @@
 				</MpButton>
 				<div v-else>
 					<MpSearch
-						id="search"
+						id="search-plan-participant"
 						v-model="searchTerm"
 						placeholder="Name or email"
 						:disabled="!searchTerm"
