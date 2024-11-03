@@ -1,9 +1,9 @@
 import PlanDetails from '@/pages/creator/PlanDetails.vue';
-import Home from '@/pages/tracker/Home.vue';
+import Home from '@/pages/Home.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
-const MyPlans = () => import('@/pages/tracker/MyPlans.vue');
-const PlanProgress = () => import('@/pages/tracker/PlanProgress.vue');
+const MyPlans = () => import('@/pages/MyPlans.vue');
+const PlanProgress = () => import('@/pages/participant/PlanProgress.vue');
 const AuthoredPlans = () => import('./pages/creator/CreatedPlans.vue');
 const CreatePlan = () => import('@/pages/creator/CreatePlan.vue');
 const EditPlan = () => import('./pages/creator/EditPlan.vue');
