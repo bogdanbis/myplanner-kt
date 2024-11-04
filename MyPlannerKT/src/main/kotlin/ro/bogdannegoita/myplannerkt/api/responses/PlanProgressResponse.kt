@@ -11,4 +11,6 @@ class PlanProgressResponse(planProgress: PlanProgress) {
     val completed = planProgress.completed
     val comment = planProgress.comment
     val steps = planProgress.steps.map(::StepProgressResponse)
+    val completedStepsCount = planProgress.completedStepsCount
+    val totalStepsCount = planProgress.totalStepsCount
 }

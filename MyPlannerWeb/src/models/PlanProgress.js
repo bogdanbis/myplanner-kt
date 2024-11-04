@@ -1,25 +1,27 @@
-import ApplicationUser from '@/models/ApplicationUser.js';
+import ApplicationUser from './ApplicationUser.js';
 import Plan from './Plan.js';
 import StepProgress from './StepProgress.js';
+import StepProgressContainer from './StepProgressContainer.js';
 
-export default class PlanProgress {
+export default class PlanProgress extends StepProgressContainer {
 	id;
 	plan = new Plan()
 	participant = new ApplicationUser()
 	acquiredAt;
 	lastSyncedPlan;
 	comment;
-	steps = [];
 
 	constructor(planProgress) {
+		super(planProgress);
 		if (!planProgress) return;
 		this.id = planProgress.id;
 		this.plan = new Plan(planProgress.plan);
 		this.participant = new ApplicationUser(planProgress.participant);
 		this.acquiredAt = planProgress.acquiredAt;
 		this.lastSyncedPlan = planProgress.lastSyncedPlan;
+		this.completed = planProgress.completed;
 		this.comment = planProgress.comment;
-		this.steps = planProgress.steps.map(step => new StepProgress(step));
+		this.steps = planProgress.steps.map(step => new StepProgress(step)) || [];
 	}
 
 	get updateAvailable() {

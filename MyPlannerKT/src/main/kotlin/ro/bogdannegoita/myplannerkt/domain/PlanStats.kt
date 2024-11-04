@@ -16,10 +16,7 @@ class PlanStats(
         get() {
             if (plan.steps.isEmpty())
                 return 0
-            var count = 0
-            for (step in plan.steps)
-                count += step.completedStepsCount
-            return count
+            return plan.steps.sumOf { it.completedStepsCount }
         }
 
     private var loadedNumberOfParticipants = false

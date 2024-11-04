@@ -14,6 +14,20 @@ abstract class StepProgressContainer(
     var completed: Boolean = completed
         protected set
 
+    val completedStepsCount: Int
+        get() {
+            if (steps.isEmpty())
+                return if (completed) 1 else 0
+            return steps.sumOf { it.completedStepsCount }
+        }
+
+    val totalStepsCount: Int
+        get() {
+            if (steps.isEmpty())
+                return 1
+            return steps.sumOf { it.totalStepsCount }
+        }
+
     var steps: SortedSet<StepProgress> = sortedSetOf()
         get() {
             loadSteps()

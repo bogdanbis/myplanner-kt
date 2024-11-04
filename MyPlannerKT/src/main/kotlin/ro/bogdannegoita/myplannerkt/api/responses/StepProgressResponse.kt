@@ -8,4 +8,6 @@ class StepProgressResponse(stepProgress: StepProgress) {
     val comment = stepProgress.comment
     val step = StepResponse(stepProgress.step)
     val steps = stepProgress.steps.map(::StepProgressResponse)
+    val completedStepsCount = stepProgress.completedStepsCount
+    val totalStepsCount = stepProgress.totalStepsCount
 }

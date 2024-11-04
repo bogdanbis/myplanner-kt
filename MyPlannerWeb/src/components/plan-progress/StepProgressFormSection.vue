@@ -6,6 +6,14 @@
 		collapsible
 		v-auto-animate
 	>
+		<div>
+			Completed: {{ stepsContainer.completedStepsCount }}/{{ stepsContainer.totalStepsCount }}
+			<ProgressBar
+				:count="stepsContainer.completedStepsCount"
+				:total="stepsContainer.totalStepsCount"
+				class="mt-2"
+			/>
+		</div>
 		<div
 			v-for="stepProgress in stepsContainer.steps"
 			:key="stepProgress"
@@ -36,10 +44,11 @@
 
 <script setup>
 import api from '@/api/index.js';
+import ProgressBar from '@/components/ui-elements/ProgressBar.vue';
 import PlanProgress from '@/models/PlanProgress.js';
 import StepProgress from '@/models/StepProgress.js';
 
-const props = defineProps({
+const { planProgressId, stepsContainer } = defineProps({
 	mayModify: {
 		type: Boolean,
 		required: true,
@@ -60,7 +69,7 @@ const props = defineProps({
 });
 
 const markAsCompleted = async (stepProgress) => {
-	await api.put('/plans/acquired/' + props.planProgressId + '/steps/' + stepProgress.id,
+	await api.put('/plans/acquired/' + planProgressId + '/steps/' + stepProgress.id,
 			{ completed: stepProgress.completed });
 }
 </script>
