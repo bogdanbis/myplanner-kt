@@ -4,6 +4,7 @@
 			@change="updateValue"
 			@input="updateValue"
 			:checked="$attrs.modelValue"
+			:disabled="disabled"
 			:id="id"
 			type="checkbox"
 			v-bind="$attrs"
@@ -18,6 +19,11 @@ export default {
 	inheritAttrs: false,
 
 	props: {
+		disabled: {
+			type: Boolean,
+			required: false,
+			default: false,
+		},
 		id: {
 			type: String,
 			required: true,

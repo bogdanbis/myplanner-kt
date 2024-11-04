@@ -217,27 +217,34 @@ $form-item-border-radius: 8px;
 	display: flex;
 	align-items: center;
 
-	* {
-		cursor: pointer;
-	}
-
 	input {
-		border-radius: 0.25rem;
 		width: 1em;
 		height: 1em;
+		margin: 0;
 		border: 1px solid var(--border-color);
+		border-radius: 0.25rem;
 		appearance: none;
 		background-color: white;
 		transition: background-color .2s;
+		cursor: pointer;
 
 		&:checked {
 			background-image: var(--checkbox-background-image);
 			background-color: var(--primary);
 			border-color: var(--primary)
 		}
+
+		&:disabled {
+			cursor: default;
+
+			+ label {
+				cursor: default;
+			}
+		}
 	}
 
 	label {
+		cursor: pointer;
 		padding-left: .5rem;
 	}
 }
