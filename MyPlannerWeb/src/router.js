@@ -1,4 +1,3 @@
-import PlanDetails from '@/pages/creator/PlanDetails.vue';
 import Home from '@/pages/Home.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
@@ -6,7 +5,9 @@ const MyPlans = () => import('@/pages/MyPlans.vue');
 const PlanProgress = () => import('@/pages/participant/PlanProgress.vue');
 const AuthoredPlans = () => import('./pages/creator/CreatedPlans.vue');
 const CreatePlan = () => import('@/pages/creator/CreatePlan.vue');
-const EditPlan = () => import('./pages/creator/EditPlan.vue');
+const PlanDetails = () => import('@/pages/creator/PlanDetails.vue');
+const EditPlan = () => import('@/pages/creator/EditPlan.vue');
+const ParticipantPlanProgress = () => import('@/pages/creator/ParticipantPlanProgress.vue');
 
 const router = createRouter({
 	history: createWebHistory(),
@@ -41,13 +42,18 @@ const router = createRouter({
 		},
 		{
 			path: '/creator/details/:id',
-			name: 'Plan Details',
+			name: 'Manage Plan',
 			component: PlanDetails,
 		},
 		{
 			path: '/creator/details/:id/edit',
 			name: 'Edit Plan',
 			component: EditPlan,
+		},
+		{
+			path: '/creator/details/:id/progress/:progressId',
+			name: 'Participant Plan Progress',
+			component: ParticipantPlanProgress,
 		},
 		{
 			path: '/:pathMatch(.*)*',

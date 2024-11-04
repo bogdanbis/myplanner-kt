@@ -5,7 +5,7 @@
 
 	<div v-if="planProgress.updateAvailable" class="m-bottom-xxl">
 		<p class="text-primary fw-600">
-			{{ plan.author.fullName }} has made some changes. Sync to use the latest version.
+			{{ plan.author.name }} has made some changes. Sync to use the latest version.
 		</p>
 		<MpButton @click="syncWithPlan">Sync</MpButton>
 	</div>
@@ -30,6 +30,7 @@
 			:steps-container="planProgress"
 			:plan-progress-id="planProgress.id"
 			is-root
+			may-modify
 		/>
 	</MpCard>
 </template>

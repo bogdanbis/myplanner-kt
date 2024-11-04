@@ -69,8 +69,12 @@ class Plan(
         stats?.let { it.numberOfParticipants++ }
     }
 
-    fun getParticipantsProgress(): List<PlanProgress> {
+    fun getParticipants(): List<PlanProgress> {
         return acquiredPlans.toList()
+    }
+
+    fun getParticipantProgress(id: UUID): PlanProgress? {
+        return acquiredPlans.find { it.id == id }
     }
 
     private var loadedAuthor = false

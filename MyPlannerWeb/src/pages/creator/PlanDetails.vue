@@ -36,8 +36,8 @@
 						</MpButton>
 					</div>
 					<ul v-if="foundParticipantProgress.length">
-						<li v-for="planProgress in foundParticipantProgress" :key="planProgress.id">
-							<MpLink to="#">{{ planProgress.participant.name }}</MpLink>
+						<li v-for="{ progressId, participant } in foundParticipantProgress" :key="progressId">
+							<MpLink :to="$route.fullPath + '/progress/' + progressId">{{ participant.name }}</MpLink>
 						</li>
 					</ul>
 				</div>
@@ -58,6 +58,7 @@
 <script setup>
 import api from '@/api/index.js';
 import Plan from '@/models/Plan.js';
+import { useSessionStorage } from '@/utils/localStorage.js';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -66,18 +67,24 @@ const planId = useRoute().params.id;
 
 const plan = ref(new Plan());
 
+const showSearchBar = ref(false);
+const searching = ref(false);
+const searchTerm = ref();
+const searchTermStorage = useSessionStorage('searchTerm/' + planId);
+const participantsProgress = ref();
+const foundParticipantProgress = ref([]);
+
 onMounted(async () => {
 	const planResponse = await api.get('/plans/created/' + planId);
 	if (!planResponse)
 		router.push('/creator');
 	plan.value = new Plan(planResponse);
+	if (searchTermStorage.value) {
+		searchTerm.value = searchTermStorage.value;
+		await findParticipants();
+		showSearchBar.value = true;
+	}
 })
-
-const showSearchBar = ref(false);
-const searching = ref(false);
-const searchTerm = ref();
-const participantsProgress = ref();
-const foundParticipantProgress = ref([]);
 
 const findParticipants = async () => {
 	if (!searchTerm.value || searchTerm.value.length <= 2) {
@@ -85,6 +92,7 @@ const findParticipants = async () => {
 		return;
 	}
 	searching.value = true;
+	searchTermStorage.value = searchTerm.value;
 	if (participantsProgress.value == null)
 		await fetchParticipantsProgress();
 	foundParticipantProgress.value = participantsProgress.value
@@ -96,11 +104,12 @@ const findParticipants = async () => {
 }
 
 const fetchParticipantsProgress = async () => {
-	participantsProgress.value = await api.get('/plans/created/' + planId + '/participants-progress');
+	participantsProgress.value = await api.get('/plans/created/' + planId + '/participants');
 }
 
 const clearSearch = () => {
 	searchTerm.value = undefined;
 	foundParticipantProgress.value = [];
+	searchTermStorage.remove()
 }
 </script>

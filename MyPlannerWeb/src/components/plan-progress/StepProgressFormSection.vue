@@ -14,6 +14,7 @@
 		>
 			<MpFormCheckbox
 				v-if="stepProgress.steps.length === 0"
+				:disabled="!mayModify"
 				:id="'step-' + stepProgress.step.id + '-completed'"
 				:label="stepProgress.step.title"
 				v-model="stepProgress.completed"
@@ -27,6 +28,7 @@
 				v-if="stepProgress.steps.length > 0"
 				:steps-container="stepProgress"
 				:plan-progress-id
+				:may-modify
 			/>
 		</div>
 	</MpFormSection>
@@ -38,6 +40,10 @@ import PlanProgress from '@/models/PlanProgress.js';
 import StepProgress from '@/models/StepProgress.js';
 
 const props = defineProps({
+	mayModify: {
+		type: Boolean,
+		required: true,
+	},
 	isRoot: {
 		type: Boolean,
 		required: false,

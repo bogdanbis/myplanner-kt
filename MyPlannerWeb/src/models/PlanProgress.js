@@ -5,6 +5,7 @@ import StepProgress from './StepProgress.js';
 export default class PlanProgress {
 	id;
 	plan = new Plan()
+	participant = new ApplicationUser()
 	acquiredAt;
 	lastSyncedPlan;
 	comment;
@@ -13,8 +14,8 @@ export default class PlanProgress {
 	constructor(planProgress) {
 		if (!planProgress) return;
 		this.id = planProgress.id;
-		this.participant = new ApplicationUser(planProgress.participant);
 		this.plan = new Plan(planProgress.plan);
+		this.participant = new ApplicationUser(planProgress.participant);
 		this.acquiredAt = planProgress.acquiredAt;
 		this.lastSyncedPlan = planProgress.lastSyncedPlan;
 		this.comment = planProgress.comment;

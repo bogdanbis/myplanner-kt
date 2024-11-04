@@ -1,0 +1,47 @@
+<template>
+	<MpBackLink :to="'/creator/details/' + planId">Manage Plan</MpBackLink>
+	<h2>{{ plan.title }}</h2>
+	<span class="page-subtitle"><u>{{ participant.name }}</u>'s progress</span>
+
+	<MpCard>
+		<b class="text-secondary">About</b>
+		<p>
+			<MpMultilineText :text="plan.description" />
+		</p>
+		<StepProgressFormSection
+			v-if="!loading"
+			:may-modify="false"
+			:steps-container="planProgress"
+			:plan-progress-id="planProgress.id"
+			is-root
+		/>
+	</MpCard>
+</template>
+
+<script setup>
+import api from '@/api/index.js';
+import StepProgressFormSection from '@/components/plan-progress/StepProgressFormSection.vue';
+import PlanProgress from '@/models/PlanProgress.js';
+import { computed, onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
+const router = useRouter()
+const route = useRoute()
+const planId = route.params.id;
+const planProgressId = route.params.progressId
+
+const planProgress = ref(new PlanProgress());
+const loading = ref(true);
+
+const plan = computed(() => planProgress.value.plan);
+console.log(planProgress.value)
+const participant = computed(() => planProgress.value.participant);
+
+onMounted(async () => {
+	const planResponse = await api.get(`/plans/created/${planId}/participant-progress/${planProgressId}`);
+	if (!planResponse)
+		return router.push('/my-plans');
+	planProgress.value = new PlanProgress(planResponse);
+	loading.value = false;
+})
+</script>

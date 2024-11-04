@@ -9,4 +9,17 @@ export const useLocalStorage = (key) => ({
 	remove() {
 		localStorage.removeItem(this.key);
 	},
+});
+
+export const useSessionStorage = (key) => ({
+	key: key,
+	get value() {
+		return JSON.parse(sessionStorage.getItem(this.key));
+	},
+	set value(newVal) {
+		sessionStorage.setItem(this.key, JSON.stringify(newVal));
+	},
+	remove() {
+		sessionStorage.removeItem(this.key);
+	},
 })

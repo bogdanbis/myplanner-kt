@@ -4,6 +4,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
 import ro.bogdannegoita.myplannerkt.api.requests.PlanRequest
+import ro.bogdannegoita.myplannerkt.api.responses.ParticipantResponse
 import ro.bogdannegoita.myplannerkt.api.responses.PlanProgressResponse
 import ro.bogdannegoita.myplannerkt.api.responses.PlanResponse
 import ro.bogdannegoita.myplannerkt.api.responses.PlanSimpleResponse
@@ -36,13 +37,23 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
         return user(principal).getCreatedPlan(id)?.let(::PlanResponse)
     }
 
-    @GetMapping("/created/{id}/participants-progress")
-    fun getCreatedPlanParticipants(
+    @GetMapping("/created/{id}/participants")
+    fun getParticipants(
         @AuthenticationPrincipal principal: UserDetails,
-        @PathVariable id: UUID
-    ): List<PlanProgressResponse>? {
-        return user(principal).getCreatedPlan(id)?.getParticipantsProgress()
-            ?.map(::PlanProgressResponse)
+        @PathVariable id: UUID,
+    ): List<ParticipantResponse>? {
+        return user(principal).getCreatedPlan(id)?.getParticipants()
+            ?.map(::ParticipantResponse)
+    }
+
+    @GetMapping("/created/{id}/participant-progress/{progressId}")
+    fun getParticipantProgress(
+        @AuthenticationPrincipal principal: UserDetails,
+        @PathVariable id: UUID,
+        @PathVariable progressId: UUID,
+    ): PlanProgressResponse? {
+        return user(principal).getCreatedPlan(id)?.getParticipantProgress(progressId)
+            ?.let { PlanProgressResponse(it) }
     }
 
     @PostMapping("/create")
