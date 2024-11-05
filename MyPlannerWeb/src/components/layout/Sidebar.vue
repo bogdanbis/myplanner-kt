@@ -19,9 +19,9 @@
 </template>
 
 <script setup>
-import NavMenu from './NavMenu.vue';
+	import NavMenu from './NavMenu.vue';
 
-const emit = defineEmits(['hide-sidebar']);
+	const emit = defineEmits(['hide-sidebar']);
 
 const hideSidebar = () => {
 	emit('hide-sidebar')
@@ -30,7 +30,7 @@ const hideSidebar = () => {
 const mainMenuItems = [
 	{
 		icon: 'search',
-		label: 'Explore Page',
+		label: 'Explore',
 		path: '/',
 	},
 	{

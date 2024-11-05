@@ -1,4 +1,4 @@
-import Home from '@/pages/Home.vue';
+import Explore from '@/pages/Explore.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const MyPlans = () => import('@/pages/MyPlans.vue');
@@ -17,8 +17,8 @@ const router = createRouter({
 	routes: [
 		{
 			path: '/',
-			name: 'Home',
-			component: Home,
+			name: 'Explore',
+			component: Explore,
 		},
 		{
 			path: '/my-plans',
