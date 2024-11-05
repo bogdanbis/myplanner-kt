@@ -61,6 +61,7 @@ class StepProgressDao(
 
     fun update(id: UUID, data: StepProgressDto) {
         val entity = findById(id)
+        entity.completed = data.completed
         entity.comment = data.comment
         repository.save(entity)
     }
