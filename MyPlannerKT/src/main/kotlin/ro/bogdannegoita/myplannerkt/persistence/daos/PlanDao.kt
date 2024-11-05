@@ -21,7 +21,8 @@ class PlanDao(
     private val dtoMapper = DtoMapper()
 
     fun getPublicPlans(): List<PlanDto> {
-        return repository.findByIsPublicTrue().map(dtoMapper::planDto)
+        return repository.findFirst50ByIsPublicTrueOrderByLastModifiedAtDesc()
+            .map(dtoMapper::planDto)
     }
 
     fun getAuthor(planId: UUID): ApplicationUserDto {

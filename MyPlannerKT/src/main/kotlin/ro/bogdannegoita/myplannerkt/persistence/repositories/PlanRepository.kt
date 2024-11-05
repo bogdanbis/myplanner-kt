@@ -7,5 +7,5 @@ import java.util.*
 
 @Repository
 interface PlanRepository : JpaRepository<PlanEntity, UUID> {
-    fun findByIsPublicTrue(): List<PlanEntity>
+    fun findFirst50ByIsPublicTrueOrderByLastModifiedAtDesc(): List<PlanEntity>
 }
