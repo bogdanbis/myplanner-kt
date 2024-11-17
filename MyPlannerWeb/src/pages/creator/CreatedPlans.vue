@@ -6,7 +6,7 @@
 
 		<MpCard v-for="plan in user.createdPlans" :title="plan.title">
 			<span class="mp-card-subtitle">
-				{{ plan.numberOfParticipants ? plan.numberOfParticipants : 'No' }} participants
+				<NumberOfParticipants :count="plan.numberOfParticipants" />
 			</span>
 			<span class="text-secondary">{{ plan.description }}</span>
 			<template #actions>
@@ -23,6 +23,7 @@
 
 <script setup>
 import LogInButton from '@/components/LogInButton.vue';
+import NumberOfParticipants from '@/components/NumberOfParticipants.vue';
 import { useAuthStore } from '@/store/auth.js';
 import { computed, onMounted } from 'vue';
 

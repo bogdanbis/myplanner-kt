@@ -3,6 +3,8 @@
 		<span class="mp-card-subtitle">
 			<MpIcon icon="person-fill" />
 			{{ plan.author.firstName + ' ' + plan.author.lastName }}
+			<br />
+			<NumberOfParticipants :count="plan.numberOfParticipants" />
 		</span>
 		<span class="text-secondary">{{ plan.description }}</span>
 		<template #actions>
@@ -27,6 +29,7 @@
 </template>
 
 <script setup>
+import NumberOfParticipants from '@/components/NumberOfParticipants.vue';
 import { useAuthStore } from '@/store/auth.js';
 import { usePlansStore } from '@/store/publicPlans.js';
 import { computed, onMounted, ref } from 'vue';
