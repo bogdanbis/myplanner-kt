@@ -18,12 +18,13 @@ class DomainProvider(
     private val registry: DomainRegistry,
 ) {
 
-    fun plan(data: PlanDto): Plan {
+    fun plan(data: PlanDto, shortLived: Boolean = false): Plan {
         var plan = registry.plans.getOrNull(data.id!!)
         if (plan != null)
             return plan
         plan = factory.plan(data, this)
-        registry.plans[plan.id] = plan
+        if (!shortLived)
+            registry.plans[plan.id] = plan
         return plan
     }
 

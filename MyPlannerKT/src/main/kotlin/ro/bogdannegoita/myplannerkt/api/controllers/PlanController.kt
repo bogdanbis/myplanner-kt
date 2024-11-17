@@ -1,5 +1,8 @@
 package ro.bogdannegoita.myplannerkt.api.controllers
 
+import org.springframework.http.HttpStatus
+import org.springframework.http.ProblemDetail
+import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
@@ -20,6 +23,16 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
     @GetMapping("/browse")
     fun getPublicPlans(): List<PlanSimpleResponse> {
         return myPlanner.getPublicPlans().toSortedSet().map(::PlanSimpleResponse)
+    }
+
+    @GetMapping("/search")
+    fun getPublicPlans(@RequestParam title: String?): ResponseEntity<List<PlanSimpleResponse>> {
+        if (title == null || title.length < 3)
+            return ResponseEntity
+                .of(ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST,
+                    "Search term must be at least 3 characets long."))
+                .build()
+        return ResponseEntity.ok(myPlanner.findByTitle(title).map(::PlanSimpleResponse))
     }
 
     @GetMapping("/{id}")

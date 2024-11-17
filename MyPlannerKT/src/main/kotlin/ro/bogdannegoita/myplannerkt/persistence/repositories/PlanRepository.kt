@@ -8,4 +8,5 @@ import java.util.*
 @Repository
 interface PlanRepository : JpaRepository<PlanEntity, UUID> {
     fun findFirst50ByIsPublicTrueOrderByLastModifiedAtDesc(): List<PlanEntity>
+    fun findByTitleContainsIgnoreCase(title: String): List<PlanEntity>
 }

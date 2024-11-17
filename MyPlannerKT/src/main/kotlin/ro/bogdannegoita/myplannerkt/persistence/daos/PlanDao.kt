@@ -38,6 +38,10 @@ class PlanDao(
             .orElseThrow { EntityNotFoundException(PlanEntity::class) }
     }
 
+    fun findByTitle(title: String): List<PlanDto> {
+        return repository.findByTitleContainsIgnoreCase(title).map(dtoMapper::planDto)
+    }
+
     fun create(data: PlanDto, author: ApplicationUserEntity): PlanDto {
         var entity = PlanEntity(
             title = data.title,

@@ -39,6 +39,11 @@ class MyPlanner(
         return publicPlansRegistry.values.toList()
     }
 
+    fun findByTitle(title: String): List<Plan> {
+        return planDao.findByTitle(title)
+            .map { domainProvider.plan(it, shortLived = true) }
+    }
+
     fun getPublicPlan(id: UUID): Plan? {
         loadPlan(id)
         return publicPlansRegistry[id]
