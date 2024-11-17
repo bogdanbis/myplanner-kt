@@ -3,7 +3,6 @@
 		<MpInput
 			:id
 			:label
-			:required
 			:unlabeled
 			type="search"
 			v-bind="$attrs"
@@ -38,11 +37,6 @@ export default {
 		label: {
 			type: String,
 			required: false,
-		},
-		required: {
-			type: Boolean,
-			required: false,
-			default: false,
 		},
 		unlabeled: {
 			type: Boolean,
