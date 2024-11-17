@@ -20,6 +20,7 @@ target/
 **/node_modules/*
 dist/
 **/package-lock.json
+*.local
 
 ### STS ###
 .apt_generated
@@ -42,9 +43,6 @@ dist/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
 ### VS Code ###
 .vscode/
