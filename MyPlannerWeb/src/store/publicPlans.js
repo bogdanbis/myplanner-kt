@@ -4,13 +4,10 @@ import api from '../api/index.js';
 
 export const usePlansStore = defineStore('plans', {
 	state: () => ({
-		publicPlans: null,
+		publicPlans: [],
 	}),
 
 	actions: {
-		setPublicPlans(plans) {
-			this.publicPlans = plans;
-		},
 		async fetchPublicPlans() {
 			const response = await api.get('/plans/browse');
 			this.publicPlans = response.map(plan => new Plan(plan));

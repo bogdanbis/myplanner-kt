@@ -10,7 +10,7 @@
 			</span>
 			<span class="text-secondary">{{ plan.description }}</span>
 			<template #actions>
-				<MpLink :to="'/creator/details/' + plan.id">Manage</MpLink>
+				<MpLink :to="'/creator/manage/' + plan.id">Manage</MpLink>
 			</template>
 		</MpCard>
 	</div>

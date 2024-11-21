@@ -1,5 +1,5 @@
 <template>
-	<MpBackLink :to="'/creator/details/' + plan.id">Manage</MpBackLink>
+	<MpBackLink :to="'/creator/manage/' + plan.id">Manage</MpBackLink>
 	<h2>Edit Plan</h2>
 	<span class="page-subtitle">Make changes to your Plan. You can make changes anytime you want.</span>
 	<MpCard>

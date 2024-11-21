@@ -4,6 +4,7 @@
 		v-model="value"
 		:class="{ 'monospaced': monospaced, 'large-input': large, 'unlabeled-input': unlabeled }"
 		:id="id"
+		:placeholder="placeholder"
 		:required="required"
 		:type="type"
 		class="mp-form-item"
@@ -35,6 +36,10 @@ export default {
 			type: Boolean,
 			required: false,
 			default: false,
+		},
+		placeholder: {
+			type: String,
+			required: false,
 		},
 		required: {
 			type: Boolean,

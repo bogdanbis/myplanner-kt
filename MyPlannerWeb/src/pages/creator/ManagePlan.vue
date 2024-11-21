@@ -14,7 +14,7 @@
 					</span>
 				</template>
 			</MpInlineValue>
-			<div class="mt-3">
+			<div class="m-top-l">
 				<MpButton v-if="!showSearchBar" @click="showSearchBar = true" icon="search" link>
 					Find someone's progress
 				</MpButton>
@@ -26,15 +26,20 @@
 						:disabled="!searchTerm"
 						:busy="searching"
 						@search="findParticipants"
-					/>
-					<div class="d-flex">
-						<MpButton v-if="foundParticipantProgress.length" link icon="trash-fill" @click="clearSearch">
-							Clear search
-						</MpButton>
-						<MpButton @click="showSearchBar = false" link class="ms-auto me-2" icon="arrow-up-left">
-							Close
-						</MpButton>
-					</div>
+						@clear-search="clearSearch"
+					>
+						<template #actions>
+							<MpButton
+								v-if="showSearchBar"
+								@click="showSearchBar = false"
+								link
+								icon="arrow-up-left"
+								class="mp-search-hide"
+							>
+								Close
+							</MpButton>
+						</template>
+					</MpSearch>
 					<ul v-if="foundParticipantProgress.length">
 						<li v-for="{ progressId, participant } in foundParticipantProgress" :key="progressId">
 							<MpLink :to="$route.fullPath + '/progress/' + progressId">{{ participant.name }}</MpLink>
@@ -49,7 +54,7 @@
 			<MpInlineValue label="Number of steps" :value="plan.steps.length" />
 
 			<template #actions>
-				<MpLink :to="'/creator/details/' + plan.id + '/edit'">Edit</MpLink>
+				<MpLink :to="'/creator/manage/' + plan.id + '/edit'">Edit</MpLink>
 			</template>
 		</MpCard>
 	</div>

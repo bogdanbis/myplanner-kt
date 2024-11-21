@@ -1,7 +1,7 @@
 <template>
-	<MpBackLink :to="'/creator/details/' + planId">Manage Plan</MpBackLink>
+	<MpBackLink :to="'/creator/manage/' + planId">Manage Plan</MpBackLink>
 	<h2>{{ plan.title }}</h2>
-	<span class="page-subtitle"><u>{{ participant.name }}</u>'s progress</span>
+	<span class="page-subtitle"><b>{{ participant.name }}</b>'s progress</span>
 
 	<MpCard>
 		<b class="text-secondary">About</b>

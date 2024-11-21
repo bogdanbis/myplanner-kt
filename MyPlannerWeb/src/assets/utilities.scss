@@ -24,3 +24,9 @@
 .text-center {
 	text-align: center;
 }
+
+@for $i from 0 through 100 {
+	.w-#{$i} {
+		width: $i * 1%;
+	}
+}

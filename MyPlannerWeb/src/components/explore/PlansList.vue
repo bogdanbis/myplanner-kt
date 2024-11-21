@@ -22,7 +22,7 @@
 				</span>
 			</div>
 			<div v-else>
-				<MpLink :to="'/creator/details/' + plan.id">Manage</MpLink>
+				<MpLink :to="'/creator/manage/' + plan.id">Manage</MpLink>
 			</div>
 		</template>
 	</MpCard>
@@ -31,30 +31,19 @@
 <script setup>
 import NumberOfParticipants from '@/components/NumberOfParticipants.vue';
 import { useAuthStore } from '@/store/auth.js';
-import { usePlansStore } from '@/store/publicPlans.js';
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
+
+const { plans } = defineProps({
+	plans: {
+		type: Array,
+		required: true,
+	},
+})
 
 const authStore = useAuthStore();
-const plansStore = usePlansStore();
 
 const user = computed(() => authStore.user);
-const plans = ref(plansStore.publicPlans);
 const loading = ref(false);
-
-onMounted(async () => {
-	const publicPlans = await plansStore.fetchPublicPlans();
-	if (user.value) {
-		if (user.value?.acquiredPlans == null)
-			await user.value?.fetchAcquiredPlans();
-		const acquiredPlans = user.value.acquiredPlans;
-		acquiredPlans.forEach((plan) => {
-			const index = publicPlans.findIndex(p => p.id === plan.plan.id)
-			if (index >= 0)
-				publicPlans[index].acquired = true;
-		});
-	}
-	plans.value = publicPlans;
-})
 
 const acquirePlan = async (plan) => {
 	if (!user.value)

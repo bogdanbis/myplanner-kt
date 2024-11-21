@@ -5,7 +5,7 @@ const MyPlans = () => import('@/pages/MyPlans.vue');
 const PlanProgress = () => import('@/pages/participant/PlanProgress.vue');
 const AuthoredPlans = () => import('./pages/creator/CreatedPlans.vue');
 const CreatePlan = () => import('@/pages/creator/CreatePlan.vue');
-const PlanDetails = () => import('@/pages/creator/PlanDetails.vue');
+const ManagePlan = () => import('@/pages/creator/ManagePlan.vue');
 const EditPlan = () => import('@/pages/creator/EditPlan.vue');
 const ParticipantPlanProgress = () => import('@/pages/creator/ParticipantPlanProgress.vue');
 
@@ -41,17 +41,17 @@ const router = createRouter({
 			component: CreatePlan,
 		},
 		{
-			path: '/creator/details/:id',
+			path: '/creator/manage/:id',
 			name: 'Manage Plan',
-			component: PlanDetails,
+			component: ManagePlan,
 		},
 		{
-			path: '/creator/details/:id/edit',
+			path: '/creator/manage/:id/edit',
 			name: 'Edit Plan',
 			component: EditPlan,
 		},
 		{
-			path: '/creator/details/:id/progress/:progressId',
+			path: '/creator/manage/:id/progress/:progressId',
 			name: 'Participant Plan Progress',
 			component: ParticipantPlanProgress,
 		},
