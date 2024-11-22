@@ -75,6 +75,7 @@ class PlanProgressDao(
         entity.lastSyncedPlan = data.lastSyncedPlan
         entity.completed = data.completed
         entity.comment = data.comment
+        entity.lastActive = data.lastActive
         repository.save(entity)
     }
 

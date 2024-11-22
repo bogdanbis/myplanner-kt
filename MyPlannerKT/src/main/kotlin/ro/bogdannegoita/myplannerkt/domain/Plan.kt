@@ -45,12 +45,11 @@ class Plan(
         }
         private set
 
-    var acquiredPlans: SortedSet<PlanProgress> = sortedSetOf()
+    private var acquiredPlans: SortedSet<PlanProgress> = sortedSetOf()
         get() {
             loadAcquiredPlans()
             return field
         }
-        private set
 
     fun update(data: PlanDto) {
         title = data.title

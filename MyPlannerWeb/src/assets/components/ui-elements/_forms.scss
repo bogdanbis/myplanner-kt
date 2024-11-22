@@ -272,16 +272,7 @@ $form-item-border-radius: 8px;
 	.mp-search-clear {
 		margin-top: 0;
 		margin-right: auto;
-
-		+ .mp-search-hide {
-			margin-top: -33.5px;
-		}
 	}
-}
-
-.mp-search-hide {
-	margin-left: auto;
-	margin-right: $spacer-s;
 }
 
 input::-webkit-outer-spin-button,

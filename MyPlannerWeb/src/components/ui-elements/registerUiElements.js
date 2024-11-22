@@ -20,6 +20,8 @@ import MpDialog from './MpDialog.vue';
 import MpInlineValue from './MpInlineValue.vue';
 import MpLink from './MpLink.vue';
 import MpMultilineText from './MpMultilineText.vue';
+import ProgressBar from './progress/ProgressBar.vue';
+import ProgressCircle from './progress/ProgressCircle.vue';
 
 export default function registerUiElements(Vue) {
 	Vue.component('MpCard', MpCard);
@@ -47,6 +49,10 @@ export default function registerUiElements(Vue) {
 	// grid
 	Vue.component('MpCol', MpCol);
 	Vue.component('MpRow', MpRow);
+
+	// progress
+	Vue.component('ProgressBar', ProgressBar);
+	Vue.component('ProgressCircle', ProgressCircle);
 
 	// plug-ins
 	Vue.use(Toast, {

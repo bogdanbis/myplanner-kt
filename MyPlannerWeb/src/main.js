@@ -1,4 +1,5 @@
-import './assets/main.scss'
+import './assets/main.scss';
+import 'js-circle-progress';
 import { autoAnimatePlugin } from '@formkit/auto-animate/vue';
 import { createPinia } from 'pinia';
 import { createApp } from 'vue'

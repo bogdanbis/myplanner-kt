@@ -7,7 +7,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
 import ro.bogdannegoita.myplannerkt.api.requests.PlanRequest
-import ro.bogdannegoita.myplannerkt.api.responses.ParticipantResponse
+import ro.bogdannegoita.myplannerkt.api.responses.ParticipantProgressResponse
 import ro.bogdannegoita.myplannerkt.api.responses.PlanProgressResponse
 import ro.bogdannegoita.myplannerkt.api.responses.PlanResponse
 import ro.bogdannegoita.myplannerkt.api.responses.PlanSimpleResponse
@@ -54,9 +54,9 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
     fun getParticipants(
         @AuthenticationPrincipal principal: UserDetails,
         @PathVariable id: UUID,
-    ): List<ParticipantResponse>? {
+    ): List<ParticipantProgressResponse>? {
         return user(principal).getCreatedPlan(id)?.getParticipants()
-            ?.map(::ParticipantResponse)
+            ?.map(::ParticipantProgressResponse)
     }
 
     @GetMapping("/created/{id}/participant-progress/{progressId}")
@@ -64,9 +64,9 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
         @AuthenticationPrincipal principal: UserDetails,
         @PathVariable id: UUID,
         @PathVariable progressId: UUID,
-    ): PlanProgressResponse? {
+    ): ParticipantProgressResponse? {
         return user(principal).getCreatedPlan(id)?.getParticipantProgress(progressId)
-            ?.let { PlanProgressResponse(it) }
+            ?.let { ParticipantProgressResponse(it) }
     }
 
     @PostMapping("/create")

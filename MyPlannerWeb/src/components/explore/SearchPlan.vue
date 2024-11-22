@@ -7,7 +7,7 @@
 			@search="searchPlan"
 			@clear-search="clearSearch"
 			:busy="searching"
-			class="search-plan-title"
+			class="search-plan-title w-50-desktop"
 		/>
 		<PlansList v-if="foundPlans.length" :plans="foundPlans" />
 	</div>

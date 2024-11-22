@@ -15,7 +15,6 @@
 		<MpButton v-if="didSearch" @click="clearSearch" link icon="trash-fill" class="mp-search-clear">
 			Clear search
 		</MpButton>
-		<slot name="actions"></slot>
 	</div>
 </template>
 

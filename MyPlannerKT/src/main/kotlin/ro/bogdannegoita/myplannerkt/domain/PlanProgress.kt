@@ -5,6 +5,7 @@ import ro.bogdannegoita.myplannerkt.commons.PlanProgressDto
 import ro.bogdannegoita.myplannerkt.commons.StepProgressDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanProgressDao
+import java.time.LocalDateTime
 import java.util.*
 
 class PlanProgress(
@@ -16,6 +17,7 @@ class PlanProgress(
 
     val acquiredAt by data::acquiredAt
     var lastSyncedPlan by data::lastSyncedPlan
+    var lastActive by data::lastActive
     var comment by data::comment
     val user: Lazy<ApplicationUserDto> = lazy { dao.getUser(id) }
 
@@ -27,7 +29,10 @@ class PlanProgress(
     }
 
     fun updateStepProgress(stepId: UUID, stepProgressData: StepProgressDto): StepProgress? {
-        return getStep(stepId)?.update(stepProgressData)
+        val stepProgress = getStep(stepId)?.update(stepProgressData)
+        lastActive = LocalDateTime.now()
+        dao.update(id, data)
+        return stepProgress
     }
 
     fun sync() {

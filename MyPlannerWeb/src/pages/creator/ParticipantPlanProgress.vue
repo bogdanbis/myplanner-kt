@@ -1,5 +1,5 @@
 <template>
-	<MpBackLink :to="'/creator/manage/' + planId">Manage Plan</MpBackLink>
+	<MpBackLink :to="`/creator/manage/${planId}/participants`">Participants</MpBackLink>
 	<h2>{{ plan.title }}</h2>
 	<span class="page-subtitle"><b>{{ participant.name }}</b>'s progress</span>
 
@@ -34,14 +34,16 @@ const planProgress = ref(new PlanProgress());
 const loading = ref(true);
 
 const plan = computed(() => planProgress.value.plan);
-console.log(planProgress.value)
 const participant = computed(() => planProgress.value.participant);
 
 onMounted(async () => {
-	const planResponse = await api.get(`/plans/created/${planId}/participant-progress/${planProgressId}`);
+	const [planResponse, planProgressResponse] = await Promise.all([
+		api.get(`/plans/created/${planId}`),
+		api.get(`/plans/created/${planId}/participant-progress/${planProgressId}`),
+	]);
 	if (!planResponse)
 		return router.push('/my-plans');
-	planProgress.value = new PlanProgress(planResponse);
+	planProgress.value = new PlanProgress({ ...planProgressResponse, plan: planResponse });
 	loading.value = false;
 })
 </script>

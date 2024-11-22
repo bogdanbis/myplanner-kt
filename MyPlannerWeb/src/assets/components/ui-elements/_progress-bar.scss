@@ -30,6 +30,26 @@
 
 @for $i from 0 through 100 {
 	.progress-bar-w-#{$i} {
-		width: $i * 3px;
+		width: $i * 1%;
+	}
+}
+
+.progress-circle {
+	margin: -.5rem;
+
+	&::part(base) {
+		width: 36px;
+		height: auto;
+	}
+
+	&::part(circle) {
+		stroke: transparent;
+		stroke-width: 50;
+	}
+
+	&::part(value) {
+		stroke: var(--primary);
+		stroke-width: -20;
+		stroke-linecap: round;
 	}
 }

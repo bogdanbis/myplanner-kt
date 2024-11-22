@@ -11,6 +11,7 @@ import java.util.*
 class PlanProgressEntity(
     var acquiredAt: LocalDateTime? = null,
     var lastSyncedPlan: LocalDateTime? = null,
+    var lastActive: LocalDateTime? = null,
     var completed: Boolean? = null,
     var comment: String? = null,
 

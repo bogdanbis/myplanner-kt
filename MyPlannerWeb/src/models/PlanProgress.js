@@ -9,6 +9,7 @@ export default class PlanProgress extends StepProgressContainer {
 	participant = new ApplicationUser()
 	acquiredAt;
 	lastSyncedPlan;
+	lastActive;
 	comment;
 
 	constructor(planProgress) {
@@ -19,8 +20,9 @@ export default class PlanProgress extends StepProgressContainer {
 		this.participant = new ApplicationUser(planProgress.participant);
 		this.acquiredAt = planProgress.acquiredAt;
 		this.lastSyncedPlan = planProgress.lastSyncedPlan;
-		this.completed = planProgress.completed;
+		this.lastActive = planProgress.lastActive;
 		this.comment = planProgress.comment;
+		this.completed = planProgress.completed;
 		this.steps = planProgress.steps.map(step => new StepProgress(step)) || [];
 	}
 

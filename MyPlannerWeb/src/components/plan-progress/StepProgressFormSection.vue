@@ -7,6 +7,7 @@
 		v-auto-animate
 	>
 		<div>
+			<!--TODO: should always be visible-->
 			Completed: {{ stepsContainer.completedStepsCount }}/{{ stepsContainer.totalStepsCount }}
 			<ProgressBar
 				:count="stepsContainer.completedStepsCount"
@@ -44,7 +45,6 @@
 
 <script setup>
 import api from '@/api/index.js';
-import ProgressBar from '@/components/ui-elements/ProgressBar.vue';
 import PlanProgress from '@/models/PlanProgress.js';
 import StepProgress from '@/models/StepProgress.js';
 

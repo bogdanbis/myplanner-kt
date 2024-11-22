@@ -15,37 +15,7 @@
 				</template>
 			</MpInlineValue>
 			<div class="m-top-l">
-				<MpButton v-if="!showSearchBar" @click="showSearchBar = true" icon="search" link>
-					Find someone's progress
-				</MpButton>
-				<div v-else>
-					<MpSearch
-						id="search-plan-participant"
-						v-model="searchTerm"
-						placeholder="Name or email"
-						:disabled="!searchTerm"
-						:busy="searching"
-						@search="findParticipants"
-						@clear-search="clearSearch"
-					>
-						<template #actions>
-							<MpButton
-								v-if="showSearchBar"
-								@click="showSearchBar = false"
-								link
-								icon="arrow-up-left"
-								class="mp-search-hide"
-							>
-								Close
-							</MpButton>
-						</template>
-					</MpSearch>
-					<ul v-if="foundParticipantProgress.length">
-						<li v-for="{ progressId, participant } in foundParticipantProgress" :key="progressId">
-							<MpLink :to="$route.fullPath + '/progress/' + progressId">{{ participant.name }}</MpLink>
-						</li>
-					</ul>
-				</div>
+				<MpLink :to="`/creator/manage/${plan.id}/participants`">View participants</MpLink>
 			</div>
 		</MpCard>
 		<MpCard title="Details">
@@ -54,7 +24,7 @@
 			<MpInlineValue label="Number of steps" :value="plan.steps.length" />
 
 			<template #actions>
-				<MpLink :to="'/creator/manage/' + plan.id + '/edit'">Edit</MpLink>
+				<MpLink :to="`/creator/manage/${plan.id}/edit`">Edit</MpLink>
 			</template>
 		</MpCard>
 	</div>
@@ -63,7 +33,6 @@
 <script setup>
 import api from '@/api/index.js';
 import Plan from '@/models/Plan.js';
-import { useSessionStorage } from '@/utils/localStorage.js';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -72,49 +41,10 @@ const planId = useRoute().params.id;
 
 const plan = ref(new Plan());
 
-const showSearchBar = ref(false);
-const searching = ref(false);
-const searchTerm = ref();
-const searchTermStorage = useSessionStorage('searchTerm/' + planId);
-const participantsProgress = ref();
-const foundParticipantProgress = ref([]);
-
 onMounted(async () => {
 	const planResponse = await api.get('/plans/created/' + planId);
 	if (!planResponse)
-		router.push('/creator');
+		return router.push('/creator');
 	plan.value = new Plan(planResponse);
-	if (searchTermStorage.value) {
-		searchTerm.value = searchTermStorage.value;
-		await findParticipants();
-		showSearchBar.value = true;
-	}
 })
-
-const findParticipants = async () => {
-	if (!searchTerm.value || searchTerm.value.length <= 2) {
-		foundParticipantProgress.value = [];
-		return;
-	}
-	searching.value = true;
-	searchTermStorage.value = searchTerm.value;
-	if (participantsProgress.value == null)
-		await fetchParticipantsProgress();
-	foundParticipantProgress.value = participantsProgress.value
-			.filter(p => {
-				return p.participant.email.toLowerCase().includes(searchTerm.value)
-						|| p.participant.name.toLowerCase().includes(searchTerm.value)
-			});
-	searching.value = false;
-}
-
-const fetchParticipantsProgress = async () => {
-	participantsProgress.value = await api.get('/plans/created/' + planId + '/participants');
-}
-
-const clearSearch = () => {
-	searchTerm.value = undefined;
-	foundParticipantProgress.value = [];
-	searchTermStorage.remove()
-}
 </script>

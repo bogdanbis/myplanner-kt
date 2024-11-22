@@ -30,3 +30,9 @@
 		width: $i * 1%;
 	}
 }
+
+.w-50-desktop {
+	@media only screen and (min-width: $mobile-width-breakpoint) {
+		width: 50%;
+	}
+}

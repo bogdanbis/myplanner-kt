@@ -7,6 +7,7 @@ const AuthoredPlans = () => import('./pages/creator/CreatedPlans.vue');
 const CreatePlan = () => import('@/pages/creator/CreatePlan.vue');
 const ManagePlan = () => import('@/pages/creator/ManagePlan.vue');
 const EditPlan = () => import('@/pages/creator/EditPlan.vue');
+const PlanParticipants = () => import('@/pages/creator/PlanParticipants.vue');
 const ParticipantPlanProgress = () => import('@/pages/creator/ParticipantPlanProgress.vue');
 
 const router = createRouter({
@@ -51,7 +52,12 @@ const router = createRouter({
 			component: EditPlan,
 		},
 		{
-			path: '/creator/manage/:id/progress/:progressId',
+			path: '/creator/manage/:id/participants',
+			name: 'Participants progress',
+			component: PlanParticipants,
+		},
+		{
+			path: '/creator/manage/:id/participant-progress/:progressId',
 			name: 'Participant Plan Progress',
 			component: ParticipantPlanProgress,
 		},
