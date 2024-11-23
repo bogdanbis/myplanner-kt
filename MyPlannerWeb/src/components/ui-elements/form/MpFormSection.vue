@@ -9,6 +9,7 @@
 		>
 			{{ title }}
 		</MpFormSectionTitle>
+		<slot name="non-collapsible"></slot>
 		<slot v-if="!collapsed"></slot>
 	</div>
 </template>

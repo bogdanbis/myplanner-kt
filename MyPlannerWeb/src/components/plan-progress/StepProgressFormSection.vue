@@ -6,15 +6,16 @@
 		collapsible
 		v-auto-animate
 	>
-		<div>
-			<!--TODO: should always be visible-->
-			Completed: {{ stepsContainer.completedStepsCount }}/{{ stepsContainer.totalStepsCount }}
-			<ProgressBar
-				:count="stepsContainer.completedStepsCount"
-				:total="stepsContainer.totalStepsCount"
-				class="mt-2"
-			/>
-		</div>
+		<template #non-collapsible>
+			<div>
+				Completed: {{ stepsContainer.completedStepsCount }}/{{ stepsContainer.totalStepsCount }}
+				<ProgressBar
+					:count="stepsContainer.completedStepsCount"
+					:total="stepsContainer.totalStepsCount"
+					class="mt-2"
+				/>
+			</div>
+		</template>
 		<div
 			v-for="stepProgress in stepsContainer.steps"
 			:key="stepProgress"
