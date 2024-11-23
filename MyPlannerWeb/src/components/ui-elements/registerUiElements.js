@@ -20,6 +20,7 @@ import MpDialog from './MpDialog.vue';
 import MpInlineValue from './MpInlineValue.vue';
 import MpLink from './MpLink.vue';
 import MpMultilineText from './MpMultilineText.vue';
+import MpTable from './MpTable.vue';
 import ProgressBar from './progress/ProgressBar.vue';
 import ProgressCircle from './progress/ProgressCircle.vue';
 
@@ -34,6 +35,7 @@ export default function registerUiElements(Vue) {
 	Vue.component('MpBackLink', MpBackLink);
 	Vue.component('MpInlineValue', MpInlineValue);
 	Vue.component('MpMultilineText', MpMultilineText);
+	Vue.component('MpTable', MpTable);
 
 	// forms
 	Vue.component('MpForm', MpForm);

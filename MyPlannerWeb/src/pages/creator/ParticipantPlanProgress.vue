@@ -39,7 +39,7 @@ const participant = computed(() => planProgress.value.participant);
 onMounted(async () => {
 	const [planResponse, planProgressResponse] = await Promise.all([
 		api.get(`/plans/created/${planId}`),
-		api.get(`/plans/created/${planId}/participant-progress/${planProgressId}`),
+		api.get(`/plans/created/${planId}/participants/${planProgressId}`),
 	]);
 	if (!planResponse)
 		return router.push('/my-plans');

@@ -57,7 +57,7 @@ const router = createRouter({
 			component: PlanParticipants,
 		},
 		{
-			path: '/creator/manage/:id/participant-progress/:progressId',
+			path: '/creator/manage/:id/participants/:progressId',
 			name: 'Participant Plan Progress',
 			component: ParticipantPlanProgress,
 		},

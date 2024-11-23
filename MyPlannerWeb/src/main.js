@@ -6,7 +6,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import registerUiElements from './components/ui-elements/registerUiElements.js';
 import router from './router.js';
-import { formatDate } from './utils/dateFormatter.js';
+import { formatDate, formatDateTime, relativeDate } from './utils/dateFormatter.js';
 
 const pinia = createPinia()
 const app = createApp(App)
@@ -19,5 +19,7 @@ app
 		.use(autoAnimatePlugin)
 
 app.config.globalProperties.$date = formatDate;
+app.config.globalProperties.$dateTime = formatDateTime;
+app.config.globalProperties.$relativeDate = relativeDate;
 
 app.mount('#app')

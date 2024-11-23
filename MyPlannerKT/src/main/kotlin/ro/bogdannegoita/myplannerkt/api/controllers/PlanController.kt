@@ -59,7 +59,7 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
             ?.map(::ParticipantProgressResponse)
     }
 
-    @GetMapping("/created/{id}/participant-progress/{progressId}")
+    @GetMapping("/created/{id}/participants/{progressId}")
     fun getParticipantProgress(
         @AuthenticationPrincipal principal: UserDetails,
         @PathVariable id: UUID,

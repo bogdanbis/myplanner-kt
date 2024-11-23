@@ -13,19 +13,19 @@
 		class="w-50-desktop"
 	/>
 	<MpCard title="Participants progress">
-		<ul>
-			<li v-for="pp in displayedParticipants">
-				<MpLink :to="`/creator/manage/${planId}/participant-progress/${pp.id}`">
-					{{ pp.participant.name }}
-				</MpLink>
-				<div class="d-flex">
+		<MpTable :fields="tableFields" :empty="!displayedParticipants?.length">
+			<tr v-for="pp in displayedParticipants">
+				<td>
+					<MpLink :to="`/creator/manage/${planId}/participants/${pp.id}`">{{ pp.participant.name }}</MpLink>
+				</td>
+				<td class="d-flex">
 					<ProgressCircle :value="pp.completedStepsCount" :max="pp.totalStepsCount" class="m-right-0" />
-					<div>Completed {{ pp.completedStepsCount }}/{{ pp.totalStepsCount }}</div>
-				</div>
-				<div>Started at: {{ $date(pp.acquiredAt) }}</div>
-				<div>Last active: {{ $date(pp.lastActive) }}</div>
-			</li>
-		</ul>
+					{{ pp.completedStepsCount }}/{{ pp.totalStepsCount }}
+				</td>
+				<td>{{ $date(pp.acquiredAt) }}</td>
+				<td>{{ $relativeDate(pp.lastActive) }}</td>
+			</tr>
+		</MpTable>
 	</MpCard>
 </template>
 
@@ -39,6 +39,13 @@ import { useRoute, useRouter } from 'vue-router';
 const router = useRouter()
 const planId = useRoute().params.id;
 const plan = ref(new Plan());
+
+const tableFields = [
+	{ label: 'Name' },
+	{ label: 'Completed' },
+	{ label: 'Started' },
+	{ label: 'Last active' },
+];
 
 const searching = ref(false);
 const searchTerm = ref();
