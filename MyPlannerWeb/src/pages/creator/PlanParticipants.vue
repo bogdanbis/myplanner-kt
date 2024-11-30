@@ -2,17 +2,17 @@
 	<MpBackLink :to="`/creator/manage/${plan.id}`">Manage</MpBackLink>
 	<h2>{{ plan.title }}</h2>
 
-	<MpSearch
-		id="search-plan-participant"
-		v-model="searchTerm"
-		placeholder="Search by name or email"
-		:disabled="!searchTerm"
-		:busy="searching"
-		@search="findParticipants"
-		@clear-search="clearSearch"
-		class="w-50-desktop"
-	/>
 	<MpCard title="Participants progress">
+		<MpSearch
+			id="search-plan-participant"
+			v-model="searchTerm"
+			placeholder="Search by name or email"
+			:disabled="!searchTerm"
+			:busy="searching"
+			@search="findParticipants"
+			@clear-search="clearSearch"
+			class="w-50-desktop"
+		/>
 		<MpTable :fields="tableFields" :empty="!displayedParticipants?.length">
 			<tr v-for="pp in displayedParticipants">
 				<td>
