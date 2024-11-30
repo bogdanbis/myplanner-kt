@@ -37,7 +37,7 @@ $layout-padding: $spacer-l;
 	min-height: calc(100vh - $top-bar-height);
 
 	@media only screen and (max-width: $hide-sidebar-breakpoint) {
-		display: unset;
+		display: block;
 	}
 }
 
