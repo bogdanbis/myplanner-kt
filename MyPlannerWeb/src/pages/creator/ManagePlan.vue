@@ -9,8 +9,8 @@
 			<MpInlineValue :value="plan.stats.completedStepsCount">
 				<template #label>
 					<span title="There can be a slight difference if not all of the participants are synced with the latest version.">
-						Steps completed by others
-						<MpIcon icon="info-circle" class="text-primary" />
+						Steps completed
+						<MpIcon icon="info-circle" class="text-primary m-left-xs" />
 					</span>
 				</template>
 			</MpInlineValue>
