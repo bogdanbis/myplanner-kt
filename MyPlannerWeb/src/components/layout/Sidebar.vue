@@ -19,9 +19,12 @@
 </template>
 
 <script setup>
-	import NavMenu from './NavMenu.vue';
+import { useUiStore } from '@/store/ui.js';
+import { useLocalStorage } from '@/utils/localStorage.js';
+import { computed } from 'vue';
+import NavMenu from './NavMenu.vue';
 
-	const emit = defineEmits(['hide-sidebar']);
+const emit = defineEmits(['hide-sidebar']);
 
 const hideSidebar = () => {
 	emit('hide-sidebar')
@@ -40,11 +43,21 @@ const mainMenuItems = [
 	},
 ]
 
-const creatorMenuItems = [
+const uiStore = useUiStore();
+const storedPins = useLocalStorage('pinned-plans').value;
+if (storedPins)
+	uiStore.setPinnedPlans(storedPins)
+
+const creatorMenuItems = computed(() => ([
 	{
 		icon: 'pencil-square',
 		label: 'Created Plans',
-		path: '/creator'
-	}
-]
+		path: '/creator',
+	},
+	...uiStore.pinnedPlans.map((plan) => ({
+		icon: 'pin-fill',
+		label: plan.title,
+		path: `/creator/manage/${plan.id}`,
+	})),
+]));
 </script>

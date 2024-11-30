@@ -1,13 +1,13 @@
+import { useLocalStorage } from '@/utils/localStorage.js';
 import { defineStore } from 'pinia';
+
+const pinnedPlansStorage = useLocalStorage('pinned-plans');
 
 export const useUiStore = defineStore('$ui', {
 	state: () => ({
 		scheme: 'auto',
 		preferedScheme: 'auto',
-		invoiceTemplate: {
-			showInvoice: false,
-			showProduct: false,
-		},
+		pinnedPlans: [],
 	}),
 
 	actions: {
@@ -51,9 +51,23 @@ export const useUiStore = defineStore('$ui', {
 				this.setColorScheme('light');
 			this.setPreferedScheme(this.scheme);
 		},
-		setInvoiceTemplate(showInvoice, showProduct) {
-			this.invoiceTemplate.showInvoice = showInvoice;
-			this.invoiceTemplate.showProduct = showProduct;
+
+		setPinnedPlans(value) {
+			this.pinnedPlans = value;
+			pinnedPlansStorage.value = this.pinnedPlans;
+		},
+		pinPlan(plan) {
+			if (this.pinnedPlans.find(p => p.id === plan.id))
+				return;
+			this.pinnedPlans.push({ id: plan.id, title: plan.title });
+			pinnedPlansStorage.value = this.pinnedPlans;
+		},
+		unpinPlan({ id }) {
+			const idx = this.pinnedPlans.findIndex(p => p.id === id);
+			if (idx < 0)
+				return;
+			this.pinnedPlans.splice(idx, 1);
+			pinnedPlansStorage.value = this.pinnedPlans;
 		},
 	},
 })

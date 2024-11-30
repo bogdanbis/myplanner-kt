@@ -1,7 +1,12 @@
 <template>
 	<MpBackLink to="/creator">Created Plans</MpBackLink>
-	<h2>{{ plan.title }}</h2>
-	<span class="page-subtitle">View stats about your plan or manage your plan details.</span>
+	<div class="d-flex">
+		<h2>{{ plan.title }} </h2>
+	</div>
+	<span class="page-subtitle">
+		View stats about your plan or manage your plan details.
+		<PinPlanButton :plan="plan" />
+	</span>
 
 	<div class="halved">
 		<MpCard title="Stats">
@@ -32,8 +37,9 @@
 
 <script setup>
 import api from '@/api/index.js';
+import PinPlanButton from '@/components/plans/PinPlanButton.vue';
 import Plan from '@/models/Plan.js';
-import { onMounted, ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const router = useRouter()
@@ -41,7 +47,7 @@ const planId = useRoute().params.id;
 
 const plan = ref(new Plan());
 
-onMounted(async () => {
+onBeforeMount(async () => {
 	const planResponse = await api.get('/plans/created/' + planId);
 	if (!planResponse)
 		return router.push('/creator');
