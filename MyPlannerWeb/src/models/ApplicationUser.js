@@ -7,13 +7,15 @@ export default class ApplicationUser {
 	name;
 	email;
 	acquiredPlans;
+	uiPreferences = { pinnedPlans: null };
 
-	constructor(logInResponse) {
-		if (!logInResponse) return;
-		this.firstName = logInResponse.firstName;
-		this.lastName = logInResponse.lastName;
-		this.name = logInResponse.name;
-		this.email = logInResponse.email;
+	constructor(userResponse) {
+		if (!userResponse) return;
+		this.firstName = userResponse.firstName;
+		this.lastName = userResponse.lastName;
+		this.name = userResponse.name;
+		this.email = userResponse.email;
+		this.uiPreferences = { pinnedPlans: JSON.parse(userResponse.uiPreferences.pinnedPlans) };
 	}
 
 	async fetchAcquiredPlans() {

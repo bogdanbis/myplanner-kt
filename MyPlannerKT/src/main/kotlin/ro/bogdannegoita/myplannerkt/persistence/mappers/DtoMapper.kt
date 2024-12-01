@@ -1,11 +1,17 @@
 package ro.bogdannegoita.myplannerkt.persistence.mappers
 
 import ro.bogdannegoita.myplannerkt.commons.*
+import ro.bogdannegoita.myplannerkt.domain.types.UserUIPreferences
 import ro.bogdannegoita.myplannerkt.persistence.entities.*
 
 class DtoMapper {
     fun applicationUserDto(entity: ApplicationUserEntity): ApplicationUserDto {
-        return ApplicationUserDto(entity.id, entity.email!!, entity.firstName!!, entity.lastName!!)
+        return ApplicationUserDto(entity.id, entity.email!!, entity.firstName!!, entity.lastName!!,
+            userUiPreferences(entity.uiPreferences!!))
+    }
+
+    fun userUiPreferences(entity: UserUIPreferencesEntity): UserUIPreferences {
+        return UserUIPreferences(entity.pinnedPlans)
     }
 
     fun planDto(entity: PlanEntity): PlanDto {

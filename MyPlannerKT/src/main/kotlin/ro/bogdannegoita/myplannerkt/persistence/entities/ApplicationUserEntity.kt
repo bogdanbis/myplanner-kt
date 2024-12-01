@@ -13,6 +13,9 @@ class ApplicationUserEntity(
     var lastName: String? = null,
     var password: String? = null,
 
+    @OneToOne(mappedBy = "user", cascade = [(ALL)], fetch = FetchType.EAGER, orphanRemoval = true)
+    var uiPreferences: UserUIPreferencesEntity? = null,
+
     @OneToMany(mappedBy = "author", fetch = LAZY)
     var createdPlans: MutableSet<PlanEntity> = mutableSetOf(),
 

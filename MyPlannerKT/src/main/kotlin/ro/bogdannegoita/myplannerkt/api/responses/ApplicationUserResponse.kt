@@ -8,4 +8,5 @@ class ApplicationUserResponse(data: ApplicationUserDto) {
     val firstName = data.firstName
     val lastName = data.lastName
     val name = data.firstName + " " + data.lastName
+    val uiPreferences = data.uiPreferences
 }

@@ -19,8 +19,8 @@
 </template>
 
 <script setup>
+import { useAuthStore } from '@/store/auth.js';
 import { useUiStore } from '@/store/ui.js';
-import { useLocalStorage } from '@/utils/localStorage.js';
 import { computed } from 'vue';
 import NavMenu from './NavMenu.vue';
 
@@ -44,9 +44,7 @@ const mainMenuItems = [
 ]
 
 const uiStore = useUiStore();
-const storedPins = useLocalStorage('pinned-plans').value;
-if (storedPins)
-	uiStore.setPinnedPlans(storedPins)
+uiStore.setPinnedPlans(useAuthStore().user.uiPreferences.pinnedPlans)
 
 const creatorMenuItems = computed(() => ([
 	{

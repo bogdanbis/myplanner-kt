@@ -1,7 +1,5 @@
-import { useLocalStorage } from '@/utils/localStorage.js';
+import api from '@/api/index.js';
 import { defineStore } from 'pinia';
-
-const pinnedPlansStorage = useLocalStorage('pinned-plans');
 
 export const useUiStore = defineStore('$ui', {
 	state: () => ({
@@ -54,20 +52,19 @@ export const useUiStore = defineStore('$ui', {
 
 		setPinnedPlans(value) {
 			this.pinnedPlans = value;
-			pinnedPlansStorage.value = this.pinnedPlans;
 		},
 		pinPlan(plan) {
 			if (this.pinnedPlans.find(p => p.id === plan.id))
 				return;
 			this.pinnedPlans.push({ id: plan.id, title: plan.title });
-			pinnedPlansStorage.value = this.pinnedPlans;
+			api.put('/ui-preferences', { pinnedPlans: JSON.stringify(this.pinnedPlans) });
 		},
 		unpinPlan({ id }) {
 			const idx = this.pinnedPlans.findIndex(p => p.id === id);
 			if (idx < 0)
 				return;
 			this.pinnedPlans.splice(idx, 1);
-			pinnedPlansStorage.value = this.pinnedPlans;
+			api.put('/ui-preferences', { pinnedPlans: JSON.stringify(this.pinnedPlans) });
 		},
 	},
 })

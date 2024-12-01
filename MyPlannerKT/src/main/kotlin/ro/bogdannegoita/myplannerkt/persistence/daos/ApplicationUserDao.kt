@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.commons.PlanProgressDto
+import ro.bogdannegoita.myplannerkt.domain.types.UserUIPreferences
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.persistence.entities.ApplicationUserEntity
 import ro.bogdannegoita.myplannerkt.persistence.mappers.DtoMapper
@@ -50,5 +51,11 @@ class ApplicationUserDao(
 
     fun deletePlan(id: UUID) {
         planDao.delete(id)
+    }
+
+    fun updateUIPreferences(id: UUID, preferences: UserUIPreferences) {
+        val entity = findById(id)
+        entity.uiPreferences!!.pinnedPlans = preferences.pinnedPlans
+        repository.save(entity)
     }
 }

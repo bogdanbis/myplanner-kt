@@ -4,6 +4,7 @@ import org.springframework.context.ApplicationEventPublisher
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
+import ro.bogdannegoita.myplannerkt.domain.types.UserUIPreferences
 import ro.bogdannegoita.myplannerkt.events.PlanDeletedEvent
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
 import java.util.*
@@ -18,6 +19,8 @@ class ApplicationUser(
     val email: String = data.email
     val firstName: String = data.firstName
     val lastName: String = data.lastName
+    var uiPreferences by data::uiPreferences
+        private set
 
     var acquiredPlans: SortedSet<PlanProgress> = sortedSetOf()
         get() {
@@ -68,6 +71,11 @@ class ApplicationUser(
         dao.deletePlan(id)
         createdPlans.removeIf { it.id == id }
         eventPublisher.publishEvent(PlanDeletedEvent(this, id))
+    }
+
+    fun updateUIPreferences(value: UserUIPreferences) {
+        dao.updateUIPreferences(id, value)
+        uiPreferences = value
     }
 
     private var loadedAcquiredPlans = false

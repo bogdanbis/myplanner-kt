@@ -39,18 +39,22 @@
 import api from '@/api/index.js';
 import PinPlanButton from '@/components/plans/PinPlanButton.vue';
 import Plan from '@/models/Plan.js';
-import { onBeforeMount, ref } from 'vue';
+import { computed, onBeforeMount, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-const router = useRouter()
-const planId = useRoute().params.id;
-
+const router = useRouter();
+const route = useRoute();
+const planId = computed(() => route.params.id);
 const plan = ref(new Plan());
 
-onBeforeMount(async () => {
-	const planResponse = await api.get('/plans/created/' + planId);
+onBeforeMount(() => fetchPlan())
+
+watch(planId, () => fetchPlan())
+
+const fetchPlan = async () => {
+	const planResponse = await api.get('/plans/created/' + planId.value);
 	if (!planResponse)
 		return router.push('/creator');
 	plan.value = new Plan(planResponse);
-})
+}
 </script>
