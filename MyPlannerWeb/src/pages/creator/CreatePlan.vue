@@ -18,13 +18,17 @@ import api from '@/api';
 import PlanForm from '@/components/plans/PlanForm.vue';
 import Plan from '@/models/Plan.js';
 import { useAuthStore } from '@/store/auth.js';
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const authStore = useAuthStore();
 const router = useRouter();
 
 const plan = ref(new Plan());
+
+onMounted(() => {
+	document.getElementById('title').focus()
+})
 
 const hasRequiredFields = computed(() => {
 	return plan.value.title && plan.value.description && plan.value.shortDescription
