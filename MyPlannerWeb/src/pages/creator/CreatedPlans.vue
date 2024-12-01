@@ -5,10 +5,11 @@
 		<MpLink icon="plus-circle" to="/creator/new" class="m-bottom-l">Create a new Plan</MpLink>
 
 		<MpCard v-for="plan in user.createdPlans" :title="plan.title">
-			<span class="mp-card-subtitle">
-				<NumberOfParticipants :count="plan.numberOfParticipants" />
-			</span>
-			<span class="text-secondary">{{ plan.description }}</span>
+			<div class="w-30-desktop">
+				<MpInlineValue label="Participants" :value="plan.numberOfParticipants" />
+				<MpInlineValue label="Last modified:" :value="$relativeDate(plan.lastModifiedAt)" />
+				<MpInlineValue label="Visibility:" :value="plan.isPublic ? 'Public' : 'Private'" />
+			</div>
 			<template #actions>
 				<MpLink :to="'/creator/manage/' + plan.id">Manage</MpLink>
 			</template>
@@ -23,7 +24,6 @@
 
 <script setup>
 import LogInButton from '@/components/LogInButton.vue';
-import NumberOfParticipants from '@/components/NumberOfParticipants.vue';
 import { useAuthStore } from '@/store/auth.js';
 import { computed, onMounted } from 'vue';
 

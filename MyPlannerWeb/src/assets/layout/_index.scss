@@ -90,7 +90,7 @@ $layout-padding: $spacer-l;
 
 	> * {
 		flex: 1 0;
-		min-width: calc($content-max-width * 0.3);
+		min-width: calc($content-max-width * 0.5 - $spacer-xl * 2);
 	}
 }
 

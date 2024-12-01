@@ -27,6 +27,7 @@
 			<MpInlineValue label="Last modified" :value="$date(plan.lastModifiedAt)" />
 			<MpInlineValue label="Created" :value="$date(plan.createdAt)" />
 			<MpInlineValue label="Number of steps" :value="plan.steps.length" />
+			<MpInlineValue label="Visibility" :value="plan.isPublic ? 'Public' : 'Private'" />
 
 			<template #actions>
 				<MpLink :to="`/creator/manage/${plan.id}/edit`">Edit</MpLink>
@@ -37,7 +38,7 @@
 
 <script setup>
 import api from '@/api/index.js';
-import PinPlanButton from '@/components/plans/PinPlanButton.vue';
+import PinPlanButton from '@/components/plans/manage-plan/PinPlanButton.vue';
 import Plan from '@/models/Plan.js';
 import { computed, onBeforeMount, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';

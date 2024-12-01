@@ -22,4 +22,14 @@
 		display: block;
 		color: var(--text-color);
 	}
+
+	&.no-space-between {
+		width: fit-content;
+		justify-content: left;
+
+		.mp-inline-label {
+			margin-right: $spacer-l;
+		}
+
+	}
 }
