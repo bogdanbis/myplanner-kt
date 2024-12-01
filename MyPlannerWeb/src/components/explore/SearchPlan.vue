@@ -2,11 +2,12 @@
 	<div>
 		<MpSearch
 			id="plan-title"
-			placeholder="Search title"
+			placeholder="Find by title"
 			v-model="searchTitle"
 			@search="searchPlan"
 			@clear-search="clearSearch"
 			:busy="searching"
+			min-length="3"
 			class="search-plan-title w-50-desktop"
 		/>
 		<PlansList v-if="foundPlans.length" :plans="foundPlans" />
@@ -26,7 +27,6 @@ const foundPlans = ref([]);
 
 const searchPlan = async () => {
 	searching.value = true;
-	if (!searchTitle) return;
 	foundPlans.value = await api.get('/plans/search', { params: { title: searchTitle.value } });
 	searching.value = false;
 	emits('search');

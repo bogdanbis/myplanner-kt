@@ -10,7 +10,7 @@
 				:modelValue="modelValue"
 				@update:modelValue="emit('update:modelValue', $event)"
 			/>
-			<MpButton :disabled="!modelValue" icon="search" type="submit" :busy />
+			<MpButton :disabled="modelValue?.length < minLength" icon="search" type="submit" :busy />
 		</form>
 		<MpButton v-if="didSearch" @click="clearSearch" link icon="trash-fill" class="mp-search-clear">
 			Clear search
@@ -45,6 +45,11 @@ const { modelValue } = defineProps({
 	label: {
 		type: String,
 		required: false,
+	},
+	minLength: {
+		type: [String, Number],
+		required: false,
+		default: 1,
 	},
 	placeholder: {
 		type: String,
