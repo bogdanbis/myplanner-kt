@@ -15,7 +15,11 @@ export default class ApplicationUser {
 		this.lastName = userResponse.lastName;
 		this.name = userResponse.name;
 		this.email = userResponse.email;
-		this.uiPreferences = { pinnedPlans: JSON.parse(userResponse.uiPreferences.pinnedPlans) };
+	}
+
+	async fetchUIPreferences() {
+		const { pinnedPlans } = await api.get('/ui-preferences');
+		this.uiPreferences = { pinnedPlans: JSON.parse(pinnedPlans) };
 	}
 
 	async fetchAcquiredPlans() {

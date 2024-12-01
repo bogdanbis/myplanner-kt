@@ -182,7 +182,7 @@ $form-item-border-radius: 8px;
 	border: 0;
 	padding: $spacer-xs;
 	border-bottom: solid 1px var(--border-color);
-	background-color: var(--card-bg) !important;
+	background-color: var(--card-bg);
 
 	&:focus, &:focus-within, &:focus-visible {
 		box-shadow: none;

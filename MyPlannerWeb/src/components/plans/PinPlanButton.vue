@@ -26,7 +26,7 @@ const pinnedPlans = computed({
 	},
 });
 
-const isPinned = computed(() => pinnedPlans.value.find(p => p.id === plan.id))
+const isPinned = computed(() => pinnedPlans.value?.find(p => p.id === plan.id))
 
 const togglePin = () => {
 	if (isPinned.value)

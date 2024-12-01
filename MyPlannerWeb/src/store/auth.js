@@ -15,6 +15,7 @@ export const useAuthStore = defineStore('auth', {
 		async fetchUser() {
 			const userResponse = await api.get('/whoami');
 			this.setUser(new ApplicationUser(userResponse));
+			await this.user.fetchUIPreferences();
 		},
 		requestLogin() {
 			this.requireLogin = true;

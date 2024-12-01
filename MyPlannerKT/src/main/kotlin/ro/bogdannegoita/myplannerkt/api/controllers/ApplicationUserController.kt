@@ -25,6 +25,11 @@ class ApplicationUserController(myPlanner: MyPlanner) : BaseController(myPlanner
         }
     }
 
+    @GetMapping("/ui-preferences")
+    fun getUIPreferences(@AuthenticationPrincipal principal: UserDetails): UserUIPreferences {
+        return user(principal).uiPreferences
+    }
+
     @PutMapping("/ui-preferences")
     fun updateUIPreferences(
         @AuthenticationPrincipal principal: UserDetails,
