@@ -51,7 +51,7 @@ export const useUiStore = defineStore('$ui', {
 		},
 
 		setPinnedPlans(value) {
-			this.pinnedPlans = value;
+			this.pinnedPlans = value || [];
 		},
 		pinPlan(plan) {
 			if (this.pinnedPlans.find(p => p.id === plan.id))

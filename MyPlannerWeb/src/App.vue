@@ -4,8 +4,8 @@
 </template>
 
 <script setup>
-import Layout from './components/layout/Layout.vue';
 import { onBeforeMount, ref } from 'vue';
+import Layout from './components/layout/Layout.vue';
 import { useAuthStore } from './store/auth.js';
 import { useUiStore } from './store/ui.js';
 
@@ -15,7 +15,11 @@ const loading = ref(true);
 
 onBeforeMount(async () => {
 	if (localStorage.getItem('token')) {
-		await authStore.fetchUser();
+		try {
+			await authStore.fetchUser();
+		} catch (e) {
+			authStore.reset();
+		}
 	}
 	loading.value = false;
 })
