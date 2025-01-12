@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
+import ro.bogdannegoita.myplannerkt.domain.types.UserUIPreferences
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
@@ -31,7 +32,7 @@ class MyPlannerTest @Autowired constructor(
     @Test
     fun `should load the user with given email`() {
         val email = "example@email.com"
-        val dto = ApplicationUserDto(UUID.randomUUID(), email, "Bogdan", "Negoita")
+        val dto = ApplicationUserDto(UUID.randomUUID(), email, "Bogdan", "Negoita", UserUIPreferences(null))
         every { userDao.findByEmail(email) } returns dto
 
         val user = myPlanner.loadUser(email)
@@ -42,7 +43,7 @@ class MyPlannerTest @Autowired constructor(
     @Test
     fun `should cache the user`() {
         val email = "example@email.com"
-        val dto = ApplicationUserDto(UUID.randomUUID(), email, "Bogdan", "Negoita")
+        val dto = ApplicationUserDto(UUID.randomUUID(), email, "Bogdan", "Negoita", UserUIPreferences(null))
         every { userDao.findByEmail(email) } returns dto
 
         myPlanner.loadUser(email)
