@@ -7,6 +7,7 @@ import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.domain.factories.myPlannerCache
 import ro.bogdannegoita.myplannerkt.events.PlanDeletedEvent
+import ro.bogdannegoita.myplannerkt.events.PlanInviteSentEvent
 import ro.bogdannegoita.myplannerkt.events.PlanUpdatedEvent
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
@@ -68,6 +69,13 @@ class MyPlanner(
     @EventListener
     fun handlePlanDeleted(event: PlanDeletedEvent) {
         publicPlansRegistry.remove(event.id)
+    }
+
+    @EventListener
+    fun handlePlanInviteSent(event: PlanInviteSentEvent) {
+        val recipient = users.getOrNull(event.recipientEmail)
+            ?: return
+        recipient.receivedInvites.add(event.invite)
     }
 
     private fun publishPlan(plan: Plan) {

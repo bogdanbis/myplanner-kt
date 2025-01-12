@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import ro.bogdannegoita.myplannerkt.api.responses.ApplicationUserResponse
+import ro.bogdannegoita.myplannerkt.api.responses.PlanInviteResponse
 import ro.bogdannegoita.myplannerkt.domain.MyPlanner
 import ro.bogdannegoita.myplannerkt.domain.types.UserUIPreferences
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
@@ -23,6 +24,18 @@ class ApplicationUserController(myPlanner: MyPlanner) : BaseController(myPlanner
         } catch (e: EntityNotFoundException) {
             throw UserNotFoundException()
         }
+    }
+
+    @GetMapping("/invites/pending")
+    fun getPendingInvites(@AuthenticationPrincipal principal: UserDetails): List<PlanInviteResponse> {
+        return user(principal).receivedInvites
+            .map { PlanInviteResponse(it) }
+    }
+
+    @GetMapping("/invites/sent")
+    fun getSentInvites(@AuthenticationPrincipal principal: UserDetails): List<PlanInviteResponse> {
+        return user(principal).sentInvites
+            .map { PlanInviteResponse(it) }
     }
 
     @GetMapping("/ui-preferences")

@@ -3,6 +3,7 @@ package ro.bogdannegoita.myplannerkt.persistence.daos
 import org.springframework.stereotype.Component
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
+import ro.bogdannegoita.myplannerkt.commons.PlanInviteDto
 import ro.bogdannegoita.myplannerkt.commons.PlanProgressDto
 import ro.bogdannegoita.myplannerkt.domain.types.UserUIPreferences
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
@@ -16,12 +17,12 @@ class ApplicationUserDao(
     private val repository: ApplicationUserRepository,
     private val planDao: PlanDao,
     private val planProgressDao: PlanProgressDao,
+    private val planInviteDao: PlanInviteDao,
 ) {
     private val dtoMapper = DtoMapper()
 
     fun findByEmail(email: String): ApplicationUserDto {
-        val entity = repository.findByEmail(email)
-            ?: throw EntityNotFoundException(ApplicationUserEntity::class)
+        val entity = findEntityByEmail(email)
         return dtoMapper.applicationUserDto(entity)
     }
 
@@ -57,5 +58,30 @@ class ApplicationUserDao(
         val entity = findById(id)
         entity.uiPreferences!!.pinnedPlans = preferences.pinnedPlans
         repository.save(entity)
+    }
+
+    fun inviteUser(planId: UUID, senderEmail: String, recipientEmail: String): PlanInviteDto {
+        val recipient = findEntityByEmail(recipientEmail)
+        val sender = findEntityByEmail(senderEmail)
+        val plan = planDao.findById(planId)
+        return planInviteDao.create(plan, sender, recipient)
+    }
+
+    fun userHasPlan(email: String, planId: UUID): Boolean {
+        val user = findEntityByEmail(email)
+        return user.acquiredPlans.find { it.id == planId } != null
+    }
+
+    fun getSentInvites(id: UUID): List<PlanInviteDto> {
+        return planInviteDao.findBySender(id)
+    }
+
+    fun getReceivedInvites(id: UUID): List<PlanInviteDto> {
+        return planInviteDao.findByRecipient(id)
+    }
+
+    private fun findEntityByEmail(email: String): ApplicationUserEntity {
+        return repository.findByEmail(email)
+            ?: throw EntityNotFoundException(ApplicationUserEntity::class)
     }
 }

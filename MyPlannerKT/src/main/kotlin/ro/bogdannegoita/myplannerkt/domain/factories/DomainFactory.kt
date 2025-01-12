@@ -3,15 +3,9 @@ package ro.bogdannegoita.myplannerkt.domain.factories
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
-import ro.bogdannegoita.myplannerkt.commons.PlanDto
-import ro.bogdannegoita.myplannerkt.commons.PlanProgressDto
-import ro.bogdannegoita.myplannerkt.commons.StepDto
-import ro.bogdannegoita.myplannerkt.commons.StepProgressDto
+import ro.bogdannegoita.myplannerkt.commons.*
 import ro.bogdannegoita.myplannerkt.domain.*
-import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
-import ro.bogdannegoita.myplannerkt.persistence.daos.PlanProgressDao
-import ro.bogdannegoita.myplannerkt.persistence.daos.StepDao
-import ro.bogdannegoita.myplannerkt.persistence.daos.StepProgressDao
+import ro.bogdannegoita.myplannerkt.persistence.daos.*
 
 @Component
 @Scope("prototype")
@@ -20,6 +14,7 @@ class DomainFactory(
     private val stepDao: StepDao,
     private val planProgressDao: PlanProgressDao,
     private val stepProgressDao: StepProgressDao,
+    private val planInviteDao: PlanInviteDao,
     private val eventPublisher: ApplicationEventPublisher,
 ) {
 
@@ -46,5 +41,9 @@ class DomainFactory(
 
     fun planStats(plan: Plan): PlanStats {
         return PlanStats(plan, planDao)
+    }
+
+    fun planInvite(data: PlanInviteDto, provider: DomainProvider): PlanInvite {
+        return PlanInvite(data, planInviteDao, provider)
     }
 }

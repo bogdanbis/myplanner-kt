@@ -20,7 +20,10 @@
 				</template>
 			</MpInlineValue>
 			<div class="m-top-l">
-				<MpLink :to="`/creator/manage/${plan.id}/participants`">View participants</MpLink>
+				<MpLink :to="`/creator/manage/${plan.id}/participants`" class="m-bottom-l">
+					View participants
+				</MpLink>
+				<InviteParticipantButton :plan="plan" />
 			</div>
 		</MpCard>
 		<MpCard title="Details">
@@ -38,6 +41,7 @@
 
 <script setup>
 import api from '@/api/index.js';
+import InviteParticipantButton from '@/components/plans/manage-plan/InviteParticipantButton.vue';
 import PinPlanButton from '@/components/plans/manage-plan/PinPlanButton.vue';
 import Plan from '@/models/Plan.js';
 import { computed, onBeforeMount, ref, watch } from 'vue';

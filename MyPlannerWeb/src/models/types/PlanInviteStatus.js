@@ -1,0 +1,6 @@
+export default {
+	PENDING: 'PENDING',
+	ACCEPTED: 'ACCEPTED',
+	DECLINED: 'DECLINED',
+	REVOKED: 'REVOKED',
+}

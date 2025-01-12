@@ -44,7 +44,7 @@ const mainMenuItems = [
 ]
 
 const uiStore = useUiStore();
-uiStore.setPinnedPlans(useAuthStore().user.uiPreferences.pinnedPlans)
+uiStore.setPinnedPlans(useAuthStore().user?.uiPreferences.pinnedPlans)
 
 const creatorMenuItems = computed(() => ([
 	{
@@ -52,7 +52,7 @@ const creatorMenuItems = computed(() => ([
 		label: 'Created Plans',
 		path: '/creator',
 	},
-	...uiStore.pinnedPlans.map((plan) => ({
+	...uiStore.pinnedPlans?.map((plan) => ({
 		icon: 'pin-fill',
 		label: plan.title,
 		path: `/creator/manage/${plan.id}`,

@@ -2,14 +2,8 @@ package ro.bogdannegoita.myplannerkt.domain.factories
 
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
-import ro.bogdannegoita.myplannerkt.commons.PlanDto
-import ro.bogdannegoita.myplannerkt.commons.PlanProgressDto
-import ro.bogdannegoita.myplannerkt.commons.StepDto
-import ro.bogdannegoita.myplannerkt.commons.StepProgressDto
-import ro.bogdannegoita.myplannerkt.domain.Plan
-import ro.bogdannegoita.myplannerkt.domain.PlanProgress
-import ro.bogdannegoita.myplannerkt.domain.Step
-import ro.bogdannegoita.myplannerkt.domain.StepProgressContainer
+import ro.bogdannegoita.myplannerkt.commons.*
+import ro.bogdannegoita.myplannerkt.domain.*
 
 @Component
 @Scope("prototype")
@@ -43,4 +37,13 @@ class DomainProvider(
         factory.stepProgress(data, parent, step, this)
 
     fun planStats(plan: Plan) = factory.planStats(plan)
+
+    fun planInvite(data: PlanInviteDto): PlanInvite {
+        var invite = registry.planInvites.getOrNull(data.id)
+        if (invite != null)
+            return invite
+        invite = factory.planInvite(data, this)
+        registry.planInvites[invite.id] = invite
+        return invite
+    }
 }

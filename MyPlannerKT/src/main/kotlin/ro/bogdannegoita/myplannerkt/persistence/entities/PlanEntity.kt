@@ -26,6 +26,9 @@ class PlanEntity(
     @OneToMany(mappedBy = "plan")
     var acquiredPlans: MutableList<PlanProgressEntity> = mutableListOf(),
 
+    @OneToMany(mappedBy = "plan", cascade = [ALL])
+    var invites: MutableList<PlanInviteEntity> = mutableListOf(),
+
     @Id @GeneratedValue
     var id: UUID? = null
 )

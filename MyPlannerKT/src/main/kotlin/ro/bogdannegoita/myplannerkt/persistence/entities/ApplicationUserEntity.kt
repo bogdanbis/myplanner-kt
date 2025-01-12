@@ -22,6 +22,12 @@ class ApplicationUserEntity(
     @OneToMany(mappedBy = "user", cascade = [ALL])
     var acquiredPlans: MutableSet<PlanProgressEntity> = mutableSetOf(),
 
+    @OneToMany(mappedBy = "sender", cascade = [ALL])
+    var sentInvites: MutableList<PlanInviteEntity> = mutableListOf(),
+
+    @OneToMany(mappedBy = "recipient", cascade = [ALL])
+    var receivedInvites: MutableList<PlanInviteEntity> = mutableListOf(),
+
     @Id @GeneratedValue
     var id: UUID? = null
 )

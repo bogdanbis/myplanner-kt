@@ -48,7 +48,7 @@ const tableFields = [
 ];
 
 const searching = ref(false);
-const searchTerm = ref();
+const searchTerm = ref('');
 const participantsProgress = ref();
 const foundParticipantProgress = ref([]);
 const showFound = ref(false);

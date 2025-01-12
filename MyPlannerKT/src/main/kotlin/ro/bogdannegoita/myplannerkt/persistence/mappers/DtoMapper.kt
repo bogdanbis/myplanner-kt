@@ -32,4 +32,13 @@ class DtoMapper {
     fun stepProgressDto(entity: StepProgressEntity): StepProgressDto {
         return StepProgressDto(entity.id, entity.completed!!, entity.comment, stepDto(entity.step!!))
     }
+
+    fun planInviteDto(entity: PlanInviteEntity): PlanInviteDto {
+        return PlanInviteDto(
+            entity.id!!, entity.status!!, entity.createdAt!!, entity.respondedAt,
+            planDto(entity.plan!!),
+            applicationUserDto(entity.sender!!),
+            if (entity.recipient != null) applicationUserDto(entity.recipient!!) else null,
+        )
+    }
 }

@@ -2,10 +2,12 @@ package ro.bogdannegoita.myplannerkt.domain
 
 import org.springframework.context.ApplicationEventPublisher
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
+import ro.bogdannegoita.myplannerkt.commons.InviteStatus
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.domain.types.UserUIPreferences
 import ro.bogdannegoita.myplannerkt.events.PlanDeletedEvent
+import ro.bogdannegoita.myplannerkt.events.PlanInviteSentEvent
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
 import java.util.*
 
@@ -32,6 +34,20 @@ class ApplicationUser(
     var createdPlans: SortedSet<Plan> = sortedSetOf()
         get() {
             loadCreatedPlans()
+            return field
+        }
+        private set
+
+    var sentInvites: SortedSet<PlanInvite> = sortedSetOf()
+        get() {
+            loadSentInvites()
+            return field
+        }
+        private set
+
+    var receivedInvites: SortedSet<PlanInvite> = sortedSetOf()
+        get() {
+            loadReceivedInvites()
             return field
         }
         private set
@@ -78,6 +94,27 @@ class ApplicationUser(
         uiPreferences = value
     }
 
+    fun inviteUser(planId: UUID, recipientEmail: String): PlanInvite? {
+        if (inviteAlreadySent(planId, recipientEmail)
+                || recipientHasPlan(recipientEmail, planId)
+                || recipientEmail == email)
+            return null
+        val persistedData = dao.inviteUser(planId, email, recipientEmail)
+        val invite = domainProvider.planInvite(persistedData)
+        sentInvites.add(invite)
+        eventPublisher.publishEvent(PlanInviteSentEvent(this, invite, recipientEmail))
+        return invite
+    }
+
+    private fun inviteAlreadySent(planId: UUID, recipientEmail: String): Boolean {
+        val invite = sentInvites.find { it.plan.value.id == planId && it.recipient.value.email == recipientEmail }
+        return invite != null && invite.status == InviteStatus.PENDING
+    }
+
+    private fun recipientHasPlan(recipientEmail: String, planId: UUID): Boolean {
+        return dao.userHasPlan(recipientEmail, planId)
+    }
+
     private var loadedAcquiredPlans = false
     private fun loadAcquiredPlans() {
         if (loadedAcquiredPlans)
@@ -95,5 +132,25 @@ class ApplicationUser(
         createdPlans = dao.getCreatedPlans(id).map { domainProvider.plan(it) }
             .toSortedSet()
         loadedCreatedPlans = true
+    }
+
+    private var loadedSentInvites = false
+    private fun loadSentInvites() {
+        if (loadedSentInvites)
+            return
+        sentInvites = dao.getSentInvites(id)
+            .map { domainProvider.planInvite(it) }
+            .toSortedSet()
+        loadedSentInvites = true
+    }
+
+    private var loadedReceivedInvites = false
+    private fun loadReceivedInvites() {
+        if (loadedReceivedInvites)
+            return
+        receivedInvites = dao.getReceivedInvites(id)
+            .map { domainProvider.planInvite(it) }
+            .toSortedSet()
+        loadedReceivedInvites = true
     }
 }

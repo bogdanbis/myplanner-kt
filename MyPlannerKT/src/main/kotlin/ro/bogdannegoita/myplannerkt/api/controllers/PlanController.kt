@@ -7,10 +7,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
 import ro.bogdannegoita.myplannerkt.api.requests.PlanRequest
-import ro.bogdannegoita.myplannerkt.api.responses.ParticipantProgressResponse
-import ro.bogdannegoita.myplannerkt.api.responses.PlanProgressResponse
-import ro.bogdannegoita.myplannerkt.api.responses.PlanResponse
-import ro.bogdannegoita.myplannerkt.api.responses.PlanSimpleResponse
+import ro.bogdannegoita.myplannerkt.api.responses.*
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.domain.MyPlanner
 import java.time.LocalDateTime
@@ -67,6 +64,16 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
     ): ParticipantProgressResponse? {
         return user(principal).getCreatedPlan(id)?.getParticipantProgress(progressId)
             ?.let { ParticipantProgressResponse(it) }
+    }
+
+    @PostMapping("/created/{id}/invite")
+    fun inviteUser(
+        @AuthenticationPrincipal principal: UserDetails,
+        @PathVariable id: UUID,
+        @RequestParam email: String,
+    ): PlanInviteResponse? {
+        val invite = user(principal).inviteUser(id, email)
+        return invite?.let { PlanInviteResponse(it) }
     }
 
     @PostMapping("/create")
