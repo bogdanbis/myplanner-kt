@@ -2,7 +2,6 @@ package ro.bogdannegoita.myplannerkt.persistence.entities
 
 import jakarta.persistence.*
 import jakarta.persistence.CascadeType.ALL
-import jakarta.persistence.FetchType.LAZY
 import java.time.LocalDateTime
 import java.util.*
 
@@ -15,13 +14,13 @@ class PlanProgressEntity(
     var completed: Boolean? = null,
     var comment: String? = null,
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne
     var plan: PlanEntity? = null,
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne
     var user: ApplicationUserEntity? = null,
 
-    @OneToMany(mappedBy = "plan", fetch = LAZY, cascade = [ALL])
+    @OneToMany(mappedBy = "plan", cascade = [ALL])
     var steps: MutableList<StepProgressEntity> = mutableListOf(),
 
     @Id @GeneratedValue

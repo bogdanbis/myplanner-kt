@@ -2,7 +2,7 @@ package ro.bogdannegoita.myplannerkt.persistence.entities
 
 import jakarta.persistence.*
 import jakarta.persistence.CascadeType.ALL
-import jakarta.persistence.FetchType.LAZY
+import jakarta.persistence.FetchType.EAGER
 import java.util.*
 
 @Entity
@@ -13,13 +13,13 @@ class ApplicationUserEntity(
     var lastName: String? = null,
     var password: String? = null,
 
-    @OneToOne(mappedBy = "user", cascade = [(ALL)], fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToOne(mappedBy = "user", cascade = [(ALL)], fetch = EAGER, orphanRemoval = true)
     var uiPreferences: UserUIPreferencesEntity? = null,
 
-    @OneToMany(mappedBy = "author", fetch = LAZY)
+    @OneToMany(mappedBy = "author")
     var createdPlans: MutableSet<PlanEntity> = mutableSetOf(),
 
-    @OneToMany(mappedBy = "user", fetch = LAZY, cascade = [ALL])
+    @OneToMany(mappedBy = "user", cascade = [ALL])
     var acquiredPlans: MutableSet<PlanProgressEntity> = mutableSetOf(),
 
     @Id @GeneratedValue
