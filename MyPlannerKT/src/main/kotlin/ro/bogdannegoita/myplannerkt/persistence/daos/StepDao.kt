@@ -2,6 +2,7 @@ package ro.bogdannegoita.myplannerkt.persistence.daos
 
 import org.springframework.stereotype.Component
 import ro.bogdannegoita.myplannerkt.commons.StepDto
+import ro.bogdannegoita.myplannerkt.commons.types.Photo
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.persistence.entities.PlanEntity
 import ro.bogdannegoita.myplannerkt.persistence.entities.StepEntity
@@ -12,6 +13,7 @@ import java.util.*
 @Component
 class StepDao(
     private val repository: StepRepository,
+    private val photoDao: PhotoDao,
 ) : StepContainerDao {
     private val dtoMapper = DtoMapper()
 
@@ -67,6 +69,15 @@ class StepDao(
     fun getSteps(id: UUID): List<StepDto> {
         return repository.findAllByParentStepId(id)
             .map { dtoMapper.stepDto(it) }
+    }
+
+    fun getImages(id: UUID): List<Photo> {
+        return findById(id).images.map(dtoMapper::photo)
+    }
+
+    fun uploadImage(id: UUID, photo: Photo): Photo {
+        val step = findById(id)
+        return photoDao.upload(photo, step)
     }
 
     override fun removeStep(id: UUID) {

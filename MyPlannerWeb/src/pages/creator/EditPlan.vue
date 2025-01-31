@@ -3,11 +3,17 @@
 	<h2>Edit Plan</h2>
 	<span class="page-subtitle">Make changes to your Plan. You can make changes anytime you want.</span>
 	<MpCard>
-		<PlanForm :plan="planEdits" @submit="updatePlan" :loading>
+		<PlanForm
+			:plan="planEdits"
+			@submit="updatePlan"
+			@upload-image="uploadImage"
+			@delete-image="deleteImage"
+			:loading
+		>
 			<template #actions>
 				<MpLinkButtonWithConfirm
 					@confirm="deletePlan"
-					class="danger me-auto" with-icons
+					class="danger mr-auto" with-icons
 					:busy="deleting"
 				>
 					Delete Plan
@@ -71,8 +77,18 @@ const updatePlan = async () => {
 	updating.value = false;
 }
 
+const uploadImage = async (file) => {
+	await plan.value.uploadImage(file);
+}
+
+const deleteImage = async (image) => {
+	await plan.value.deleteImage(image);
+	planEdits.value.images = plan.value.images;
+}
+
 const initChanges = () => {
 	planEdits.value = new Plan(plan.value);
+	planEdits.value.images = plan.value.images;
 }
 
 const deleting = ref(false);

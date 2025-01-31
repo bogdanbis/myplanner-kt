@@ -3,6 +3,7 @@ package ro.bogdannegoita.myplannerkt.domain
 import org.springframework.context.ApplicationEventPublisher
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
+import ro.bogdannegoita.myplannerkt.commons.types.Photo
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.events.PlanUpdatedEvent
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
@@ -45,6 +46,13 @@ class Plan(
         }
         private set
 
+    var images: MutableList<Photo> = mutableListOf()
+        get() {
+            loadImages()
+            return field
+        }
+        private set
+
     private var acquiredPlans: SortedSet<PlanProgress> = sortedSetOf()
         get() {
             loadAcquiredPlans()
@@ -74,6 +82,22 @@ class Plan(
 
     fun getParticipantProgress(id: UUID): PlanProgress? {
         return acquiredPlans.find { it.id == id }
+    }
+
+    fun getStep(id: UUID): Step? {
+        return steps.find { it.id == id }
+    }
+
+    fun uploadImage(id: UUID, photo: Photo): Photo {
+        val persistedPhoto = dao.uploadImage(id, photo)
+        images.add(persistedPhoto)
+        return persistedPhoto
+    }
+
+    fun deleteImage(id: UUID) {
+        val removed = images.removeIf { it.id == id }
+        if (removed)
+            dao.deleteImage(id)
     }
 
     private var loadedAuthor = false
@@ -108,6 +132,14 @@ class Plan(
             .map { domainProvider.planProgress(it, this) }
             .toSortedSet()
         loadedAcquiredPlans = true
+    }
+
+    private var loadedImages = false
+    private fun loadImages() {
+        if (loadedImages)
+            return
+        images = dao.getImages(id).toMutableList()
+        loadedImages = true
     }
 
     override fun compareTo(other: Plan) = other.createdAt.compareTo(createdAt)

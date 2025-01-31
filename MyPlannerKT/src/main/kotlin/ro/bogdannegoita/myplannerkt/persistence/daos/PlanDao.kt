@@ -5,6 +5,7 @@ import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.commons.PlanProgressDto
 import ro.bogdannegoita.myplannerkt.commons.StepDto
+import ro.bogdannegoita.myplannerkt.commons.types.Photo
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.persistence.entities.ApplicationUserEntity
 import ro.bogdannegoita.myplannerkt.persistence.entities.PlanEntity
@@ -17,6 +18,7 @@ class PlanDao(
     private val repository: PlanRepository,
     private val stepDao: StepDao,
     private val planProgressDao: PlanProgressDao,
+    private val photoDao: PhotoDao,
 ) : StepContainerDao {
     private val dtoMapper = DtoMapper()
 
@@ -92,5 +94,18 @@ class PlanDao(
 
     override fun removeStep(id: UUID) {
         stepDao.removeStep(id)
+    }
+
+    fun getImages(id: UUID): List<Photo> {
+        return findById(id).images.map(dtoMapper::photo)
+    }
+
+    fun uploadImage(id: UUID, photo: Photo): Photo {
+        val plan: PlanEntity = findById(id)
+        return photoDao.upload(photo, plan)
+    }
+
+    fun deleteImage(imageId: UUID) {
+        photoDao.delete(imageId)
     }
 }

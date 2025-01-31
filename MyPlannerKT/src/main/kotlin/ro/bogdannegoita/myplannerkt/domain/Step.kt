@@ -1,6 +1,7 @@
 package ro.bogdannegoita.myplannerkt.domain
 
 import ro.bogdannegoita.myplannerkt.commons.StepDto
+import ro.bogdannegoita.myplannerkt.commons.types.Photo
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.persistence.daos.StepDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.StepProgressDao
@@ -22,6 +23,13 @@ class Step(
     var steps: SortedSet<Step> = sortedSetOf()
         get() {
             loadSteps()
+            return field
+        }
+        private set
+
+    var images: MutableList<Photo> = mutableListOf()
+        get() {
+            loadImages()
             return field
         }
         private set
@@ -50,5 +58,19 @@ class Step(
         loadedSteps = true
     }
 
+    fun uploadImage(id: UUID, photo: Photo): Photo {
+        val persistedPhoto = dao.uploadImage(id, photo)
+        images.add(persistedPhoto)
+        return persistedPhoto
+    }
+
     override fun compareTo(other: Step) = index.compareTo(other.index)
+
+    private var loadedImages = false
+    private fun loadImages() {
+        if (loadedImages)
+            return
+        images = dao.getImages(id).toMutableList()
+        loadedImages = true
+    }
 }

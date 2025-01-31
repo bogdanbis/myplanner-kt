@@ -7,4 +7,5 @@ open class StepSimpleResponse(step: Step) {
     val title = step.title
     val description = step.description
     val index = step.index
+    val images = step.images
 }

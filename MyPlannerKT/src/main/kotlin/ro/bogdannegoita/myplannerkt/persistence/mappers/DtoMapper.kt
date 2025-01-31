@@ -1,7 +1,8 @@
 package ro.bogdannegoita.myplannerkt.persistence.mappers
 
 import ro.bogdannegoita.myplannerkt.commons.*
-import ro.bogdannegoita.myplannerkt.domain.types.UserUIPreferences
+import ro.bogdannegoita.myplannerkt.commons.types.Photo
+import ro.bogdannegoita.myplannerkt.commons.types.UserUIPreferences
 import ro.bogdannegoita.myplannerkt.persistence.entities.*
 
 class DtoMapper {
@@ -40,5 +41,9 @@ class DtoMapper {
             applicationUserDto(entity.sender!!),
             if (entity.recipient != null) applicationUserDto(entity.recipient!!) else null,
         )
+    }
+
+    fun photo(entity: PhotoEntity): Photo {
+        return Photo(entity.id!!, entity.name!!, entity.contentType!!, null)
     }
 }

@@ -1,36 +1,23 @@
 <template>
-	<div :class="`col-${this.colsSm} ${colsClass}`">
+	<div class="col" :class="cols ? `col-${colsNumber}` : undefined">
 		<slot></slot>
 	</div>
 </template>
 
-<script>
-const gridColumns = 12;
+<script setup>
+import { computed } from 'vue';
 
-export default {
-	name: 'MpCol',
-	props: {
-		cols: {
-			type: [String, Number],
-			required: false,
-		},
-		colsSm: {
-			type: [String, Number],
-			required: false,
-			default: gridColumns,
-		},
+const gridColumns = 60;
+
+const { cols } = defineProps({
+	cols: {
+		type: [String, Number],
+		required: false,
 	},
-	computed: {
-		colsNumber() {
-			if (this.cols && this.cols <= 1 && Number.isInteger(gridColumns * this.cols))
-				return this.cols * gridColumns;
-			return null;
-		},
-		colsClass() {
-			if (!this.colsNumber)
-				return '';
-			return 'col-md-' + this.colsNumber;
-		},
-	},
-}
+});
+
+const colsNumber = computed(() => {
+	if (cols && cols <= 1 && Number.isInteger(gridColumns * cols))
+		return cols * gridColumns;
+});
 </script>

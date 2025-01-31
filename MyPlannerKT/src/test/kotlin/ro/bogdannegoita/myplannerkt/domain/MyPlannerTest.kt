@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
+import ro.bogdannegoita.myplannerkt.commons.types.UserUIPreferences
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
-import ro.bogdannegoita.myplannerkt.domain.types.UserUIPreferences
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao

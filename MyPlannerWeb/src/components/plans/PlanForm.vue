@@ -1,5 +1,5 @@
 <template>
-	<MpForm @submit="emit('submit')" class="tall">
+	<MpForm @submit="$emit('submit')" class="tall">
 		<MpFormInput
 			v-model="plan.title"
 			placeholder="The Title"
@@ -34,6 +34,13 @@
 			v-model="plan.color"
 		/>
 
+		<PlanImages
+			:plan="plan"
+			upload-enabled
+			@upload="$emit('upload-image', $event)"
+			@delete="$emit('delete-image', $event)"
+		/>
+
 		<StepsFormSection
 			v-if="!loading"
 			:steps-container="plan"
@@ -48,6 +55,7 @@
 </template>
 
 <script setup>
+import PlanImages from '@/components/plans/PlanImages.vue';
 import Plan from '@/models/Plan.js';
 import StepsFormSection from './StepsFormSection.vue';
 
@@ -63,5 +71,5 @@ defineProps({
 	},
 })
 
-const emit = defineEmits(['submit']);
+defineEmits(['submit', 'upload-image', 'delete-image']);
 </script>

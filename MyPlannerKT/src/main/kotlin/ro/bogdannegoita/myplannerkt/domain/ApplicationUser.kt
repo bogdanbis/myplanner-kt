@@ -4,8 +4,8 @@ import org.springframework.context.ApplicationEventPublisher
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.InviteStatus
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
+import ro.bogdannegoita.myplannerkt.commons.types.UserUIPreferences
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
-import ro.bogdannegoita.myplannerkt.domain.types.UserUIPreferences
 import ro.bogdannegoita.myplannerkt.events.PlanDeletedEvent
 import ro.bogdannegoita.myplannerkt.events.PlanInviteSentEvent
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao

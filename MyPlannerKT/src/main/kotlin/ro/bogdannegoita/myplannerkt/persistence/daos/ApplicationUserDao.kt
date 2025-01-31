@@ -5,7 +5,7 @@ import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.commons.PlanInviteDto
 import ro.bogdannegoita.myplannerkt.commons.PlanProgressDto
-import ro.bogdannegoita.myplannerkt.domain.types.UserUIPreferences
+import ro.bogdannegoita.myplannerkt.commons.types.UserUIPreferences
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.persistence.entities.ApplicationUserEntity
 import ro.bogdannegoita.myplannerkt.persistence.mappers.DtoMapper

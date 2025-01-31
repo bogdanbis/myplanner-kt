@@ -1,5 +1,6 @@
-import Step from './Step.js';
+import api from '@/api/index.js';
 import ApplicationUser from './ApplicationUser.js';
+import Step from './Step.js';
 
 export default class Plan {
 	id;
@@ -12,6 +13,7 @@ export default class Plan {
 	lastModifiedAt;
 	numberOfParticipants;
 	author = new ApplicationUser();
+	images = [];
 	steps = [];
 	stats = {
 		numberOfParticipants: null,
@@ -30,6 +32,10 @@ export default class Plan {
 		this.lastModifiedAt = plan.lastModifiedAt;
 		this.numberOfParticipants = plan.numberOfParticipants;
 		this.author = new ApplicationUser(plan.author);
+		this.images = plan.images.map(img => ({
+			...img,
+			src: `${api.params.baseURL}/images/${img.id}`,
+		}));
 		this.steps = plan.steps?.map(t => new Step(t)) || [];
 		if (plan.stats) {
 			this.stats = {
@@ -37,5 +43,21 @@ export default class Plan {
 				completedStepsCount: plan.stats.completedStepsCount,
 			};
 		}
+	}
+
+	async uploadImage(file) {
+		const requestBody = new FormData();
+		requestBody.set('photo', file);
+		const image = await api.post(`/plans/created/${this.id}/images`, requestBody);
+		image.src = `${api.params.baseURL}/images/${image.id}`;
+		this.images.push(image);
+		return image;
+	}
+
+	async deleteImage(image) {
+		await api.delete(`/plans/created/${this.id}/images/${image.id}`);
+		const idx = this.images.findIndex(it => it.id === image.id);
+		if (idx >= 0)
+			this.images.splice(idx, 1);
 	}
 }

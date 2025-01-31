@@ -13,4 +13,5 @@ open class PlanSimpleResponse(plan: Plan) {
     val lastModifiedAt = plan.lastModifiedAt
     val author = ApplicationUserResponse(plan.author!!)
     val numberOfParticipants = plan.stats?.numberOfParticipants
+    val images = plan.images
 }

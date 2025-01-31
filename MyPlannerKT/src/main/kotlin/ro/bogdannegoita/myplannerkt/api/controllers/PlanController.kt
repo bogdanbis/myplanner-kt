@@ -6,9 +6,11 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 import ro.bogdannegoita.myplannerkt.api.requests.PlanRequest
 import ro.bogdannegoita.myplannerkt.api.responses.*
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
+import ro.bogdannegoita.myplannerkt.commons.types.Photo
 import ro.bogdannegoita.myplannerkt.domain.MyPlanner
 import java.time.LocalDateTime
 import java.util.*
@@ -45,6 +47,43 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
     @GetMapping("/created/{id}")
     fun getCreatedPlan(@AuthenticationPrincipal principal: UserDetails, @PathVariable id: UUID): PlanResponse? {
         return user(principal).getCreatedPlan(id)?.let(::PlanResponse)
+    }
+
+    @PostMapping("/created/{id}/images")
+    fun uploadImage(
+        @AuthenticationPrincipal principal: UserDetails,
+        @PathVariable id: UUID,
+        @RequestParam("photo") request: MultipartFile
+    ): Photo? {
+        val photo = Photo(id = null,
+            name = request.originalFilename,
+            contentType = request.contentType,
+            content = request.bytes)
+        return user(principal).getCreatedPlan(id)?.uploadImage(id, photo)
+    }
+
+    @DeleteMapping("/created/{id}/images/{imageId}")
+    fun deleteImage(
+        @AuthenticationPrincipal principal: UserDetails,
+        @PathVariable id: UUID,
+        @PathVariable imageId: UUID,
+    ) {
+        user(principal).getCreatedPlan(id)?.deleteImage(imageId)
+    }
+
+    @PostMapping("/created/{id}/steps/{stepId}/images")
+    fun uploadImage(
+        @AuthenticationPrincipal principal: UserDetails,
+        @PathVariable id: UUID,
+        @PathVariable stepId: UUID,
+        @RequestParam("photo") request: MultipartFile
+    ): Photo? {
+        val photo = Photo(id = null,
+            name = request.originalFilename,
+            contentType = request.contentType,
+            content = request.bytes)
+        return user(principal).getCreatedPlan(id)
+            ?.getStep(id)?.uploadImage(id, photo)
     }
 
     @GetMapping("/created/{id}/participants")

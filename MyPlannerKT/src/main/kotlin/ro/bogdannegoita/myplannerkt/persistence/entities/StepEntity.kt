@@ -24,6 +24,9 @@ class StepEntity(
     @OneToMany(mappedBy = "step", cascade = [ALL])
     var stepsProgress: MutableList<StepProgressEntity> = mutableListOf(),
 
+    @OneToMany(mappedBy = "step", cascade = [ALL])
+    var images: MutableList<PhotoEntity> = mutableListOf(),
+
     @Id @GeneratedValue
     var id: UUID? = null
 )

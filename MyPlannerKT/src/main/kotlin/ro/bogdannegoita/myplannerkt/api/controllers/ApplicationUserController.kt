@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import ro.bogdannegoita.myplannerkt.api.responses.ApplicationUserResponse
 import ro.bogdannegoita.myplannerkt.api.responses.PlanInviteResponse
+import ro.bogdannegoita.myplannerkt.commons.types.UserUIPreferences
 import ro.bogdannegoita.myplannerkt.domain.MyPlanner
-import ro.bogdannegoita.myplannerkt.domain.types.UserUIPreferences
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.security.exceptions.UserNotFoundException
 

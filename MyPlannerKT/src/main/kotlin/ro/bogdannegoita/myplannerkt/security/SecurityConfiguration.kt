@@ -59,6 +59,7 @@ class SecurityConfiguration(val jwtTokenFilter: JwtFilter) {
                     .requestMatchers(
                         "/api/signup", "/api/login",
                         "/api/plans/browse", "/api/plans/search",
+                        "/api/images/*",
                     )
                     .permitAll()
                     .anyRequest().authenticated()

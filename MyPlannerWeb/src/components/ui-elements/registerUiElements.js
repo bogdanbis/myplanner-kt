@@ -17,6 +17,7 @@ import MpIcon from './icons/MpIcon.vue';
 import MpBackLink from './MpBackLink.vue';
 import MpCard from './MpCard.vue';
 import MpDialog from './MpDialog.vue';
+import MpFileUpload from './MpFileUpload.vue';
 import MpInlineValue from './MpInlineValue.vue';
 import MpLink from './MpLink.vue';
 import MpMultilineText from './MpMultilineText.vue';
@@ -31,6 +32,7 @@ export default function registerUiElements(Vue) {
 	Vue.component('MpIcon', MpIcon);
 	Vue.component('LoadingIcon', LoadingIcon);
 	Vue.component('MpDialog', MpDialog);
+	Vue.component('MpFileUpload', MpFileUpload);
 	Vue.component('MpLink', MpLink);
 	Vue.component('MpBackLink', MpBackLink);
 	Vue.component('MpInlineValue', MpInlineValue);

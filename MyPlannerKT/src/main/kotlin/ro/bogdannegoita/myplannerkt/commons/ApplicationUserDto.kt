@@ -1,6 +1,6 @@
 package ro.bogdannegoita.myplannerkt.commons
 
-import ro.bogdannegoita.myplannerkt.domain.types.UserUIPreferences
+import ro.bogdannegoita.myplannerkt.commons.types.UserUIPreferences
 import java.util.*
 
 data class ApplicationUserDto(

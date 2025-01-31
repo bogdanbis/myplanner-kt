@@ -97,7 +97,7 @@ export default class Api {
 
 	async createErrorToast(error) {
 		if (!error.response) {
-			Api.toast.error('Nu s-a putut stabili conexiunea la server.', { timeout: false });
+			Api.toast.error('Could not establish connection to server.', { timeout: false });
 			return;
 		}
 		let message;
@@ -109,9 +109,9 @@ export default class Api {
 			return;
 		}
 		if (code === 413) {
-			message = 'Dimensiunea fișierului prea mare. Maximul admis este 10MB.'
+			message = 'File too large. Maximum allowed file size is 10MB.'
 		} else if (code === 404) {
-			message = 'Ceea ce cauți pare că nu există.'
+			message = 'Something was not found :('
 		} else {
 			let responseData = error.response.data;
 			if (responseData.errorType) {
@@ -121,17 +121,17 @@ export default class Api {
 				if (responseData instanceof Blob)
 					errorMessage = JSON.parse(await responseData.text()).errorMessage;
 				if (errorMessage)
-					message = 'A apărut o eroare: ' + errorMessage;
+					message = 'An error occured: ' + errorMessage;
 				else
-					message = 'A apărut o eroare';
+					message = 'An error occured:';
 			}
 		}
 		Api.toast.error(message);
 	}
 
 	static errorTypes = {
-		entity_not_found: 'Ceea ce cauți pare că nu există.',
-		user_not_found: 'Nu există niciun cont cu acest email.',
+		entity_not_found: 'Something was not found :(',
+		user_not_found: 'An account with this email does not exist.',
 	}
 
 }

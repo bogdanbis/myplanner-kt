@@ -29,6 +29,9 @@ class PlanEntity(
     @OneToMany(mappedBy = "plan", cascade = [ALL])
     var invites: MutableList<PlanInviteEntity> = mutableListOf(),
 
+    @OneToMany(mappedBy = "plan", cascade = [ALL])
+    var images: MutableList<PhotoEntity> = mutableListOf(),
+
     @Id @GeneratedValue
     var id: UUID? = null
 )

@@ -4,12 +4,14 @@ import org.springframework.beans.factory.ObjectProvider
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
 import ro.bogdannegoita.myplannerkt.commons.PlanDto
+import ro.bogdannegoita.myplannerkt.commons.types.Photo
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.domain.factories.myPlannerCache
 import ro.bogdannegoita.myplannerkt.events.PlanDeletedEvent
 import ro.bogdannegoita.myplannerkt.events.PlanInviteSentEvent
 import ro.bogdannegoita.myplannerkt.events.PlanUpdatedEvent
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
+import ro.bogdannegoita.myplannerkt.persistence.daos.PhotoDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
 import java.time.LocalDateTime
 import java.util.*
@@ -19,6 +21,7 @@ class MyPlanner(
     private val userBeanProvider: ObjectProvider<ApplicationUser>,
     private val userDao: ApplicationUserDao,
     private val planDao: PlanDao,
+    private val photoDao: PhotoDao,
     private val domainProvider: DomainProvider,
 ) {
 
@@ -56,6 +59,10 @@ class MyPlanner(
         if (plan.isPublic)
             publishPlan(plan)
         return plan
+    }
+
+    fun getImage(id: UUID): Photo {
+        return photoDao.findById(id)
     }
 
     @EventListener

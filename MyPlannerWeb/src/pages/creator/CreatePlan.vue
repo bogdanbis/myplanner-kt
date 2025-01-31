@@ -3,7 +3,12 @@
 	<h2>Create a Plan</h2>
 	<span class="page-subtitle">Create a Plan for yourself or to share with others.</span>
 	<MpCard>
-		<PlanForm :plan="plan" @submit="createPlan">
+		<PlanForm
+			:plan="plan"
+			@submit="createPlan"
+			@upload-image="uploadImage"
+			@delete-image="deleteImage"
+		>
 			<template #actions>
 				<MpButton type="submit" :disabled="!hasRequiredFields" :busy="loading">
 					Save
@@ -25,6 +30,7 @@ const authStore = useAuthStore();
 const router = useRouter();
 
 const plan = ref(new Plan());
+const image = ref(null);
 
 onMounted(() => {
 	document.getElementById('title').focus()
@@ -40,8 +46,21 @@ const createPlan = async () => {
 	loading.value = true;
 	if (!hasRequiredFields.value)
 		return;
-	await api.post('/plans/create', plan.value);
+	const response = await api.post('/plans/create', plan.value);
+	const createdPlan = new Plan(response);
+	await createdPlan.uploadImage(image.value);
 	authStore.user.fetchCreatedPlans();
 	router.push('/creator');
+}
+
+const uploadImage = async (file) => {
+	image.value = file;
+	image.value.src = URL.createObjectURL(file);
+	plan.value.images.push(image.value);
+}
+
+const deleteImage = async () => {
+	plan.value.images = [];
+	image.value = null;
 }
 </script>
