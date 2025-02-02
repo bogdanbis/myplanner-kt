@@ -24,19 +24,19 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 0 $spacer-xxl;
+		padding: 0 var(--spacer-xxl);
 		width: 100%;
 		max-width: calc($content-max-width + $sidebar-width);
 
 		.menu-button {
 			display: none;
 			user-select: none;
-			font-size: $font-size-m;
+			font-size: var(--font-size-h5);
 
 			@media only screen and (max-width: $hide-sidebar-breakpoint) {
 				display: block !important;
 				cursor: pointer;
-				font-size: $font-size-l;
+				font-size: var(--font-size-h3);
 			}
 		}
 
@@ -48,7 +48,7 @@
 				max-width: 150px;
 				overflow: hidden;
 				text-overflow: ellipsis;
-				font-size: $font-size-s;
+				font-size: var(--font-size-s);
 			}
 		}
 
@@ -60,7 +60,7 @@
 		}
 
 		@media only screen and (max-width: $mobile-width-breakpoint) {
-			padding: 0 $spacer-m;
+			padding: 0 var(--spacer-m);
 		}
 	}
 
@@ -89,8 +89,8 @@
 
 	.theme-switcher-container {
 		width: 12ch;
-		padding-left: $spacer-m;
-		padding-right: $spacer-m;
+		padding-left: var(--spacer-m);
+		padding-right: var(--spacer-m);
 
 		.theme-switcher {
 			@extend .clickable;
@@ -99,7 +99,7 @@
 			align-items: center;
 
 			small {
-				margin-right: $spacer-m;
+				margin-right: var(--spacer-m);
 			}
 		}
 	}

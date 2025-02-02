@@ -1,5 +1,5 @@
 <template>
-	<MpLink :to="to" class="cursor-pointer m-top-l">
+	<MpLink :to="to" class="cursor-pointer mt-l">
 		<MpIcon :icon="icon" /> <slot></slot>
 	</MpLink>
 </template>

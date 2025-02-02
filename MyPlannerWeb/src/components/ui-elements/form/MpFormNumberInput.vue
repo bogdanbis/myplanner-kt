@@ -7,7 +7,9 @@
 			:required="required"
 			v-bind="$attrs"
 		/>
-		<small v-if="info"><MpIcon icon="info-circle" class="me-2" />{{ info }}</small>
+		<small v-if="info">
+			<MpIcon icon="info-circle" class="mr-2" />
+			{{ info }}</small>
 		<small v-if="description">{{ description }}</small>
 	</MpCol>
 </template>

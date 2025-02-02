@@ -1,5 +1,5 @@
 :root {
-	--menu-item-padding: #{$spacer-s};
+	--menu-item-padding: #{var(--spacer-s)};
 	--active-menu-item-opacity: .2;
 }
 
@@ -20,8 +20,8 @@
 	@media only screen and (max-width: $hide-sidebar-breakpoint) {
 		.close-menu-button {
 			visibility: visible;
-			top: $spacer-xl;
-			right: $spacer-l;
+			top: var(--spacer-xl);
+			right: var(--spacer-l);
 			font-size: 2rem;
 			cursor: pointer;
 		}
@@ -29,15 +29,15 @@
 
 	.menu {
 		border-radius: $border-radius-xs;
-		margin-top: $spacer-xxxl;
+		margin-top: var(--spacer-xl);
 		font-weight: 500;
 
-		$menu-item-gap: $spacer-s;
+		$menu-item-gap: var(--spacer-s);
 		$menu-item-height: 36px;
 
 		.menu-title {
 			display: grid;
-			margin: $spacer-m $spacer-s;
+			margin: var(--spacer-m) var(--spacer-s);
 			font-weight: bold;
 		}
 
@@ -70,7 +70,7 @@
 			}
 
 			.bi {
-				margin-right: $spacer-xs;
+				margin-right: var(--spacer-xs);
 			}
 
 			&.sub-item {
@@ -93,13 +93,13 @@
 
 			@media only screen and (max-width: $hide-sidebar-breakpoint) {
 				transition-duration: .1s;
-				width: calc(100% - $spacer-l * 2);
+				width: calc(100% - var(--spacer-l) * 2);
 			}
 		}
 	}
 
 	.creator-menu {
-		margin-top: $spacer-xxxl;
+		margin-top: var(--spacer-xl);
 	}
 
 	.my-account-item {

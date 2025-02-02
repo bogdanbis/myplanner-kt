@@ -5,7 +5,7 @@
 	border-radius: 8px;
 	text-align: center;
 	z-index: 1;
-	font-size: $font-size-s;
+	font-size: var(--font-size-s);
 
 	span {
 		font-weight: 600;

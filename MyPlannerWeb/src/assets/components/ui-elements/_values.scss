@@ -1,12 +1,12 @@
 .mp-inline-value-container {
-	$horizontal-padding: $spacer-s;
+	$horizontal-padding: var(--spacer-s);
 
 	display: flex;
 	justify-content: space-between;
 	font-weight: 500;
 	margin-right: -$horizontal-padding;
 	margin-left: -$horizontal-padding;
-	padding: $spacer-xs $horizontal-padding;
+	padding: var(--spacer-xs) $horizontal-padding;
 	border-radius: $border-radius-xs;
 
 	&:hover {
@@ -28,7 +28,7 @@
 		justify-content: left;
 
 		.mp-inline-label {
-			margin-right: $spacer-l;
+			margin-right: var(--spacer-l);
 		}
 
 	}

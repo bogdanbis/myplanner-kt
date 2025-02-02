@@ -3,7 +3,7 @@
 
 	.step {
 		position: relative;
-		margin-bottom: $spacer-xxl;
+		margin-bottom: var(--spacer-xxl);
 
 		.col {
 			margin-bottom: 0;
@@ -23,7 +23,7 @@
 
 		.step-actions {
 			display: flex;
-			column-gap: $spacer-xl;
+			column-gap: var(--spacer-xl);
 			position: absolute;
 			top: 0;
 			right: 0;
@@ -32,11 +32,11 @@
 }
 
 .step-form-secondary {
-	margin-top: $spacer-m;
+	margin-top: var(--spacer-m);
 	margin-bottom: 0 !important;
 
 	.step {
-		margin-bottom: $spacer-s;
+		margin-bottom: var(--spacer-s);
 	}
 
 	.step-title {

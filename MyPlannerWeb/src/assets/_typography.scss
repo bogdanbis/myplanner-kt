@@ -1,21 +1,44 @@
+:root {
+	--font-size-h1: 40px;
+	--font-size-h2: 32px;
+	--font-size-h3: 28px;
+	--font-size-h4: 24px;
+	--font-size-h5: 20px;
+	--font-size: 16px;
+	--font-size-s: 14px;
+}
+
+small {
+	font-size: small;
+	color: var(--text-secondary-color);
+}
+
 h1, h2, h3, h4, h5, h6 {
-	//font-weight: 500;
 }
 
 h1 {
-	font-size: $font-size-xl;
+	font-size: var(--font-size-h1);
 }
 
 h2 {
-	font-size: $font-size-l2;
+	font-size: var(--font-size-h2);
 }
 
 h3 {
-	font-size: $font-size-l;
+	font-size: var(--font-size-h3);
 }
 
 h4 {
-	font-size: 24px;
+	font-size: var(--font-size-h4);
+}
+
+h5 {
+	font-size: var(--font-size-h5);
+}
+
+p {
+	margin-top: 0;
+	margin-bottom: var(--spacer-m);
 }
 
 p, span, a {

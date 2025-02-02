@@ -19,7 +19,7 @@
 					<MpLink :to="`/creator/manage/${planId}/participants/${pp.id}`">{{ pp.participant.name }}</MpLink>
 				</td>
 				<td class="d-flex">
-					<ProgressCircle :value="pp.completedStepsCount" :max="pp.totalStepsCount" class="m-right-0" />
+					<ProgressCircle :value="pp.completedStepsCount" :max="pp.totalStepsCount" class="mr-0" />
 					{{ pp.completedStepsCount }}/{{ pp.totalStepsCount }}
 				</td>
 				<td>{{ $date(pp.acquiredAt) }}</td>

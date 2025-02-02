@@ -1,11 +1,11 @@
 :root {
-	--card-margin: 0 0 #{$spacer-xl} 0;
-	--card-padding-horizontal: #{$spacer-xxxl};
+	--card-margin: 0 0 #{var(--spacer-xl)} 0;
+	--card-padding-horizontal: #{var(--spacer-xl)};
 	--card-padding-vertical: calc(var(--card-padding-horizontal) / 1.3);
 	--card-border-radius: #{$border-radius-l};
 
 	@media only screen and (max-width: $mobile-width-breakpoint) {
-		--card-padding-horizontal: #{$spacer-xl};
+		--card-padding-horizontal: #{var(--spacer-xl)};
 		--card-padding-vertical: var(--card-padding-horizontal);
 		--card-border-radius: #{$border-radius-m};
 	}
@@ -21,8 +21,8 @@
 }
 
 .mp-card-title {
-	font-size: $font-size-m;
-	margin-bottom: $font-size-s;
+	font-size: var(--font-size-h5);
+	margin-bottom: var(--font-size-s);
 	font-weight: 600;
 	margin-top: 0;
 	padding-top: 0;
@@ -30,11 +30,11 @@
 
 .mp-card-subtitle {
 	display: block;
-	margin-top: -$spacer-xs;
-	margin-bottom: $spacer-l;
+	margin-top: -var(--spacer-xs);
+	margin-bottom: var(--spacer-l);
 }
 
 .mp-card-actions {
-	margin-top: $spacer-l;
+	margin-top: var(--spacer-l);
 	display: flex;
 }

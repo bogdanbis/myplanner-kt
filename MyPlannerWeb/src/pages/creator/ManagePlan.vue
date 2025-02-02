@@ -15,12 +15,12 @@
 				<template #label>
 					<span title="There can be a slight difference if not all of the participants are synced with the latest version.">
 						Steps completed
-						<MpIcon icon="info-circle" class="text-primary m-left-xs" />
+						<MpIcon icon="info-circle" class="text-primary ml-xs" />
 					</span>
 				</template>
 			</MpInlineValue>
-			<div class="m-top-l">
-				<MpLink :to="`/creator/manage/${plan.id}/participants`" class="m-bottom-l">
+			<div class="mt-l">
+				<MpLink :to="`/creator/manage/${plan.id}/participants`" class="mb-l">
 					View participants
 				</MpLink>
 				<InviteParticipantButton :plan="plan" />

@@ -33,15 +33,15 @@ $button-padding-x: 32px;
 	}
 
 	.button-icon {
-		margin-right: $spacer-s;
+		margin-right: var(--spacer-s);
 	}
 
 	& + .p-button {
-		margin-top: $spacer-m;
+		margin-top: var(--spacer-m);
 
 		@media only screen and (min-width: $mobile-width-breakpoint) {
 			margin-top: 0;
-			margin-left: $spacer-m;
+			margin-left: var(--spacer-m);
 		}
 	}
 
@@ -70,12 +70,12 @@ $button-padding-x: 32px;
 	}
 
 	.bi {
-		margin-right: $spacer-s;
+		margin-right: var(--spacer-s);
 	}
 
 	.loading-icon {
 		display: none;
-		margin-right: $spacer-s;
+		margin-right: var(--spacer-s);
 		border-color: var(--button-text-color);
 	}
 
@@ -129,5 +129,5 @@ $button-padding-x: 32px;
 .mp-button-confirm-container {
 	display: flex;
 	flex-wrap: wrap;
-	gap: $spacer-l;
+	gap: var(--spacer-l);
 }

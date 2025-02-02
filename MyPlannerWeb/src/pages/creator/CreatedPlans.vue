@@ -2,7 +2,7 @@
 	<div v-if="user?.email">
 		<h2>Created Plans</h2>
 		<span class="page-subtitle">Plans that you have created. Add a new one or edit an existing one.</span>
-		<MpLink icon="plus-circle" to="/creator/new" class="m-bottom-l">Create a new Plan</MpLink>
+		<MpLink icon="plus-circle" to="/creator/new" class="mb-l">Create a new Plan</MpLink>
 
 		<MpCard v-for="plan in user.createdPlans" :title="plan.title">
 			<div class="w-30-desktop">
@@ -18,7 +18,7 @@
 	<MpCard v-else>
 		<span>We don't know who you are. 🧐<br />
 			Log in to see your plans.</span>
-		<LogInButton redirect-to="/creator" class="m-top-l" />
+		<LogInButton redirect-to="/creator" class="mt-l" />
 	</MpCard>
 </template>
 

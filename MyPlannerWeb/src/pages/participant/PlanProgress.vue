@@ -3,7 +3,7 @@
 	<h2>{{ plan.title }}</h2>
 	<span class="page-subtitle">{{ plan.shortDescription }}</span>
 
-	<div v-if="planProgress.updateAvailable" class="m-bottom-xxl">
+	<div v-if="planProgress.updateAvailable" class="mb-xxl">
 		<p class="text-primary fw-600">
 			{{ plan.author.name }} has made some changes. Sync to use the latest version.
 		</p>

@@ -3,7 +3,7 @@
 		:title="isRoot ? 'Steps' : ''"
 		:smaller-title="!isRoot"
 		:start-collapsed="stepsContainer.id"
-		class="steps-form m-bottom-xxl"
+		class="steps-form mb-xxl"
 		:class="{ 'step-form-secondary': !isRoot }"
 		:collapsible="!isRoot"
 		v-auto-animate
@@ -41,7 +41,7 @@
 				:steps-container="step"
 				:focused-step="focused"
 				@step-focused="onFocusStep"
-				class="m-left-xxl"
+				class="ml-xxl"
 			/>
 		</div>
 

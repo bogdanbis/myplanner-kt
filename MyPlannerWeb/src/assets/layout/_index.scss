@@ -2,7 +2,7 @@ $top-bar-height: 40px;
 $sidebar-width: 15rem;
 $hide-sidebar-breakpoint: 950px;
 $content-max-width: 1000px;
-$layout-padding: $spacer-l;
+$layout-padding: var(--spacer-l);
 
 :root {
 	--sidebar-color: rgba(255, 255, 255, 0.8);
@@ -86,11 +86,11 @@ $layout-padding: $spacer-l;
 .halved {
 	display: flex;
 	flex-wrap: wrap;
-	column-gap: $spacer-xl;
+	column-gap: var(--spacer-xl);
 
 	> * {
 		flex: 1 0;
-		min-width: calc($content-max-width * 0.5 - $spacer-xl * 2);
+		min-width: calc($content-max-width * 0.5 - var(--spacer-xl) * 2);
 	}
 
 	@media only screen and (max-width: $mobile-width-breakpoint) {
@@ -102,7 +102,7 @@ $layout-padding: $spacer-l;
 
 .page-subtitle {
 	display: block;
-	margin-top: -$spacer-l;
-	margin-bottom: $font-size-l;
+	margin-top: -var(--spacer-l);
+	margin-bottom: var(--font-size-h3);
 	color: var(--text-secondary);
 }

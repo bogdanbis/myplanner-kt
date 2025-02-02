@@ -16,31 +16,31 @@
 $form-item-border-radius: 8px;
 
 .mp-form {
-	row-gap: $spacer-xl;
+	row-gap: var(--spacer-xl);
 
 	&.tall {
 		.mp-form-item-container {
-			margin-bottom: $spacer-m + $spacer-s;
+			margin-bottom: var(--spacer-m) + var(--spacer-s);
 		}
 	}
 }
 
 .mp-form-section {
-	margin-top: $spacer-l;
+	margin-top: var(--spacer-l);
 	display: flex;
 	flex-direction: column;
-	row-gap: $spacer-xl;
+	row-gap: var(--spacer-xl);
 }
 
 .mp-form-section-title {
 	display: flex;
 	width: fit-content;
-	font-size: $font-size-m2;
+	font-size: var(--font-size-h4);
 	font-weight: bold;
-	margin-bottom: $spacer-m;
+	margin-bottom: var(--spacer-m);
 
 	&.smaller-title {
-		font-size: $font-size-2;
+		font-size: var(--font-size-h5);
 	}
 
 	&.collapsible {
@@ -50,7 +50,7 @@ $form-item-border-radius: 8px;
 	}
 
 	.bi {
-		margin-right: $spacer-s;
+		margin-right: var(--spacer-s);
 		transition: transform .2s ease-in;
 	}
 
@@ -64,20 +64,20 @@ $form-item-border-radius: 8px;
 	position: relative;
 	border: solid 1px var(--border-color);
 	border-radius: $border-radius-s;
-	padding: $spacer-l;
+	padding: var(--spacer-l);
 
 	@media only screen and (max-width: $mobile-width-breakpoint) {
-		margin-bottom: $spacer-m;
+		margin-bottom: var(--spacer-m);
 	}
 
 	.change-index-container {
 		position: absolute;
-		top: $spacer-xs;
-		right: $spacer-l;
+		top: var(--spacer-xs);
+		right: var(--spacer-l);
 		display: flex;
 		flex-direction: row-reverse;
 		align-items: center;
-		gap: $spacer-m;
+		gap: var(--spacer-m);
 
 		.hover-info {
 			color: var(--primary);
@@ -101,7 +101,7 @@ $form-item-border-radius: 8px;
 .mp-form-actions {
 	display: flex;
 	justify-content: end;
-	gap: $spacer-m;
+	gap: var(--spacer-m);
 
 	@media only screen and (max-width: $mobile-width-breakpoint) {
 		flex-direction: column;
@@ -113,20 +113,20 @@ $form-item-border-radius: 8px;
 	flex-direction: column;
 
 	label {
-		margin-bottom: $spacer-xs;
-		margin-left: $spacer-xs;
+		margin-bottom: var(--spacer-xs);
+		margin-left: var(--spacer-xs);
 		font-weight: 500;
 	}
 
 	small {
 		color: var(--text-secondary);
-		font-size: $font-size-s;
-		margin-top: $spacer-s;
-		margin-bottom: -$font-size-s * 1.2;
+		font-size: var(--font-size-s);
+		margin-top: var(--spacer-s);
+		margin-bottom: calc((0px - var(--font-size-s)) * 1.2);
 	}
 
 	&:has(.large-input) {
-		margin-bottom: $spacer-xl;
+		margin-bottom: var(--spacer-xl);
 	}
 }
 
@@ -135,7 +135,7 @@ $form-item-border-radius: 8px;
 
 	@media only screen and (max-width: $mobile-width-breakpoint) {
 		height: inherit;
-		margin-bottom: $spacer-m;
+		margin-bottom: var(--spacer-m);
 	}
 }
 
@@ -146,7 +146,7 @@ $form-item-border-radius: 8px;
 	border-radius: $form-item-border-radius;
 	caret-color: var(--primary);
 	width: 100%;
-	padding: $spacer-s $spacer-m;
+	padding: var(--spacer-s) var(--spacer-m);
 	transition: border-color .2s, box-shadow .2s, background-color .2s;
 
 	&:-webkit-autofill,
@@ -180,7 +180,7 @@ $form-item-border-radius: 8px;
 .unlabeled-input {
 	border-radius: 0;
 	border: 0;
-	padding: $spacer-xs;
+	padding: var(--spacer-xs);
 	border-bottom: solid 1px var(--border-color);
 	background-color: var(--card-bg);
 
@@ -194,10 +194,10 @@ $form-item-border-radius: 8px;
 }
 
 .large-input {
-	font-size: $font-size-l2;
+	font-size: var(--font-size-h3) 2;
 
 	@media only screen and (max-width: $mobile-width-breakpoint) {
-		font-size: $font-size-m2;
+		font-size: var(--font-size-h5) 2;
 	}
 }
 
@@ -213,7 +213,7 @@ $form-item-border-radius: 8px;
 
 .mp-textarea-counter {
 	text-align: end;
-	margin-right: $spacer-xs;
+	margin-right: var(--spacer-xs);
 	height: 0;
 }
 
@@ -231,7 +231,7 @@ $form-item-border-radius: 8px;
 .mp-form-check-col {
 	display: flex;
 	flex-direction: column;
-	margin-bottom: $spacer-m;
+	margin-bottom: var(--spacer-m);
 }
 
 .mp-form-check {
@@ -272,7 +272,7 @@ $form-item-border-radius: 8px;
 }
 
 .mp-search {
-	margin-bottom: $spacer-l;
+	margin-bottom: var(--spacer-l);
 
 	.mp-search-form {
 		display: flex;
