@@ -4,7 +4,7 @@ import { onMounted, ref } from 'vue';
 export function useCollapse(collapsible, startCollapsed) {
 	const localStorage = useLocalStorage('collapsed-sections');
 
-	const collapsed = ref(true);
+	const collapsed = ref(false);
 
 	const toggleCollapsed = () => {
 		if (!collapsible) return;

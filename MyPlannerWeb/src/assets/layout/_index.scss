@@ -92,6 +92,12 @@ $layout-padding: $spacer-l;
 		flex: 1 0;
 		min-width: calc($content-max-width * 0.5 - $spacer-xl * 2);
 	}
+
+	@media only screen and (max-width: $mobile-width-breakpoint) {
+		> * {
+			min-width: 100%;
+		}
+	}
 }
 
 .page-subtitle {

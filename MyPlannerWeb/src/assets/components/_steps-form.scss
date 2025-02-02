@@ -1,0 +1,49 @@
+.steps-form {
+	row-gap: 0;
+
+	.step {
+		position: relative;
+		margin-bottom: $spacer-xxl;
+
+		.col {
+			margin-bottom: 0;
+
+			.unlabeled-input {
+				border-bottom: none;
+			}
+
+			.step-title {
+				font-weight: 600;
+			}
+
+			.step-description {
+				border-bottom: solid 1px var(--border-color);
+			}
+		}
+
+		.step-actions {
+			display: flex;
+			column-gap: $spacer-xl;
+			position: absolute;
+			top: 0;
+			right: 0;
+		}
+	}
+}
+
+.step-form-secondary {
+	margin-top: $spacer-m;
+	margin-bottom: 0 !important;
+
+	.step {
+		margin-bottom: $spacer-s;
+	}
+
+	.step-title {
+		font-weight: 500 !important;
+	}
+
+	.step-description {
+		color: var(--text-secondary) !important;
+	}
+}

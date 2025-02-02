@@ -4,6 +4,7 @@
 		v-model="value"
 		:id="id"
 		class="mp-form-item mp-textarea"
+		:class="{ 'unlabeled-textarea': unlabeled }"
 		ref="textarea"
 		v-bind="$attrs"
 	/>
@@ -41,6 +42,11 @@ export default {
 			required: false,
 			default: 'text',
 		},
+		unlabeled: {
+			type: Boolean,
+			required: false,
+			default: false,
+		},
 	},
 
 	computed: {
@@ -66,7 +72,10 @@ export default {
 	methods: {
 		resize() {
 			const { textarea } = this.$refs;
-			textarea.style.height = '62px';
+			if (this.unlabeled)
+				textarea.style.height = '28px';
+			else
+				textarea.style.height = '62px';
 			textarea.style.height = textarea.scrollHeight + 'px';
 		},
 	},

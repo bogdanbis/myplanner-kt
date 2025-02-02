@@ -5,7 +5,6 @@
 	<MpCard>
 		<PlanForm
 			:plan="planEdits"
-			@submit="updatePlan"
 			@upload-image="uploadImage"
 			@delete-image="deleteImage"
 			:loading
@@ -26,7 +25,7 @@
 				>
 					Cancel
 				</MpButton>
-				<MpButton type="submit" :disabled="!hasChanges || !hasRequiredFields" :busy="updating">
+				<MpButton @click="updatePlan" :disabled="!hasChanges || !hasRequiredFields" :busy="updating">
 					Save
 				</MpButton>
 			</template>

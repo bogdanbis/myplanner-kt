@@ -1,5 +1,5 @@
 <template>
-	<MpForm @submit="$emit('submit')" class="tall">
+	<MpForm class="tall">
 		<MpFormInput
 			v-model="plan.title"
 			placeholder="The Title"
@@ -30,7 +30,7 @@
 			id="color"
 			type="color"
 			label="Primary color"
-			description="Pick a color to personalize your plan. Make it recognizable at a glance."
+			description="Pick a color to personalize your plan and make it easier to recognize."
 			v-model="plan.color"
 		/>
 

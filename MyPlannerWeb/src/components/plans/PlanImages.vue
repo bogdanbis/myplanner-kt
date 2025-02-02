@@ -4,7 +4,9 @@
 			<img :src="image.src" class="mp-image" alt="" />
 			<MpLinkButtonWithConfirm @confirm="deleteImage(image)" with-icons>Delete image</MpLinkButtonWithConfirm>
 		</div>
-		<MpFileUpload v-if="uploadEnabled && plan.images.length === 0" @upload="upload">Upload image</MpFileUpload>
+		<MpFileUpload v-if="uploadEnabled && plan.images.length === 0" @upload="upload" accept="image/*">
+			Image
+		</MpFileUpload>
 	</div>
 </template>
 

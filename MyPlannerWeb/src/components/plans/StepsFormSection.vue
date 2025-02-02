@@ -1,60 +1,62 @@
 <template>
 	<MpFormSection
-		v-if="steps.length > 0"
-		:title="isRoot ? 'Steps' : 'Sub steps'"
+		:title="isRoot ? 'Steps' : ''"
 		:smaller-title="!isRoot"
 		:start-collapsed="stepsContainer.id"
-		collapsible
+		class="steps-form m-bottom-xxl"
+		:class="{ 'step-form-secondary': !isRoot }"
+		:collapsible="!isRoot"
 		v-auto-animate
 	>
-		<MpCol
-			v-for="(step, index) in steps"
+		<div
+			v-for="step in steps"
 			:key="step"
-			class="mp-form-subsection"
-			:class="{ 'mp-form-root-section': isRoot }"
+			class="step"
 		>
-			<div class="change-index-container">
-				<MpButton v-if="index < (steps.length - 1)" link icon="arrow-down" @click="moveStepDown(step)" />
-				<MpButton v-if="index > 0" link icon="arrow-up" @click="moveStepUp(step)" />
-				<span class="hover-info">Move item</span>
-			</div>
 			<MpFormInput
-				:id="'step-title-' + (step.id || index)"
-				label="Title"
+				:id="'step-title-' + step.index"
+				placeholder="Step title"
+				unlabeled
 				v-model="step.title"
+				class="step-title"
+				@focus="onFocusStep(step)"
+				@focusout="onFocusOut(step)"
 			/>
 			<MpFormTextarea
-				:id="'step-description-' + step.id"
-				label="Description"
+				:id="'step-description-' + step.index"
+				placeholder="Description"
+				unlabeled
 				v-model="step.description"
+				class="step-description"
+				@focus="onFocusStep(step)"
+				@focusout="onFocusOut(step)"
 			/>
-
-			<StepsFormSection :steps-container="step" />
-
-			<div class="mp-form-actions">
-				<MpButton link @click="removeStep(step)" icon="dash" class="ms-auto">Remove</MpButton>
+			<div v-if="focused === step || focusedStep === step" class="step-actions">
+				<MpButton v-if="isRoot" link @click="addSubStep(step)" icon="plus-lg">Step</MpButton>
+				<MpButton link @click="removeStep(step)" icon="dash" class="danger">Remove</MpButton>
 			</div>
-		</MpCol>
 
-		<MpCol cols="1">
-			<MpButton @click="addNewStep" icon="plus-circle" :link="!isRoot" :class="{ 'm-left-xs': !isRoot }">
-				{{ isRoot ? 'Step' : 'Sub step' }}
-			</MpButton>
+			<StepsFormSection
+				v-if="step.steps.length > 0"
+				:steps-container="step"
+				:focused-step="focused"
+				@step-focused="onFocusStep"
+				class="m-left-xxl"
+			/>
+		</div>
+
+		<MpCol v-if="isRoot" cols="1">
+			<MpButton @click="addNewStep" icon="plus-circle" link>Step</MpButton>
 		</MpCol>
 	</MpFormSection>
-	<MpCol v-else cols="1">
-		<MpButton @click="addNewStep" icon="plus-circle" :link="!isRoot" :class="{ 'm-left-xs': !isRoot }">
-			{{ isRoot ? 'Step' : 'Sub step' }}
-		</MpButton>
-	</MpCol>
 </template>
 
 <script setup>
 import Step from '@/models/Step.js';
 import { sortBy as _sortBy } from 'lodash';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
-const { stepsContainer } = defineProps({
+const { stepsContainer, isRoot } = defineProps({
 	stepsContainer: {
 		type: Object,
 		required: true,
@@ -64,16 +66,45 @@ const { stepsContainer } = defineProps({
 		required: false,
 		default: false,
 	},
+	focusedStep: {
+		type: Object,
+		required: false,
+	},
 });
+
+const emit = defineEmits(['step-focused']);
+
+const focused = ref(null);
 
 const steps = computed(() => _sortBy(stepsContainer.steps, 'index'));
 
 const addNewStep = () => {
 	stepsContainer.steps.push(new Step({ index: stepsContainer.steps.length }));
 	setTimeout(() => {
-		document.getElementById('step-title-' + (stepsContainer.steps.length - 1))
-				.scrollIntoView({ behavior: 'smooth' });
+		document.getElementById('step-title-' + (stepsContainer.steps.length - 1)).focus();
 	}, 250);
+}
+
+const addSubStep = (step) => {
+	const theStep = stepsContainer.steps.find(it => it === step)
+	theStep.steps.push(new Step({ index: theStep.steps.length }));
+}
+
+const onFocusStep = (step) => {
+	if (isRoot) {
+		focused.value = step;
+	} else {
+		emit('step-focused', step);
+	}
+}
+
+const onFocusOut = (step) => {
+	removeStepIfEmpty(step)
+}
+
+const removeStepIfEmpty = (step) => {
+	if (!step.title && !step.description)
+		removeStep(step);
 }
 
 const removeStep = (step) => {

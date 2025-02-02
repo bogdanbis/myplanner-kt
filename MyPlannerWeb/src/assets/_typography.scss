@@ -45,6 +45,6 @@ ul {
 
 @for $i from 3 through 7 {
 	.fw-#{$i}00 {
-		font-weight: #{$i}00;
+		font-weight: #{$i}00 !important;
 	}
 }

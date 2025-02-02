@@ -6,6 +6,7 @@
 			:placeholder="placeholder"
 			:required="required"
 			:show-count="showCount"
+			:unlabeled="unlabeled"
 			v-bind="$attrs"
 		/>
 		<small v-if="info"><MpIcon icon="info-circle" class="me-2" />{{ info }}</small>
@@ -20,6 +21,7 @@ import MpTextarea from './base/MpTextarea.vue';
 export default {
 	name: 'MpFormTextarea',
 	components: { MpTextarea, MpCol },
+	inheritAttrs: false,
 	props: {
 		id: {
 			type: String,
@@ -58,6 +60,11 @@ export default {
 		placeholder: {
 			type: String,
 			required: false,
+		},
+		unlabeled: {
+			type: Boolean,
+			required: false,
+			default: false,
 		},
 	},
 }

@@ -5,12 +5,12 @@
 	<MpCard>
 		<PlanForm
 			:plan="plan"
-			@submit="createPlan"
 			@upload-image="uploadImage"
 			@delete-image="deleteImage"
+			:loading
 		>
 			<template #actions>
-				<MpButton type="submit" :disabled="!hasRequiredFields" :busy="loading">
+				<MpButton @click="createPlan" :disabled="!hasRequiredFields" :busy="loading">
 					Save
 				</MpButton>
 			</template>

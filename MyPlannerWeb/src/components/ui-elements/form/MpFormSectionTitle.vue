@@ -14,7 +14,7 @@
 <script setup>
 const emit = defineEmits(['collapsed-changed']);
 
-defineProps({
+const { collapsible } = defineProps({
 	collapsible: {
 		type: Boolean,
 		required: false,
@@ -33,6 +33,7 @@ defineProps({
 });
 
 const toggleCollapsed = () => {
-	emit('collapsed-changed');
+	if (collapsible)
+		emit('collapsed-changed');
 };
 </script>

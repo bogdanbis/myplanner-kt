@@ -37,7 +37,7 @@ $form-item-border-radius: 8px;
 	width: fit-content;
 	font-size: $font-size-m2;
 	font-weight: bold;
-	margin-bottom: 0;
+	margin-bottom: $spacer-m;
 
 	&.smaller-title {
 		font-size: $font-size-2;
@@ -189,6 +189,10 @@ $form-item-border-radius: 8px;
 	}
 }
 
+.unlabeled-textarea {
+	@extend .unlabeled-input;
+}
+
 .large-input {
 	font-size: $font-size-l2;
 
@@ -201,6 +205,10 @@ $form-item-border-radius: 8px;
 	resize: none;
 	overflow: hidden;
 	min-height: 62px;
+
+	&.unlabeled-textarea {
+		min-height: 28px !important;
+	}
 }
 
 .mp-textarea-counter {
