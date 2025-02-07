@@ -48,3 +48,12 @@
 .d-none {
 	display: none;
 }
+
+.d-hidden {
+	opacity: 0;
+	cursor: inherit !important;
+}
+
+.align-start {
+	align-items: start;
+}

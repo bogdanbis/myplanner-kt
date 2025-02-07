@@ -14,6 +14,7 @@ import ro.bogdannegoita.myplannerkt.commons.types.UserUIPreferences
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
+import ro.bogdannegoita.myplannerkt.persistence.daos.PhotoDao
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanDao
 import ro.bogdannegoita.myplannerkt.persistence.entities.PlanEntity
 import java.time.LocalDateTime
@@ -24,10 +25,11 @@ import kotlin.test.assertEquals
 class MyPlannerTest @Autowired constructor(
     userBeanProvider: ObjectProvider<ApplicationUser>,
     domainProvider: DomainProvider,
+    photoDao: PhotoDao,
 ) {
     private val userDao = mockk<ApplicationUserDao>()
     private val planDao = mockk<PlanDao>()
-    private val myPlanner = MyPlanner(userBeanProvider, userDao, planDao, domainProvider)
+    private val myPlanner = MyPlanner(userBeanProvider, userDao, planDao, photoDao, domainProvider)
 
     @Test
     fun `should load the user with given email`() {

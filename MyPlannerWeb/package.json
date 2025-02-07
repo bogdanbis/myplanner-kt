@@ -10,8 +10,11 @@
 	},
 	"dependencies": {
 		"@formkit/auto-animate": "^0.8.2",
+		"@vueuse/components": "^12.5.0",
+		"@vueuse/core": "^12.5.0",
 		"axios": "^1.7.9",
 		"bootstrap-icons": "^1.11.3",
+		"dompurify": "^3.2.4",
 		"js-circle-progress": "^1.0.0-beta.0",
 		"lodash": "^4.17.21",
 		"pinia": "^2.3.1",

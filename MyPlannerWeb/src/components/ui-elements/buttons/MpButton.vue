@@ -3,7 +3,7 @@
 		:disabled="busy || disabled"
 		:type="type"
 		class="mp-button"
-		:class="{ 'busy': busy, 'mp-link-button': link }"
+		:class="{ 'busy': busy, 'mp-link-button': link, 'mp-icon-button': !$slots.default }"
 	>
 		<LoadingIcon />
 		<MpIcon v-if="icon" :icon="icon" />

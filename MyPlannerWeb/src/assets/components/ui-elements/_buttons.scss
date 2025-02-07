@@ -95,6 +95,12 @@ $button-padding-x: 32px;
 
 }
 
+.mp-icon-button {
+	.bi {
+		margin-right: 0;
+	}
+}
+
 .mp-link-button {
 	background: none !important;
 	color: var(--primary);

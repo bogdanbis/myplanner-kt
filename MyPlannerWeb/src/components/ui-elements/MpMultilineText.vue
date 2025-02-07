@@ -1,17 +1,21 @@
 <template>
-	<span v-html="multiline(text)" />
+	<span v-html="multiline" />
 </template>
 
 <script setup>
-defineProps({
+import DOMPurify from 'dompurify';
+import { computed } from 'vue';
+
+const { text } = defineProps({
 	text: {
 		type: String,
 		required: false,
 	},
 });
 
-const multiline = (text) => {
+const multiline = computed(() => {
 	if (!text) return;
-	return text.replaceAll('\n', '<br/>')
-};
+	return DOMPurify.sanitize(text, { ALLOWED_TAGS: [] })
+			.replaceAll('\n', '<br/>')
+});
 </script>

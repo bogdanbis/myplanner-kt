@@ -1,6 +1,7 @@
 import Toast from 'vue-toastification';
 import MpButton from './buttons/MpButton.vue';
 import MpLinkButtonWithConfirm from './buttons/MpLinkButtonWithConfirm.vue';
+import MpCheckbox from './form/base/MpCheckbox.vue';
 import MpForm from './form/MpForm.vue';
 import MpFormCheckbox from './form/MpFormCheckbox.vue';
 import MpFormInput from './form/MpFormInput.vue';
@@ -38,6 +39,7 @@ export default function registerUiElements(Vue) {
 	Vue.component('MpInlineValue', MpInlineValue);
 	Vue.component('MpMultilineText', MpMultilineText);
 	Vue.component('MpTable', MpTable);
+	Vue.component('MpCheckbox', MpCheckbox);
 
 	// forms
 	Vue.component('MpForm', MpForm);

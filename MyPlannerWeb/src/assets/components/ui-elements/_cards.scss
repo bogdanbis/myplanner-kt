@@ -5,7 +5,7 @@
 	--card-border-radius: #{$border-radius-l};
 
 	@media only screen and (max-width: $mobile-width-breakpoint) {
-		--card-padding-horizontal: #{var(--spacer-xl)};
+		--card-padding-horizontal: #{var(--spacer-m)};
 		--card-padding-vertical: var(--card-padding-horizontal);
 		--card-border-radius: #{$border-radius-m};
 	}

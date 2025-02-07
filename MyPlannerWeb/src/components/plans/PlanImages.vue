@@ -2,7 +2,13 @@
 	<div>
 		<div v-for="image in plan.images">
 			<img :src="image.src" class="mp-image" alt="" />
-			<MpLinkButtonWithConfirm @confirm="deleteImage(image)" with-icons>Delete image</MpLinkButtonWithConfirm>
+			<MpLinkButtonWithConfirm
+				v-if="uploadEnabled"
+				@confirm="deleteImage(image)"
+				with-icons
+			>
+				Delete image
+			</MpLinkButtonWithConfirm>
 		</div>
 		<MpFileUpload v-if="uploadEnabled && plan.images.length === 0" @upload="upload" accept="image/*">
 			Image

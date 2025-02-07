@@ -1,5 +1,6 @@
 <template>
-	<div class="mp-form-check" :class="$attrs.class">
+	<div class="mp-form-check" :class="[$attrs.class, reversed ? 'mp-form-check-reversed' : undefined]">
+		<label v-if="reversed" :for="id">{{ computedLabel }}</label>
 		<input
 			@change="updateValue"
 			@input="updateValue"
@@ -9,7 +10,7 @@
 			type="checkbox"
 			v-bind="$attrs"
 		/>
-		<label :for="id">{{ computedLabel }}</label>
+		<label v-if="!reversed" :for="id">{{ computedLabel }}</label>
 	</div>
 </template>
 
@@ -33,6 +34,11 @@ export default {
 			required: true,
 		},
 		required: {
+			type: Boolean,
+			required: false,
+			default: false,
+		},
+		reversed: {
 			type: Boolean,
 			required: false,
 			default: false,

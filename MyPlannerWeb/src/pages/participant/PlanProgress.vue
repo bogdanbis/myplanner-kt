@@ -10,8 +10,11 @@
 		<MpButton @click="syncWithPlan">Sync</MpButton>
 	</div>
 
-	<MpCard>
-		<b class="text-secondary">About</b>
+	<MpCard :style="primaryColor">
+		<PlanImages
+			:plan="plan"
+			class="mb-m"
+		/>
 		<p><MpMultilineText :text="plan.description" /></p>
 		<MpForm @submit="saveComment">
 			<MpFormTextarea
@@ -38,6 +41,7 @@
 <script setup>
 import api from '@/api/index.js';
 import StepProgressFormSection from '@/components/plan-progress/StepProgressFormSection.vue';
+import PlanImages from '@/components/plans/PlanImages.vue';
 import PlanProgress from '@/models/PlanProgress.js';
 import { computed, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -51,6 +55,8 @@ const loading = ref(true);
 const saving = ref(false);
 
 const plan = computed(() => planProgress.value.plan);
+
+const primaryColor = computed(() => ({ '--primary': `${plan.value.color}` }))
 
 onMounted(async () => {
 	const planResponse = await api.get('/plans/acquired/' + planId);

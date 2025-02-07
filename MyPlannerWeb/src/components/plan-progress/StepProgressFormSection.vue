@@ -1,43 +1,28 @@
 <template>
 	<MpFormSection
-		:title="isRoot ? 'Steps' : 'Sub steps'"
+		:title="isRoot ? 'Steps' : ''"
 		:smaller-title="!isRoot"
 		:start-collapsed="stepsContainer.id"
-		collapsible
+		class="steps-form"
+		:class="{ 'step-form-secondary': !isRoot }"
+		:collapsible="!isRoot"
 		v-auto-animate
 	>
-		<template #non-collapsible>
-			<div>
-				Completed: {{ stepsContainer.completedStepsCount }}/{{ stepsContainer.totalStepsCount }}
-				<ProgressBar
-					:count="stepsContainer.completedStepsCount"
-					:total="stepsContainer.totalStepsCount"
-					class="mt-2"
-				/>
-			</div>
-		</template>
+		<div v-if="isRoot" class="steps-progress">
+			<div>Completed {{ stepsContainer.completedStepsCount }}/{{ stepsContainer.totalStepsCount }}</div>
+			<ProgressCircle
+				:value="stepsContainer.completedStepsCount"
+				:max="stepsContainer.totalStepsCount"
+				class="ml-xs"
+			/>
+		</div>
 		<div
 			v-for="stepProgress in stepsContainer.steps"
 			:key="stepProgress"
-			class="mp-form-subsection"
-			:class="{ 'mp-form-root-section': isRoot }"
 		>
-			<MpFormCheckbox
-				v-if="stepProgress.steps.length === 0"
-				:disabled="!mayModify"
-				:id="'step-' + stepProgress.step.id + '-completed'"
-				:label="stepProgress.step.title"
-				v-model="stepProgress.completed"
-				@change="markAsCompleted(stepProgress)"
-				class="fw-700"
-			/>
-			<span v-else><b>{{ stepProgress.step.title }}</b></span>
-			<p class="text-secondary">{{ stepProgress.step.description }}</p>
-
-			<StepProgressFormSection
-				v-if="stepProgress.steps.length > 0"
+			<StepProgressDetails
 				:steps-container="stepProgress"
-				:plan-progress-id
+				:plan-progress-id="planProgressId"
 				:may-modify
 			/>
 		</div>
@@ -45,7 +30,7 @@
 </template>
 
 <script setup>
-import api from '@/api/index.js';
+import StepProgressDetails from '@/components/plan-progress/StepProgressDetails.vue';
 import PlanProgress from '@/models/PlanProgress.js';
 import StepProgress from '@/models/StepProgress.js';
 
@@ -68,9 +53,4 @@ const { planProgressId, stepsContainer } = defineProps({
 		required: true,
 	},
 });
-
-const markAsCompleted = async (stepProgress) => {
-	await api.put('/plans/acquired/' + planProgressId + '/steps/' + stepProgress.id,
-			{ completed: stepProgress.completed });
-}
 </script>

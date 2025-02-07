@@ -48,7 +48,8 @@ const createPlan = async () => {
 		return;
 	const response = await api.post('/plans/create', plan.value);
 	const createdPlan = new Plan(response);
-	await createdPlan.uploadImage(image.value);
+	if (image.value)
+		await createdPlan.uploadImage(image.value);
 	authStore.user.fetchCreatedPlans();
 	router.push('/creator');
 }

@@ -39,6 +39,7 @@
 			upload-enabled
 			@upload="$emit('upload-image', $event)"
 			@delete="$emit('delete-image', $event)"
+			class="mt-m"
 		/>
 
 		<StepsFormSection
