@@ -1,9 +1,13 @@
 <template>
 	<MpBackLink to="/my-plans">My Plans</MpBackLink>
 	<h2>{{ plan.title }}</h2>
-	<span class="page-subtitle">{{ plan.shortDescription }}</span>
+	<h5 class="page-subtitle">
+		<MpIcon icon="person-fill" />
+		{{ plan.author.name }}
+	</h5>
+	<p class="fw-600">{{ plan.shortDescription }}</p>
 
-	<div v-if="planProgress.updateAvailable" class="mb-xxl">
+	<div v-if="planProgress.updateAvailable" class="mb-xl">
 		<p class="text-primary fw-600">
 			{{ plan.author.name }} has made some changes. Sync to use the latest version.
 		</p>

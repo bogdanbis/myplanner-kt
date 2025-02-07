@@ -23,8 +23,10 @@ class PlanProgressDao(
     private val dtoMapper = DtoMapper()
 
     fun create(planEntity: PlanEntity, userEntity: ApplicationUserEntity): PlanProgressDto {
+        val now = LocalDateTime.now()
         var entity = PlanProgressEntity(
-            acquiredAt = LocalDateTime.now(),
+            acquiredAt = now,
+            lastActive = now,
             lastSyncedPlan = planEntity.lastModifiedAt,
             completed = false,
             plan = planEntity,

@@ -18,7 +18,7 @@
 				@change="markAsCompleted"
 				class="step-title"
 			/>
-			<div v-else class="step-title d-flex">
+			<div v-else class="step-title d-flex cursor-pointer" @click="toggleCollapsed">
 				{{ stepsContainer.step.title }}
 				<ProgressCircle
 					v-if="stepsContainer.completedStepsCount"

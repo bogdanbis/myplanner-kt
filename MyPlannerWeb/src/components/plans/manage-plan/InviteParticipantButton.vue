@@ -43,8 +43,8 @@ const sendInvite = async () => {
 		const response = await api.post(`/plans/created/${plan.id}/invite`, null, { params: { email: email.value } });
 		if (!response)
 			return toast.error('Could not send invite.')
-		email.value = '';
 		toast('Invite sent to ' + email.value);
+		email.value = '';
 		showInviteForm.value = false;
 	} finally {
 		sending.value = false;

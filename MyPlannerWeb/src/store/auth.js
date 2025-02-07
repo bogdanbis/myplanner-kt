@@ -20,6 +20,9 @@ export const useAuthStore = defineStore('auth', {
 		requestLogin() {
 			this.requireLogin = true;
 		},
+		async fetchReceivedInvites() {
+			await this.user.fetchReceivedInvites();
+		},
 		reset() {
 			api.logOut();
 			this.$reset();

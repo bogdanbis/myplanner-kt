@@ -21,7 +21,7 @@
 }
 
 .mp-card-title {
-	font-size: var(--font-size-h5);
+	font-size: var(--font-size-h4);
 	margin-bottom: var(--font-size-s);
 	font-weight: 600;
 	margin-top: 0;
@@ -30,7 +30,7 @@
 
 .mp-card-subtitle {
 	display: block;
-	margin-top: -var(--spacer-xs);
+	margin-top: calc(0px - var(--spacer-s));
 	margin-bottom: var(--spacer-l);
 }
 

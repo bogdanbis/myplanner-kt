@@ -4,13 +4,12 @@
 		<span class="page-subtitle">The plans you got from other creators.</span>
 
 		<MpCard v-if="pendingInvites.length" title="Received invites">
-			<div v-for="invite in pendingInvites" class="mp-form-subsection">
-				<b>{{ invite.plan.title }}</b><br />
-				<span>
-					<MpIcon icon="person-fill" />
-					{{ invite.plan.author.name }}</span><br />
-				<span>Received at: {{ $relativeDate(invite.createdAt) }}</span>
-			</div>
+			<ReceivedPendingInvite
+				v-for="invite in pendingInvites"
+				:invite="invite"
+				@accepted="fetchAcquiredPlans"
+				@declined="fetchAcquiredPlans"
+			/>
 		</MpCard>
 
 		<MpCard v-for="{ plan, id } in user.acquiredPlans" :title="plan.title">
@@ -33,6 +32,7 @@
 
 <script setup>
 import LogInButton from '@/components/LogInButton.vue';
+import ReceivedPendingInvite from '@/components/plan-progress/ReceivedPendingInvite.vue';
 import { useAuthStore } from '@/store/auth.js';
 import { computed, onMounted } from 'vue';
 
@@ -42,10 +42,15 @@ const user = computed(() => authStore.user);
 onMounted(async () => {
 	if (user.value.acquiredPlans == null)
 		await user.value.fetchAcquiredPlans();
-	await user.value.fetchReceivedInvites();
+	await authStore.fetchReceivedInvites();
 })
 
+const fetchAcquiredPlans = async () => {
+	await authStore.fetchReceivedInvites();
+	await user.value.fetchAcquiredPlans();
+}
+
 const pendingInvites = computed(() => {
-	return user.value.receivedInvites?.filter(it => it.isPending) || [];
+	return authStore.user?.receivedInvites?.filter(it => it.isPending) || [];
 })
 </script>

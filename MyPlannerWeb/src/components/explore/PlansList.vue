@@ -1,11 +1,13 @@
 <template>
 	<MpCard v-for="plan in plans" :title="plan.title">
-		<span class="mp-card-subtitle">
-			<MpIcon icon="person-fill" />
-			{{ plan.author.firstName + ' ' + plan.author.lastName }}
+		<div class="mp-card-subtitle">
+			<div>
+				<MpIcon icon="person-fill" />
+				{{ plan.author.firstName + ' ' + plan.author.lastName }}
+			</div>
 			<br />
 			<NumberOfParticipants :count="plan.numberOfParticipants" />
-		</span>
+		</div>
 		<span class="text-secondary">{{ plan.description }}</span>
 		<template #actions>
 			<div v-if="plan.author.email !== user?.email">

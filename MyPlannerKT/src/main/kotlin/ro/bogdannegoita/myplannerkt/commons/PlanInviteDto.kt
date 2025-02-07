@@ -5,9 +5,9 @@ import java.util.*
 
 data class PlanInviteDto(
     val id: UUID,
-    val status: InviteStatus,
+    var status: InviteStatus,
     val createdAt: LocalDateTime,
-    val respondedAt: LocalDateTime? = null,
+    var respondedAt: LocalDateTime? = null,
     val plan: PlanDto,
     val sender: ApplicationUserDto,
     val recipient: ApplicationUserDto? = null,

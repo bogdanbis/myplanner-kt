@@ -30,15 +30,15 @@ class PlanInviteDao(private val repository: PlanInviteRespository) {
     }
 
     fun getPlan(id: UUID): PlanDto {
-        return dtoMapper.planDto(findById(id).plan!!)
+        return dtoMapper.planDto(findEntityById(id).plan!!)
     }
 
     fun getSender(id: UUID): ApplicationUserDto {
-        return dtoMapper.applicationUserDto(findById(id).sender!!)
+        return dtoMapper.applicationUserDto(findEntityById(id).sender!!)
     }
 
     fun getRecipient(id: UUID): ApplicationUserDto {
-        val recipient = findById(id).recipient!!
+        val recipient = findEntityById(id).recipient!!
         return dtoMapper.applicationUserDto(recipient)
     }
 
@@ -50,7 +50,14 @@ class PlanInviteDao(private val repository: PlanInviteRespository) {
         return repository.findByRecipientId(id).map { dtoMapper.planInviteDto(it) }
     }
 
-    private fun findById(id: UUID): PlanInviteEntity {
+    fun updateStatus(id: UUID, status: InviteStatus, respondedAt: LocalDateTime) {
+        val invite = findEntityById(id)
+        invite.status = status
+        invite.respondedAt = respondedAt
+        repository.save(invite)
+    }
+
+    private fun findEntityById(id: UUID): PlanInviteEntity {
         return repository.findById(id)
             .orElseThrow { EntityNotFoundException(PlanInviteEntity::class) }
     }

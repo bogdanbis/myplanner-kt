@@ -7,6 +7,7 @@ import ro.bogdannegoita.myplannerkt.commons.PlanDto
 import ro.bogdannegoita.myplannerkt.commons.types.UserUIPreferences
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.events.PlanDeletedEvent
+import ro.bogdannegoita.myplannerkt.events.PlanInviteAcceptedEvent
 import ro.bogdannegoita.myplannerkt.events.PlanInviteSentEvent
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
 import java.util.*
@@ -104,6 +105,18 @@ class ApplicationUser(
         sentInvites.add(invite)
         eventPublisher.publishEvent(PlanInviteSentEvent(this, invite, recipientEmail))
         return invite
+    }
+
+    fun acceptInvite(id: UUID) {
+        val invite = receivedInvites.find { it.id == id }
+        if (invite == null) return
+        invite.accept()
+        eventPublisher.publishEvent(PlanInviteAcceptedEvent(this, invite))
+    }
+
+    fun declineInvite(id: UUID) {
+        receivedInvites.find { it.id == id }
+            ?.decline()
     }
 
     private fun inviteAlreadySent(planId: UUID, recipientEmail: String): Boolean {

@@ -11,6 +11,7 @@
 		<div v-if="isRoot" class="steps-progress">
 			<div>Completed {{ stepsContainer.completedStepsCount }}/{{ stepsContainer.totalStepsCount }}</div>
 			<ProgressCircle
+				v-if="stepsContainer.completedStepsCount"
 				:value="stepsContainer.completedStepsCount"
 				:max="stepsContainer.totalStepsCount"
 				class="ml-xs"

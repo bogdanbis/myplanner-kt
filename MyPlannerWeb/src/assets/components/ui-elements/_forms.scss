@@ -90,6 +90,10 @@ $form-item-border-radius: 8px;
 			transition-delay: .5s;
 		}
 	}
+
+	+ .mp-form-subsection {
+		margin-top: var(--spacer-m);
+	}
 }
 
 .mp-form-root-section {

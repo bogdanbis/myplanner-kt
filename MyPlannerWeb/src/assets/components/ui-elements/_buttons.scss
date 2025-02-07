@@ -36,7 +36,7 @@ $button-padding-x: 32px;
 		margin-right: var(--spacer-s);
 	}
 
-	& + .p-button {
+	& + .mp-button {
 		margin-top: var(--spacer-m);
 
 		@media only screen and (min-width: $mobile-width-breakpoint) {
@@ -128,6 +128,14 @@ $button-padding-x: 32px;
 
 		.loading-icon {
 			border-color: var(--danger);
+		}
+	}
+
+	&.success {
+		color: var(--success);
+
+		.loading-icon {
+			border-color: var(--success);
 		}
 	}
 }

@@ -8,6 +8,7 @@ import ro.bogdannegoita.myplannerkt.commons.types.Photo
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.domain.factories.myPlannerCache
 import ro.bogdannegoita.myplannerkt.events.PlanDeletedEvent
+import ro.bogdannegoita.myplannerkt.events.PlanInviteAcceptedEvent
 import ro.bogdannegoita.myplannerkt.events.PlanInviteSentEvent
 import ro.bogdannegoita.myplannerkt.events.PlanUpdatedEvent
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
@@ -83,6 +84,12 @@ class MyPlanner(
         val recipient = users.getOrNull(event.recipientEmail)
             ?: return
         recipient.receivedInvites.add(event.invite)
+    }
+
+    @EventListener
+    fun handlePlanInviteAccepted(event: PlanInviteAcceptedEvent) {
+        val recipient = loadUser(event.invite.recipient.value.email)
+        recipient.acquirePlan(event.invite.plan.value)
     }
 
     private fun publishPlan(plan: Plan) {

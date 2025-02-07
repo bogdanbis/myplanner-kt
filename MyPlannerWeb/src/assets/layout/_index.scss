@@ -102,7 +102,7 @@ $layout-padding: var(--spacer-l);
 
 .page-subtitle {
 	display: block;
-	margin-top: -var(--spacer-l);
+	margin-top: calc(0px - var(--spacer-m));
 	margin-bottom: var(--font-size-h3);
 	color: var(--text-secondary);
 }

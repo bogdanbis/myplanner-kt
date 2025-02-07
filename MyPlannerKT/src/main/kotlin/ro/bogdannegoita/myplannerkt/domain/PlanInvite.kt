@@ -1,9 +1,13 @@
 package ro.bogdannegoita.myplannerkt.domain
 
 import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
+import ro.bogdannegoita.myplannerkt.commons.InviteStatus
+import ro.bogdannegoita.myplannerkt.commons.InviteStatus.ACCEPTED
+import ro.bogdannegoita.myplannerkt.commons.InviteStatus.DECLINED
 import ro.bogdannegoita.myplannerkt.commons.PlanInviteDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanInviteDao
+import java.time.LocalDateTime
 import java.util.*
 
 class PlanInvite(
@@ -12,13 +16,29 @@ class PlanInvite(
     private val domainProvider: DomainProvider,
 ) : Comparable<PlanInvite> {
     val id: UUID = data.id
-    val status by data::status
+    var status by data::status
+        private set
     val createdAt by data::createdAt
-    val respondedAt by data::respondedAt
+    var respondedAt by data::respondedAt
+        private set
 
     val plan: Lazy<Plan> = lazy { domainProvider.plan(dao.getPlan(id)) }
     val sender: Lazy<ApplicationUserDto> = lazy { dao.getSender(id) }
     val recipient: Lazy<ApplicationUserDto> = lazy { dao.getRecipient(id) }
+
+    fun accept() {
+        updateStatus(ACCEPTED)
+    }
+
+    fun decline() {
+        updateStatus(DECLINED)
+    }
+
+    private fun updateStatus(value: InviteStatus) {
+        status = value
+        respondedAt = LocalDateTime.now()
+        dao.updateStatus(id, status, respondedAt!!)
+    }
 
     override fun compareTo(other: PlanInvite) = createdAt.compareTo(other.createdAt)
 }

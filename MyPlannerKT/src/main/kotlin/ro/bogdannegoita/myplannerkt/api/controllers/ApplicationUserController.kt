@@ -2,16 +2,14 @@ package ro.bogdannegoita.myplannerkt.api.controllers
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import ro.bogdannegoita.myplannerkt.api.responses.ApplicationUserResponse
 import ro.bogdannegoita.myplannerkt.api.responses.PlanInviteResponse
 import ro.bogdannegoita.myplannerkt.commons.types.UserUIPreferences
 import ro.bogdannegoita.myplannerkt.domain.MyPlanner
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.security.exceptions.UserNotFoundException
+import java.util.*
 
 @RestController
 class ApplicationUserController(myPlanner: MyPlanner) : BaseController(myPlanner) {
@@ -30,6 +28,22 @@ class ApplicationUserController(myPlanner: MyPlanner) : BaseController(myPlanner
     fun getPendingInvites(@AuthenticationPrincipal principal: UserDetails): List<PlanInviteResponse> {
         return user(principal).receivedInvites
             .map { PlanInviteResponse(it) }
+    }
+
+    @PostMapping("/invites/pending/{id}/accept")
+    fun acceptInvite(
+        @AuthenticationPrincipal principal: UserDetails,
+        @PathVariable id: UUID
+    ) {
+        user(principal).acceptInvite(id)
+    }
+
+    @PostMapping("/invites/pending/{id}/decline")
+    fun declinetInvite(
+        @AuthenticationPrincipal principal: UserDetails,
+        @PathVariable id: UUID
+    ) {
+        user(principal).declineInvite(id)
     }
 
     @GetMapping("/invites/sent")
