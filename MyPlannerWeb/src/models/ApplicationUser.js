@@ -1,5 +1,6 @@
 import api from '@/api/index.js';
 import PlanInvite from '@/models/PlanInvite.js';
+import PlanInviteStatus from '@/models/types/PlanInviteStatus.js';
 import Plan from './Plan.js';
 
 export default class ApplicationUser {
@@ -10,6 +11,7 @@ export default class ApplicationUser {
 	acquiredPlans;
 	uiPreferences = { pinnedPlans: null };
 	receivedInvites;
+	pendingInvites;
 
 	constructor(userResponse) {
 		if (!userResponse) return;
@@ -35,8 +37,9 @@ export default class ApplicationUser {
 	}
 
 	async fetchReceivedInvites() {
-		const invites = await api.get('/invites/pending');
+		const invites = await api.get('/invites/received');
 		this.receivedInvites = invites.map(i => new PlanInvite(i));
+		this.pendingInvites = this.receivedInvites.filter(it => it.status === PlanInviteStatus.PENDING);
 	}
 
 	async acquirePlan(plan) {

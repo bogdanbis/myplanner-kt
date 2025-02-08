@@ -24,7 +24,7 @@ class ApplicationUserController(myPlanner: MyPlanner) : BaseController(myPlanner
         }
     }
 
-    @GetMapping("/invites/pending")
+    @GetMapping("/invites/received")
     fun getPendingInvites(@AuthenticationPrincipal principal: UserDetails): List<PlanInviteResponse> {
         return user(principal).receivedInvites
             .map { PlanInviteResponse(it) }
