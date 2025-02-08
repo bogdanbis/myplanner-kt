@@ -21,7 +21,7 @@
 <script setup>
 import { useAuthStore } from '@/store/auth.js';
 import { useUiStore } from '@/store/ui.js';
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import NavMenu from './NavMenu.vue';
 
 const emit = defineEmits(['hide-sidebar']);
@@ -30,7 +30,14 @@ const hideSidebar = () => {
 	emit('hide-sidebar')
 }
 
-const mainMenuItems = [
+const authStore = useAuthStore();
+
+onMounted(() => {
+	if (!authStore.user.receivedInvites)
+		authStore.fetchReceivedInvites();
+})
+
+const mainMenuItems = computed(() => ([
 	{
 		icon: 'search',
 		label: 'Explore',
@@ -40,8 +47,9 @@ const mainMenuItems = [
 		icon: 'bullseye',
 		label: 'My Plans',
 		path: '/my-plans',
+		notificationCount: authStore.user.pendingInvites?.length,
 	},
-]
+]))
 
 const uiStore = useUiStore();
 uiStore.setPinnedPlans(useAuthStore().user?.uiPreferences.pinnedPlans)

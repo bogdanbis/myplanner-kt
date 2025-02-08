@@ -64,6 +64,9 @@
 			}
 
 			.text-container {
+				width: 100%;
+				display: flex;
+				align-items: center;
 				overflow: hidden;
 				white-space: nowrap;
 				text-overflow: ellipsis;
@@ -75,6 +78,20 @@
 
 			&.sub-item {
 				margin-left: 2rem;
+			}
+
+			.menu-item-notification-badge {
+				height: fit-content;
+				display: flex;
+				align-items: center;
+				align-content: center;
+				border-radius: var(--font-size);
+				margin-left: auto;
+				background-color: var(--primary);
+				color: white;
+				padding: 0 var(--spacer-s);
+				font-size: var(--font-size-s);
+				font-weight: 600;
 			}
 		}
 

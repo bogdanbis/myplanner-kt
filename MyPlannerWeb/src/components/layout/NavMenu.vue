@@ -8,6 +8,7 @@
 			:index="index + 2"
 			:key="index"
 			:label="menuItem.label"
+			:notification-count="menuItem.notificationCount"
 			:to="menuItem.path"
 		/>
 	</div>
