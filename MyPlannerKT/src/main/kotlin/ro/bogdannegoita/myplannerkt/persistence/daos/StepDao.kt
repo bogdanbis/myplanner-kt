@@ -1,7 +1,7 @@
 package ro.bogdannegoita.myplannerkt.persistence.daos
 
 import org.springframework.stereotype.Component
-import ro.bogdannegoita.myplannerkt.commons.StepDto
+import ro.bogdannegoita.myplannerkt.commons.dtos.StepDto
 import ro.bogdannegoita.myplannerkt.commons.types.Photo
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.persistence.entities.PlanEntity

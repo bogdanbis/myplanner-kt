@@ -1,7 +1,7 @@
 package ro.bogdannegoita.myplannerkt.persistence.entities
 
 import jakarta.persistence.*
-import ro.bogdannegoita.myplannerkt.commons.InviteStatus
+import ro.bogdannegoita.myplannerkt.commons.types.InviteStatus
 import java.time.LocalDateTime
 import java.util.*
 

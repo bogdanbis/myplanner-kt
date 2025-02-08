@@ -5,7 +5,7 @@ import org.springframework.context.ApplicationEventPublisher
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Scope
-import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
+import ro.bogdannegoita.myplannerkt.commons.dtos.ApplicationUserDto
 import ro.bogdannegoita.myplannerkt.domain.ApplicationUser
 import ro.bogdannegoita.myplannerkt.persistence.daos.ApplicationUserDao
 

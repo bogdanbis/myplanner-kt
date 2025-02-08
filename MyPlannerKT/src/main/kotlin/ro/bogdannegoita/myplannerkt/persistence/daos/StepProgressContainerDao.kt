@@ -1,6 +1,6 @@
 package ro.bogdannegoita.myplannerkt.persistence.daos
 
-import ro.bogdannegoita.myplannerkt.commons.StepProgressDto
+import ro.bogdannegoita.myplannerkt.commons.dtos.StepProgressDto
 import java.util.*
 
 interface StepProgressContainerDao {

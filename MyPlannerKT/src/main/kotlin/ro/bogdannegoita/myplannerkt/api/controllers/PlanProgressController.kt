@@ -7,7 +7,7 @@ import ro.bogdannegoita.myplannerkt.api.requests.PlanProgressRequest
 import ro.bogdannegoita.myplannerkt.api.requests.StepProgressRequest
 import ro.bogdannegoita.myplannerkt.api.responses.PlanProgressResponse
 import ro.bogdannegoita.myplannerkt.api.responses.StepProgressResponse
-import ro.bogdannegoita.myplannerkt.commons.StepProgressDto
+import ro.bogdannegoita.myplannerkt.commons.dtos.StepProgressDto
 import ro.bogdannegoita.myplannerkt.domain.MyPlanner
 import java.util.*
 

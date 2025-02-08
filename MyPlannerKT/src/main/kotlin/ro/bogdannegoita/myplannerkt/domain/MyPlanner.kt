@@ -3,7 +3,7 @@ package ro.bogdannegoita.myplannerkt.domain
 import org.springframework.beans.factory.ObjectProvider
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
-import ro.bogdannegoita.myplannerkt.commons.PlanDto
+import ro.bogdannegoita.myplannerkt.commons.dtos.PlanDto
 import ro.bogdannegoita.myplannerkt.commons.types.Photo
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.domain.factories.myPlannerCache

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import ro.bogdannegoita.myplannerkt.api.requests.PlanRequest
 import ro.bogdannegoita.myplannerkt.api.responses.*
-import ro.bogdannegoita.myplannerkt.commons.PlanDto
+import ro.bogdannegoita.myplannerkt.commons.dtos.PlanDto
 import ro.bogdannegoita.myplannerkt.commons.types.Photo
 import ro.bogdannegoita.myplannerkt.domain.MyPlanner
 import java.time.LocalDateTime

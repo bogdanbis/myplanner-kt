@@ -1,10 +1,10 @@
 package ro.bogdannegoita.myplannerkt.domain
 
-import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
-import ro.bogdannegoita.myplannerkt.commons.InviteStatus
-import ro.bogdannegoita.myplannerkt.commons.InviteStatus.ACCEPTED
-import ro.bogdannegoita.myplannerkt.commons.InviteStatus.DECLINED
-import ro.bogdannegoita.myplannerkt.commons.PlanInviteDto
+import ro.bogdannegoita.myplannerkt.commons.dtos.ApplicationUserDto
+import ro.bogdannegoita.myplannerkt.commons.types.InviteStatus
+import ro.bogdannegoita.myplannerkt.commons.types.InviteStatus.ACCEPTED
+import ro.bogdannegoita.myplannerkt.commons.types.InviteStatus.DECLINED
+import ro.bogdannegoita.myplannerkt.commons.dtos.PlanInviteDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanInviteDao
 import java.time.LocalDateTime

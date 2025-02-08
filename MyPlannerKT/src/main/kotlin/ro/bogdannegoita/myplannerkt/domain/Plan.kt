@@ -1,8 +1,8 @@
 package ro.bogdannegoita.myplannerkt.domain
 
 import org.springframework.context.ApplicationEventPublisher
-import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
-import ro.bogdannegoita.myplannerkt.commons.PlanDto
+import ro.bogdannegoita.myplannerkt.commons.dtos.ApplicationUserDto
+import ro.bogdannegoita.myplannerkt.commons.dtos.PlanDto
 import ro.bogdannegoita.myplannerkt.commons.types.Photo
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.events.PlanUpdatedEvent

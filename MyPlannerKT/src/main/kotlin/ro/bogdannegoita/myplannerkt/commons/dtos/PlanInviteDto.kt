@@ -1,5 +1,6 @@
-package ro.bogdannegoita.myplannerkt.commons
+package ro.bogdannegoita.myplannerkt.commons.dtos
 
+import ro.bogdannegoita.myplannerkt.commons.types.InviteStatus
 import java.time.LocalDateTime
 import java.util.*
 

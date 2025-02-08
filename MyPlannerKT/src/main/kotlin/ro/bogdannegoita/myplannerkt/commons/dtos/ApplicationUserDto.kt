@@ -1,4 +1,4 @@
-package ro.bogdannegoita.myplannerkt.commons
+package ro.bogdannegoita.myplannerkt.commons.dtos
 
 import ro.bogdannegoita.myplannerkt.commons.types.UserUIPreferences
 import java.util.*

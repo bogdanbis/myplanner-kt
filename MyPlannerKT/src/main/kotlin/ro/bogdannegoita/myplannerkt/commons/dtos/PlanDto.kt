@@ -1,4 +1,4 @@
-package ro.bogdannegoita.myplannerkt.commons
+package ro.bogdannegoita.myplannerkt.commons.dtos
 
 import java.time.LocalDateTime
 import java.util.*

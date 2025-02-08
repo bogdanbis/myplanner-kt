@@ -1,8 +1,8 @@
 package ro.bogdannegoita.myplannerkt.domain
 
-import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
-import ro.bogdannegoita.myplannerkt.commons.PlanProgressDto
-import ro.bogdannegoita.myplannerkt.commons.StepProgressDto
+import ro.bogdannegoita.myplannerkt.commons.dtos.ApplicationUserDto
+import ro.bogdannegoita.myplannerkt.commons.dtos.PlanProgressDto
+import ro.bogdannegoita.myplannerkt.commons.dtos.StepProgressDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanProgressDao
 import java.time.LocalDateTime

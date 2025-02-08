@@ -1,6 +1,6 @@
 package ro.bogdannegoita.myplannerkt.persistence.mappers
 
-import ro.bogdannegoita.myplannerkt.commons.*
+import ro.bogdannegoita.myplannerkt.commons.dtos.*
 import ro.bogdannegoita.myplannerkt.commons.types.Photo
 import ro.bogdannegoita.myplannerkt.commons.types.UserUIPreferences
 import ro.bogdannegoita.myplannerkt.persistence.entities.*

@@ -1,6 +1,6 @@
 package ro.bogdannegoita.myplannerkt.api.responses
 
-import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
+import ro.bogdannegoita.myplannerkt.commons.dtos.ApplicationUserDto
 
 class ApplicationUserResponse(data: ApplicationUserDto) {
     val id = data.id

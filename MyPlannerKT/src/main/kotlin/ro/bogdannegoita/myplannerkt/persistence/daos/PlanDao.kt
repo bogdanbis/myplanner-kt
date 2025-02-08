@@ -1,10 +1,10 @@
 package ro.bogdannegoita.myplannerkt.persistence.daos
 
 import org.springframework.stereotype.Component
-import ro.bogdannegoita.myplannerkt.commons.ApplicationUserDto
-import ro.bogdannegoita.myplannerkt.commons.PlanDto
-import ro.bogdannegoita.myplannerkt.commons.PlanProgressDto
-import ro.bogdannegoita.myplannerkt.commons.StepDto
+import ro.bogdannegoita.myplannerkt.commons.dtos.ApplicationUserDto
+import ro.bogdannegoita.myplannerkt.commons.dtos.PlanDto
+import ro.bogdannegoita.myplannerkt.commons.dtos.PlanProgressDto
+import ro.bogdannegoita.myplannerkt.commons.dtos.StepDto
 import ro.bogdannegoita.myplannerkt.commons.types.Photo
 import ro.bogdannegoita.myplannerkt.exceptions.EntityNotFoundException
 import ro.bogdannegoita.myplannerkt.persistence.entities.ApplicationUserEntity

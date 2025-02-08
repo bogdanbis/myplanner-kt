@@ -1,6 +1,6 @@
 package ro.bogdannegoita.myplannerkt.domain
 
-import ro.bogdannegoita.myplannerkt.commons.StepDto
+import ro.bogdannegoita.myplannerkt.commons.dtos.StepDto
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.persistence.daos.StepContainerDao
 import java.util.*

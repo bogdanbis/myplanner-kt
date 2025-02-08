@@ -1,6 +1,6 @@
 package ro.bogdannegoita.myplannerkt.api.requests
 
-import ro.bogdannegoita.myplannerkt.commons.StepDto
+import ro.bogdannegoita.myplannerkt.commons.dtos.StepDto
 
 class PlanRequest(
     val title: String,
