@@ -66,6 +66,10 @@ ul {
 	color: var(--text-secondary) !important;
 }
 
+.strikethrough {
+	text-decoration: line-through;
+}
+
 @for $i from 3 through 7 {
 	.fw-#{$i}00 {
 		font-weight: #{$i}00 !important;

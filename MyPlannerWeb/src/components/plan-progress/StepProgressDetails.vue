@@ -17,6 +17,7 @@
 				v-model="stepsContainer.completed"
 				@change="markAsCompleted"
 				class="step-title"
+				strikethrough
 			/>
 			<div v-else class="step-title d-flex cursor-pointer" @click="toggleCollapsed">
 				{{ stepsContainer.step.title }}

@@ -256,7 +256,7 @@ $form-item-border-radius: 8px;
 		&:checked {
 			background-image: var(--checkbox-background-image);
 			background-color: var(--primary);
-			border-color: var(--primary)
+			border-color: var(--primary);
 		}
 
 		&:disabled {
