@@ -21,7 +21,7 @@ export const useAuthStore = defineStore('auth', {
 			this.requireLogin = true;
 		},
 		async fetchReceivedInvites() {
-			await this.user.fetchReceivedInvites();
+			await this.user?.fetchReceivedInvites();
 		},
 		reset() {
 			api.logOut();

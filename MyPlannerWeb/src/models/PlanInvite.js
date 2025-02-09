@@ -1,3 +1,4 @@
+import api from '@/api/index.js';
 import ApplicationUser from '@/models/ApplicationUser.js';
 import Plan from '@/models/Plan.js';
 import InviteStatus from '@/models/types/InviteStatus.js';
@@ -24,5 +25,10 @@ export default class PlanInvite {
 
 	get isPending() {
 		return this.status === InviteStatus.PENDING;
+	}
+
+	async revoke() {
+		await api.post(`/invites/sent/${this.id}/revoke`);
+		this.status = InviteStatus.REVOKED;
 	}
 }

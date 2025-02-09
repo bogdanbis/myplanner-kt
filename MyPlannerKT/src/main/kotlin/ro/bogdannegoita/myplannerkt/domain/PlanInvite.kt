@@ -1,10 +1,9 @@
 package ro.bogdannegoita.myplannerkt.domain
 
 import ro.bogdannegoita.myplannerkt.commons.dtos.ApplicationUserDto
-import ro.bogdannegoita.myplannerkt.commons.types.InviteStatus
-import ro.bogdannegoita.myplannerkt.commons.types.InviteStatus.ACCEPTED
-import ro.bogdannegoita.myplannerkt.commons.types.InviteStatus.DECLINED
 import ro.bogdannegoita.myplannerkt.commons.dtos.PlanInviteDto
+import ro.bogdannegoita.myplannerkt.commons.types.InviteStatus
+import ro.bogdannegoita.myplannerkt.commons.types.InviteStatus.*
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.persistence.daos.PlanInviteDao
 import java.time.LocalDateTime
@@ -32,6 +31,10 @@ class PlanInvite(
 
     fun decline() {
         updateStatus(DECLINED)
+    }
+
+    fun revoke() {
+        updateStatus(REVOKED)
     }
 
     private fun updateStatus(value: InviteStatus) {

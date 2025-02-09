@@ -33,7 +33,7 @@ const hideSidebar = () => {
 const authStore = useAuthStore();
 
 onMounted(() => {
-	if (!authStore.user.receivedInvites)
+	if (!authStore.user?.receivedInvites)
 		authStore.fetchReceivedInvites();
 })
 
@@ -47,7 +47,7 @@ const mainMenuItems = computed(() => ([
 		icon: 'bullseye',
 		label: 'My Plans',
 		path: '/my-plans',
-		notificationCount: authStore.user.pendingInvites?.length,
+		notificationCount: authStore.user?.pendingInvites?.length,
 	},
 ]))
 

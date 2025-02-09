@@ -2,8 +2,8 @@ package ro.bogdannegoita.myplannerkt.domain
 
 import org.springframework.context.ApplicationEventPublisher
 import ro.bogdannegoita.myplannerkt.commons.dtos.ApplicationUserDto
-import ro.bogdannegoita.myplannerkt.commons.types.InviteStatus
 import ro.bogdannegoita.myplannerkt.commons.dtos.PlanDto
+import ro.bogdannegoita.myplannerkt.commons.types.InviteStatus
 import ro.bogdannegoita.myplannerkt.commons.types.UserUIPreferences
 import ro.bogdannegoita.myplannerkt.domain.factories.DomainProvider
 import ro.bogdannegoita.myplannerkt.events.PlanDeletedEvent
@@ -117,6 +117,11 @@ class ApplicationUser(
     fun declineInvite(id: UUID) {
         receivedInvites.find { it.id == id }
             ?.decline()
+    }
+
+    fun revokeInvite(id: UUID) {
+        sentInvites.find { it.id == id }
+            ?.revoke()
     }
 
     private fun inviteAlreadySent(planId: UUID, recipientEmail: String): Boolean {

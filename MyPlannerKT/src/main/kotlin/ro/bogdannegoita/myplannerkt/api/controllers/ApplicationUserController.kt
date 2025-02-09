@@ -39,7 +39,7 @@ class ApplicationUserController(myPlanner: MyPlanner) : BaseController(myPlanner
     }
 
     @PostMapping("/invites/pending/{id}/decline")
-    fun declinetInvite(
+    fun declineInvite(
         @AuthenticationPrincipal principal: UserDetails,
         @PathVariable id: UUID
     ) {
@@ -50,6 +50,14 @@ class ApplicationUserController(myPlanner: MyPlanner) : BaseController(myPlanner
     fun getSentInvites(@AuthenticationPrincipal principal: UserDetails): List<PlanInviteResponse> {
         return user(principal).sentInvites
             .map { PlanInviteResponse(it) }
+    }
+
+    @PostMapping("/invites/sent/{id}/revoke")
+    fun revokeInvite(
+        @AuthenticationPrincipal principal: UserDetails,
+        @PathVariable id: UUID
+    ) {
+        user(principal).revokeInvite(id)
     }
 
     @GetMapping("/ui-preferences")
