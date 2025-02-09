@@ -3,7 +3,7 @@
 	<h2>{{ plan.title }}</h2>
 	<span class="page-subtitle"><b>{{ participant.name }}</b>'s progress</span>
 
-	<MpCard>
+	<MpCard :style="{ '--primary': plan.color }">
 		<b class="text-secondary">About</b>
 		<p>
 			<MpMultilineText :text="plan.description" />

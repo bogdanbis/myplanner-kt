@@ -2,6 +2,7 @@
 	<MpBackLink :to="`/creator/manage/${plan.id}`">Manage</MpBackLink>
 	<h2>{{ plan.title }}</h2>
 
+	<InviteParticipantButton :plan="plan" class="w-50-desktop mb-m" />
 	<MpCard title="Participants progress">
 		<MpSearch
 			id="search-plan-participant"
@@ -31,6 +32,7 @@
 
 <script setup>
 import api from '@/api/index.js';
+import InviteParticipantButton from '@/components/plans/manage-plan/InviteParticipantButton.vue';
 import Plan from '@/models/Plan.js';
 import PlanProgress from '@/models/PlanProgress.js';
 import { computed, onMounted, ref } from 'vue';

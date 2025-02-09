@@ -3,9 +3,9 @@
 		<table
 			:id="id" class="mp-table"
 			:class="{
-			'busy': busy,
-			'mp-table-fixed-layout': fixedLayout,
-		}"
+				'busy': busy,
+				'mp-table-fixed-layout': fixedLayout,
+			}"
 		>
 			<thead>
 				<slot name="header"></slot>

@@ -22,7 +22,6 @@
 			<div v-else class="step-title d-flex cursor-pointer" @click="toggleCollapsed">
 				{{ stepsContainer.step.title }}
 				<ProgressCircle
-					v-if="stepsContainer.completedStepsCount"
 					:value="stepsContainer.completedStepsCount"
 					:max="stepsContainer.totalStepsCount"
 					class="ml-xs"

@@ -1,9 +1,9 @@
 <template>
-	<MpButton v-if="!showInviteForm" @click="showInviteForm = true" icon="send" link>Invite someone</MpButton>
+	<MpButton v-if="!showInviteForm" @click="showInviteForm = true" icon="send" link>Send invite</MpButton>
 	<MpForm v-else @submit="sendInvite">
 		<MpFormInput
 			id="invite-participant-email"
-			label="Invite someone"
+			label="Send invite"
 			placeholder="Their email"
 			type="email"
 			v-model="email"
