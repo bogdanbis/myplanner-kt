@@ -1,6 +1,6 @@
 import ApplicationUser from '@/models/ApplicationUser.js';
 import Plan from '@/models/Plan.js';
-import PlanInviteStatus from '@/models/types/PlanInviteStatus.js';
+import InviteStatus from '@/models/types/InviteStatus.js';
 
 export default class PlanInvite {
 	id;
@@ -23,6 +23,6 @@ export default class PlanInvite {
 	}
 
 	get isPending() {
-		return this.status === PlanInviteStatus.PENDING;
+		return this.status === InviteStatus.PENDING;
 	}
 }

@@ -1,8 +1,13 @@
 <template>
-	<MpBackLink :to="`/creator/manage/${plan.id}`">Manage</MpBackLink>
+	<MpBackLink :to="`/creator/manage/${planId}`">Manage</MpBackLink>
 	<h2>{{ plan.title }}</h2>
 
-	<InviteParticipantButton :plan="plan" class="w-50-desktop mb-m" />
+	<div class="mb-m">
+		<MpLink :to="`/creator/manage/${planId}/sent-invites`">
+			View sent invites
+		</MpLink>
+		<InviteParticipantButton :plan="plan" class="w-50-desktop" />
+	</div>
 	<MpCard title="Participants progress">
 		<MpSearch
 			id="search-plan-participant"
@@ -38,7 +43,7 @@ import PlanProgress from '@/models/PlanProgress.js';
 import { computed, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-const router = useRouter()
+const router = useRouter();
 const planId = useRoute().params.id;
 const plan = ref(new Plan());
 

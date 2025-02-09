@@ -41,6 +41,11 @@
 	display: flex;
 }
 
+.d-flex-column {
+	display: flex;
+	flex-direction: column;
+}
+
 .d-block {
 	display: block;
 }
@@ -56,4 +61,9 @@
 
 .align-start {
 	align-items: start;
+}
+
+.space-between {
+	display: flex;
+	justify-content: space-between;
 }

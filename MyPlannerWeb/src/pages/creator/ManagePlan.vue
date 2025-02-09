@@ -9,7 +9,7 @@
 	</span>
 
 	<div class="halved">
-		<MpCard title="Stats">
+		<MpCard title="Stats" class="d-flex-column">
 			<MpInlineValue label="Participants" :value="plan.stats.numberOfParticipants" />
 			<MpInlineValue :value="plan.stats.completedStepsCount">
 				<template #label>
@@ -20,10 +20,13 @@
 				</template>
 			</MpInlineValue>
 			<div class="mt-l">
-				<MpLink :to="`/creator/manage/${plan.id}/participants`" class="mb-l">
+				<InviteParticipantButton :plan="plan" />
+				<MpLink :to="`/creator/manage/${plan.id}/sent-invites`" class="my-s">
+					View sent invites
+				</MpLink>
+				<MpLink :to="`/creator/manage/${plan.id}/participants`" class="">
 					View participants
 				</MpLink>
-				<InviteParticipantButton :plan="plan" />
 			</div>
 		</MpCard>
 		<MpCard title="Details">

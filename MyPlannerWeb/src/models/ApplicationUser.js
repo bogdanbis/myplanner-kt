@@ -1,6 +1,6 @@
 import api from '@/api/index.js';
 import PlanInvite from '@/models/PlanInvite.js';
-import PlanInviteStatus from '@/models/types/PlanInviteStatus.js';
+import InviteStatus from '@/models/types/InviteStatus.js';
 import Plan from './Plan.js';
 
 export default class ApplicationUser {
@@ -39,7 +39,7 @@ export default class ApplicationUser {
 	async fetchReceivedInvites() {
 		const invites = await api.get('/invites/received');
 		this.receivedInvites = invites.map(i => new PlanInvite(i));
-		this.pendingInvites = this.receivedInvites.filter(it => it.status === PlanInviteStatus.PENDING);
+		this.pendingInvites = this.receivedInvites.filter(it => it.status === InviteStatus.PENDING);
 	}
 
 	async acquirePlan(plan) {

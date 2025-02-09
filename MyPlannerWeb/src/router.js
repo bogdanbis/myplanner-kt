@@ -9,6 +9,7 @@ const ManagePlan = () => import('@/pages/creator/ManagePlan.vue');
 const EditPlan = () => import('@/pages/creator/EditPlan.vue');
 const PlanParticipants = () => import('@/pages/creator/PlanParticipants.vue');
 const ParticipantPlanProgress = () => import('@/pages/creator/ParticipantPlanProgress.vue');
+const SentInvites = () => import('@/pages/creator/SentInvites.vue');
 
 const router = createRouter({
 	history: createWebHistory(),
@@ -53,13 +54,18 @@ const router = createRouter({
 		},
 		{
 			path: '/creator/manage/:id/participants',
-			name: 'Participants progress',
+			name: 'Participants Progress',
 			component: PlanParticipants,
 		},
 		{
 			path: '/creator/manage/:id/participants/:progressId',
 			name: 'Participant Plan Progress',
 			component: ParticipantPlanProgress,
+		},
+		{
+			path: '/creator/manage/:id/sent-invites',
+			name: 'Sent Invites',
+			component: SentInvites,
 		},
 		{
 			path: '/:pathMatch(.*)*',
