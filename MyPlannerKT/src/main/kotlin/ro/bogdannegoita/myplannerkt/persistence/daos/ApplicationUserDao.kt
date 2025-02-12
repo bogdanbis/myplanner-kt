@@ -69,7 +69,7 @@ class ApplicationUserDao(
 
     fun userHasPlan(email: String, planId: UUID): Boolean {
         val user = findEntityByEmail(email)
-        return user.acquiredPlans.find { it.id == planId } != null
+        return user.acquiredPlans.find { it.plan?.id == planId } != null
     }
 
     fun getSentInvites(id: UUID): List<PlanInviteDto> {
