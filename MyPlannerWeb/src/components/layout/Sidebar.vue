@@ -49,6 +49,11 @@ const mainMenuItems = computed(() => ([
 		path: '/my-plans',
 		notificationCount: authStore.user?.pendingInvites?.length,
 	},
+	{
+		icon: 'envelope-fill',
+		label: 'Received Invites',
+		path: '/received-invites',
+	},
 ]))
 
 const uiStore = useUiStore();

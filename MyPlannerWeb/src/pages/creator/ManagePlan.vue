@@ -3,12 +3,12 @@
 	<div class="d-flex">
 		<h2>{{ plan.title }} </h2>
 	</div>
-	<span class="page-subtitle">
+	<span class="page-subtitle" :style="{ '--primary': plan.color }">
 		View stats about your plan or manage your plan details.
 		<PinPlanButton :plan="plan" />
 	</span>
 
-	<div class="halved">
+	<div class="halved" :style="{ '--primary': plan.color }">
 		<MpCard title="Stats" class="d-flex-column">
 			<MpInlineValue label="Participants" :value="plan.stats.numberOfParticipants" />
 			<MpInlineValue :value="plan.stats.completedStepsCount">
@@ -43,26 +43,25 @@
 </template>
 
 <script setup>
-import api from '@/api/index.js';
 import InviteParticipantButton from '@/components/plans/manage-plan/InviteParticipantButton.vue';
 import PinPlanButton from '@/components/plans/manage-plan/PinPlanButton.vue';
-import Plan from '@/models/Plan.js';
-import { computed, onBeforeMount, ref, watch } from 'vue';
+import { useManagePlanStore } from '@/store/managePlan.js';
+import { computed, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const router = useRouter();
 const route = useRoute();
 const planId = computed(() => route.params.id);
-const plan = ref(new Plan());
+const managePlanStore = useManagePlanStore();
+const plan = computed(() => managePlanStore.plan);
 
-onBeforeMount(() => fetchPlan())
+onMounted(() => fetchPlan())
 
 watch(planId, () => fetchPlan())
 
 const fetchPlan = async () => {
-	const planResponse = await api.get('/plans/created/' + planId.value);
-	if (!planResponse)
+	await managePlanStore.fetchPlan(planId.value);
+	if (!managePlanStore.plan)
 		return router.push('/creator');
-	plan.value = new Plan(planResponse);
 }
 </script>

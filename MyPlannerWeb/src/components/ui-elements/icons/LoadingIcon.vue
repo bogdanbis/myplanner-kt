@@ -1,5 +1,6 @@
 <template>
-	<span class="loading-icon">{{ withText ? 'Loading...' : null }}</span>
+	<span v-if="withText" class="loading-icon-container"><span class="loading-icon" />Loading...</span>
+	<span v-else class="loading-icon" />
 </template>
 
 <script setup>

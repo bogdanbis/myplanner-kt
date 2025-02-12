@@ -1,5 +1,11 @@
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
+.loading-icon-container {
+	display: flex;
+	align-items: center;
+	column-gap: var(--spacer-s);
+}
+
 .loading-icon {
 	display: block;
 	width: 1rem;

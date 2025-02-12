@@ -66,12 +66,36 @@ ul {
 	color: var(--text-secondary) !important;
 }
 
+.text-success {
+	color: var(--text-success) !important;
+}
+
+.text-danger {
+	color: var(--text-danger) !important;
+}
+
+.text-warning {
+	color: var(--text-warning) !important;
+}
+
 .strikethrough {
 	text-decoration: line-through;
+}
+
+.line-height-normal {
+	line-height: normal !important;
+
+	* {
+		line-height: normal !important;
+	}
 }
 
 @for $i from 3 through 7 {
 	.fw-#{$i}00 {
 		font-weight: #{$i}00 !important;
 	}
+}
+
+.font-size-s {
+	font-size: var(--font-size-s);
 }

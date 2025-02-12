@@ -10,6 +10,7 @@ const EditPlan = () => import('@/pages/creator/EditPlan.vue');
 const PlanParticipants = () => import('@/pages/creator/PlanParticipants.vue');
 const ParticipantPlanProgress = () => import('@/pages/creator/ParticipantPlanProgress.vue');
 const SentInvites = () => import('@/pages/creator/SentInvites.vue');
+const ReceivedInvites = () => import('@/pages/participant/ReceivedInvites.vue');
 
 const router = createRouter({
 	history: createWebHistory(),
@@ -26,6 +27,11 @@ const router = createRouter({
 			path: '/my-plans',
 			name: 'My Plans',
 			component: MyPlans,
+		},
+		{
+			path: '/received-invites',
+			name: 'Received Invites',
+			component: ReceivedInvites,
 		},
 		{
 			path: '/my-plans/:id',

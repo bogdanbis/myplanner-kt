@@ -2,7 +2,7 @@
 	<MpBackLink to="/creator">Created Plans</MpBackLink>
 	<h2>Create a Plan</h2>
 	<span class="page-subtitle">Create a Plan for yourself or to share with others.</span>
-	<MpCard>
+	<MpCard :style="{ '--primary': plan.color }">
 		<PlanForm
 			:plan="plan"
 			@upload-image="uploadImage"

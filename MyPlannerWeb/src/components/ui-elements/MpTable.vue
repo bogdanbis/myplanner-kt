@@ -16,8 +16,10 @@
 			<tbody v-if="busy || empty">
 				<tr class="placeholder-row">
 					<td :colspan="(fixedLayout ? fields?.length : fixedLayout) || 99">
-						<LoadingIcon v-if="busy" with-text />
-						<span v-else-if="empty">{{ emptyText || 'No records.' }}</span>
+						<div class="place-center">
+							<LoadingIcon v-if="busy" with-text />
+							<span v-else-if="empty">{{ emptyText }}</span>
+						</div>
 					</td>
 				</tr>
 			</tbody>
@@ -45,6 +47,7 @@ defineProps({
 	emptyText: {
 		type: String,
 		required: false,
+		default: 'No records.',
 	},
 	fields: {
 		type: Array,

@@ -2,13 +2,13 @@
 	<MpBackLink :to="`/creator/manage/${planId}`">Manage</MpBackLink>
 	<h2>{{ plan.title }}</h2>
 
-	<div class="mb-m">
+	<div class="mb-m" :style="{ '--primary': plan.color }">
 		<MpLink :to="`/creator/manage/${planId}/sent-invites`">
 			View sent invites
 		</MpLink>
 		<InviteParticipantButton :plan="plan" class="w-50-desktop" />
 	</div>
-	<MpCard title="Participants progress">
+	<MpCard title="Participants progress" :style="{ '--primary': plan.color }">
 		<MpSearch
 			id="search-plan-participant"
 			v-model="searchTerm"
@@ -21,12 +21,15 @@
 		/>
 		<MpTable :fields="tableFields" :empty="!displayedParticipants?.length">
 			<tr v-for="pp in displayedParticipants">
-				<td>
+				<td class="line-height-normal">
 					<MpLink :to="`/creator/manage/${planId}/participants/${pp.id}`">{{ pp.participant.name }}</MpLink>
+					<span class="text-secondary font-size-s">{{ pp.participant.email }}</span>
 				</td>
-				<td class="d-flex">
-					<ProgressCircle :value="pp.completedStepsCount" :max="pp.totalStepsCount" class="mr-0" />
-					{{ pp.completedStepsCount }}/{{ pp.totalStepsCount }}
+				<td>
+					<div class="d-flex">
+						{{ pp.completedStepsCount }}/{{ pp.totalStepsCount }}
+						<ProgressCircle :value="pp.completedStepsCount" :max="pp.totalStepsCount" class="ml-xs" />
+					</div>
 				</td>
 				<td>{{ $date(pp.acquiredAt) }}</td>
 				<td>{{ $relativeDate(pp.lastActive) }}</td>
