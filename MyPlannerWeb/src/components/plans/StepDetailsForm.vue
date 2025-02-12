@@ -14,6 +14,7 @@
 				v-model="step.title"
 				class="step-title"
 				autocomplete="off"
+				@focus="focusStep"
 			/>
 			<MpFormTextarea
 				:id="'step-description-' + (step.id || step.index)"
@@ -21,28 +22,29 @@
 				unlabeled
 				v-model="step.description"
 				class="step-description"
+				@focus="focusStep"
 			/>
 		</div>
-	</div>
 
-	<div v-if="showHoverMenu" class="step-actions">
-		<div>
-			<MpButton @click="unfocusStep" icon="x-lg" link class="secondary" />
-		</div>
-		<div v-if="canAddSecondaryStep">
-			<MpButton @click="addSeconaryStep" icon="plus-lg" link>
-				Secondary step
-			</MpButton>
-		</div>
-		<div class="move-step-actions">
-			<MpButton icon="arrow-up" link @click="moveUp" />
-			<div class="mx-s">Move</div>
-			<MpButton icon="arrow-down" link @click="moveDown" />
-		</div>
-		<div>
-			<MpButton @click="remove" icon="dash" link class="ml-l danger">
-				Remove
-			</MpButton>
+		<div v-if="showHoverMenu" class="step-actions">
+			<div>
+				<MpButton v-if="canAddSecondaryStep" @click="addSeconaryStep" icon="plus-lg" link>
+					Secondary step
+				</MpButton>
+				<MpButton v-else @click="addStep" icon="plus-lg" link>
+					Step
+				</MpButton>
+			</div>
+			<div class="move-step-actions">
+				<MpButton icon="arrow-up" link @click="moveUp" />
+				<div class="mx-s">Move</div>
+				<MpButton icon="arrow-down" link @click="moveDown" />
+			</div>
+			<div>
+				<MpButton @click="remove" icon="dash" link class="ml-l danger">
+					Remove
+				</MpButton>
+			</div>
 		</div>
 	</div>
 
@@ -60,7 +62,7 @@ import { useCollapse } from '@/composables/collapse.js';
 import Step from '@/models/Step.js';
 import { useStepFormStore } from '@/store/stepForm.js';
 import { vOnClickOutside } from '@vueuse/components';
-import { computed } from 'vue';
+import { computed, nextTick } from 'vue';
 
 const props = defineProps({
 	step: {
@@ -73,7 +75,7 @@ const props = defineProps({
 	},
 })
 
-const emit = defineEmits(['add-secondary-step', 'remove-step', 'move-up', 'move-down'])
+const emit = defineEmits(['add-secondary-step', 'add-step', 'remove-step', 'move-up', 'move-down'])
 
 const stepFormStore = useStepFormStore();
 
@@ -86,7 +88,11 @@ const focusStep = () => {
 }
 
 const unfocusStep = () => {
-	stepFormStore.hideHover();
+	nextTick(() => stepFormStore.hideHover());
+}
+
+const addStep = () => {
+	emit('add-step')
 }
 
 const addSeconaryStep = () => {

@@ -36,7 +36,7 @@
 			<MpInlineValue label="Visibility" :value="plan.isPublic ? 'Public' : 'Private'" />
 
 			<template #actions>
-				<MpLink :to="`/creator/manage/${plan.id}/edit`">Edit</MpLink>
+				<MpLink :to="`/creator/manage/${plan.id}/edit`" icon="pencil-square">Edit</MpLink>
 			</template>
 		</MpCard>
 	</div>

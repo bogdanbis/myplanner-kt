@@ -4,23 +4,25 @@ $button-padding-x: 32px;
 
 :root {
 	--button-text-color: var(--white);
-	--button-shadow: 0 2px 5px 2px #{$shadow-primary};
 }
 
 .mp-button {
 	user-select: none;
 	font-weight: normal;
-	background: var(--linear-gradient-primary);
+	background: var(--primary);
 	color: var(--button-text-color);
 	padding: $button-padding-y $button-padding-x;
 	border: none;
 	border-radius: 10px;
 	white-space: nowrap;
-	box-shadow: var(--button-shadow);
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	transition: background-color .1s, box-shadow .2s, transform .1s;
+
+	&.gradient {
+		color: var(--linear-gradient-primary);
+	}
 
 	&.secondary {
 		background: var(--secondary);

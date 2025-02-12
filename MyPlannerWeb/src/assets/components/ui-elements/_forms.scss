@@ -104,7 +104,6 @@ $form-item-border-radius: 8px;
 .mp-form-actions {
 	display: flex;
 	justify-content: end;
-	gap: var(--spacer-m);
 
 	@media only screen and (max-width: $mobile-width-breakpoint) {
 		flex-direction: column;

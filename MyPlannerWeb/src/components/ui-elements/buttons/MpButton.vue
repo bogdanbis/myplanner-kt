@@ -3,7 +3,7 @@
 		:disabled="busy || disabled"
 		:type="type"
 		class="mp-button"
-		:class="{ 'busy': busy, 'mp-link-button': link, 'mp-icon-button': !$slots.default }"
+		:class="{ 'busy': busy, 'mp-link-button': link, 'mp-icon-button': !$slots.default, 'mp-button-gradient': gradient }"
 	>
 		<LoadingIcon />
 		<MpIcon v-if="icon" :icon="icon" />
@@ -22,6 +22,11 @@ defineProps({
 		default: false,
 	},
 	disabled: {
+		type: Boolean,
+		required: false,
+		default: false,
+	},
+	gradient: {
 		type: Boolean,
 		required: false,
 		default: false,

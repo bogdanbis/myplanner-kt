@@ -17,6 +17,7 @@
 				:step="step"
 				:can-add-secondary-step="isRoot"
 				@add-secondary-step="addSubStep(step)"
+				@add-step="addNewStep(step)"
 				@remove-step="removeStep(step)"
 				@move-up="moveStepUp(step)"
 				@move-down="moveStepDown(step)"

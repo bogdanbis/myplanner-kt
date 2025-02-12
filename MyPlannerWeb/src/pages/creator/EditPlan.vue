@@ -2,7 +2,7 @@
 	<MpBackLink :to="'/creator/manage/' + plan.id">Manage</MpBackLink>
 	<h2>Edit Plan</h2>
 	<span class="page-subtitle">Make changes to your Plan. You can make changes anytime you want.</span>
-	<MpCard :style="{ '--primary': plan.color }">
+	<MpCard :style="{ '--primary': planEdits.color }">
 		<PlanForm
 			:plan="planEdits"
 			@upload-image="uploadImage"
