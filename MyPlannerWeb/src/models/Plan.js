@@ -1,4 +1,5 @@
 import api from '@/api/index.js';
+import { sanitize } from '@/utils/sanitizer.js';
 import ApplicationUser from './ApplicationUser.js';
 import Step from './Step.js';
 
@@ -45,6 +46,7 @@ export default class Plan {
 				completedStepsCount: plan.stats.completedStepsCount,
 			};
 		}
+		this.sanitize();
 	}
 
 	async uploadImage(file) {
@@ -61,5 +63,11 @@ export default class Plan {
 		const idx = this.images.findIndex(it => it.id === image.id);
 		if (idx >= 0)
 			this.images.splice(idx, 1);
+	}
+
+	sanitize() {
+		this.title = sanitize(this.title);
+		this.shortDescription = sanitize(this.shortDescription);
+		this.description = sanitize(this.shortDescription);
 	}
 }

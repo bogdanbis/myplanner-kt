@@ -70,6 +70,7 @@ const updatePlan = async () => {
 	updating.value = true;
 	if (!hasChanges.value || !hasRequiredFields.value)
 		return;
+	planEdits.value.sanitize();
 	const planResponse = await api.put('/plans/' + plan.value.id, planEdits.value);
 	plan.value = new Plan(planResponse);
 	planEdits.value = new Plan(planResponse);

@@ -46,6 +46,7 @@ const createPlan = async () => {
 	loading.value = true;
 	if (!hasRequiredFields.value)
 		return;
+	plan.value.sanitize();
 	const response = await api.post('/plans/create', plan.value);
 	const createdPlan = new Plan(response);
 	if (image.value)
