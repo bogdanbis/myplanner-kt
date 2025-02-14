@@ -20,33 +20,36 @@ import java.util.*
 class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
 
     @GetMapping("/browse")
-    fun getPublicPlans(): List<PlanSimpleResponse> {
-        return myPlanner.getPublicPlans().toSortedSet().map(::PlanSimpleResponse)
+    fun getPublicPlans(): List<PlanPublicInfoResponse> {
+        return myPlanner.publicPlans.map(::PlanPublicInfoResponse)
     }
 
     @GetMapping("/search")
-    fun getPublicPlans(@RequestParam title: String?): ResponseEntity<List<PlanSimpleResponse>> {
+    fun getPublicPlans(@RequestParam title: String?): ResponseEntity<List<PlanPublicInfoResponse>> {
         if (title == null || title.length < 3)
             return ResponseEntity
                 .of(ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST,
-                    "Search term must be at least 3 characets long."))
+                    "Search term must be at least 3 characters long."))
                 .build()
-        return ResponseEntity.ok(myPlanner.findByTitle(title).map(::PlanSimpleResponse))
+        return ResponseEntity.ok(myPlanner.findByTitle(title).map(::PlanPublicInfoResponse))
     }
 
     @GetMapping("/{id}")
-    fun getPublicInfo(@PathVariable id: UUID): PlanSimpleResponse? {
-        return myPlanner.getPublicPlan(id)?.let(::PlanSimpleResponse)
+    fun getPublicInfo(@PathVariable id: UUID): PlanPublicInfoResponse? {
+        return myPlanner.getPublicPlan(id)?.let(::PlanPublicInfoResponse)
     }
 
     @GetMapping("/created")
-    fun getCreatedPlans(@AuthenticationPrincipal principal: UserDetails): List<PlanSimpleResponse> {
-        return user(principal).createdPlans.map(::PlanSimpleResponse)
+    fun getCreatedPlans(@AuthenticationPrincipal principal: UserDetails): List<PlanResponse> {
+        return user(principal).createdPlans.map(::PlanResponse)
     }
 
     @GetMapping("/created/{id}")
-    fun getCreatedPlan(@AuthenticationPrincipal principal: UserDetails, @PathVariable id: UUID): PlanResponse? {
-        return user(principal).getCreatedPlan(id)?.let(::PlanResponse)
+    fun getCreatedPlan(
+        @AuthenticationPrincipal principal: UserDetails,
+        @PathVariable id: UUID
+    ): PlanWithStepsResponse? {
+        return user(principal).getCreatedPlan(id)?.let(::PlanWithStepsResponse)
     }
 
     @PostMapping("/created/{id}/images")
@@ -117,9 +120,9 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
 
     @PostMapping("/create")
     fun createPlan(@AuthenticationPrincipal principal: UserDetails, @RequestBody request: PlanRequest)
-            : PlanSimpleResponse? {
+            : PlanResponse? {
         val plan = myPlanner.createPlan(user(principal), planRequestToDto(request))
-        return PlanSimpleResponse(plan)
+        return PlanResponse(plan)
     }
 
     @PostMapping("/{id}/acquire")
@@ -133,9 +136,9 @@ class PlanController(myPlanner: MyPlanner) : BaseController(myPlanner) {
         @AuthenticationPrincipal principal: UserDetails,
         @PathVariable id: UUID,
         @RequestBody request: PlanRequest
-    ): PlanResponse? {
+    ): PlanWithStepsResponse? {
         val plan = user(principal).updatePlan(id, planRequestToDto(request))
-        return plan?.let { PlanResponse(it) }
+        return plan?.let { PlanWithStepsResponse(it) }
     }
 
     @DeleteMapping("/{id}")

@@ -8,20 +8,14 @@
 			<br />
 			<NumberOfParticipants :count="plan.numberOfParticipants" />
 		</div>
-		<span class="text-secondary">{{ plan.description }}</span>
+		<span class="text-secondary">{{ plan.shortDescription }}</span>
 		<template #actions>
-			<div v-if="plan.author.email !== user?.email">
-				<MpButton
-					v-if="!plan.acquired"
-					@click="acquirePlan(plan)"
-					:busy="loading"
-				>
-					Get
-				</MpButton>
-				<span v-else class="text-primary">
+			<div v-if="plan.author.email !== authStore.user?.email">
+				<MpLink v-if="!plan.acquired" :to="'/plan/' + plan.id">Details</MpLink>
+				<MpLink v-else :to="'/my-plans/' + plan.acquired.id" class="text-primary">
 					You have this plan
 					<MpIcon icon="check-lg" />
-				</span>
+				</MpLink>
 			</div>
 			<div v-else>
 				<MpLink :to="'/creator/manage/' + plan.id">Manage</MpLink>
@@ -33,7 +27,6 @@
 <script setup>
 import NumberOfParticipants from '@/components/NumberOfParticipants.vue';
 import { useAuthStore } from '@/store/auth.js';
-import { computed, ref } from 'vue';
 
 const { plans } = defineProps({
 	plans: {
@@ -42,22 +35,5 @@ const { plans } = defineProps({
 	},
 })
 
-const authStore = useAuthStore();
-
-const user = computed(() => authStore.user);
-const loading = ref(false);
-
-const acquirePlan = async (plan) => {
-	if (!user.value)
-		return authStore.requestLogin();
-
-	loading.value = true;
-	await user.value.acquirePlan(plan);
-	user.value.acquiredPlans.forEach(plan => {
-		const index = plans.value.findIndex(p => p.id === plan.plan.id)
-		if (index >= 0)
-			plans.value[index].acquired = true;
-	});
-	loading.value = false;
-}
+const authStore = useAuthStore()
 </script>

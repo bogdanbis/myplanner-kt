@@ -50,8 +50,8 @@ const createPlan = async () => {
 	const createdPlan = new Plan(response);
 	if (image.value)
 		await createdPlan.uploadImage(image.value);
-	authStore.user.fetchCreatedPlans();
-	router.push('/creator');
+	await authStore.user.fetchCreatedPlans();
+	await router.push('/creator');
 }
 
 const uploadImage = async (file) => {

@@ -15,6 +15,7 @@ export default class Plan {
 	author = new ApplicationUser();
 	images = [];
 	steps = [];
+	totalSteps;
 	stats = {
 		numberOfParticipants: null,
 		completedStepsCount: null,
@@ -37,6 +38,7 @@ export default class Plan {
 			src: `${api.params.baseURL}/images/${img.id}`,
 		}));
 		this.steps = plan.steps?.map(t => new Step(t)) || [];
+		this.totalSteps = plan.totalSteps;
 		if (plan.stats) {
 			this.stats = {
 				numberOfParticipants: plan.stats.numberOfParticipants,

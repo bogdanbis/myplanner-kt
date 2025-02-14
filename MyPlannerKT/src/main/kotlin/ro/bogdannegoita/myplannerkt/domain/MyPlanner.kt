@@ -27,7 +27,12 @@ class MyPlanner(
 ) {
 
     private val users = myPlannerCache<String, ApplicationUser>()
-    private val publicPlansRegistry = mutableMapOf<UUID, Plan>()
+    final var publicPlans: MutableSet<Plan> = sortedSetOf(compareBy<Plan> { it.createdAt }.reversed())
+        get() {
+            loadPublicPlans()
+            return field
+        }
+        private set
 
     fun loadUser(email: String): ApplicationUser {
         var user = users.getOrNull(email)
@@ -39,19 +44,13 @@ class MyPlanner(
         return user
     }
 
-    fun getPublicPlans(): List<Plan> {
-        loadPublicPlans()
-        return publicPlansRegistry.values.toList()
-    }
-
     fun findByTitle(title: String): List<Plan> {
         return planDao.findByTitle(title)
             .map { domainProvider.plan(it, shortLived = true) }
     }
 
     fun getPublicPlan(id: UUID): Plan? {
-        loadPlan(id)
-        return publicPlansRegistry[id]
+        return publicPlans.find { it.id == id }
     }
 
     fun createPlan(user: ApplicationUser, planData: PlanDto): Plan {
@@ -76,7 +75,7 @@ class MyPlanner(
 
     @EventListener
     fun handlePlanDeleted(event: PlanDeletedEvent) {
-        publicPlansRegistry.remove(event.id)
+        publicPlans.removeIf { it.id == event.id }
     }
 
     @EventListener
@@ -93,32 +92,20 @@ class MyPlanner(
     }
 
     private fun publishPlan(plan: Plan) {
-        publicPlansRegistry[plan.id] = plan
+        publicPlans.add(plan)
     }
 
     private fun unpublishPlan(plan: Plan) {
-        publicPlansRegistry.remove(plan.id)
+        publicPlans.remove(plan)
     }
 
     private var loadedPublicPlans = false
     private fun loadPublicPlans() {
         if (loadedPublicPlans) return
-        planDao.getPublicPlans()
-            .map {
-                val plan = domainProvider.plan(it)
-                publicPlansRegistry[plan.id] = plan
-                plan
-            }
-            .toMutableList()
+        publicPlans = planDao.getPublicPlans()
+            .map(domainProvider::plan)
+            .toSortedSet(compareBy<Plan> { it.createdAt }.reversed())
         loadedPublicPlans = true
-    }
-
-    private fun loadPlan(id: UUID) {
-        if (publicPlansRegistry[id] != null)
-            return
-        val planDto = planDao.getById(id)
-        if (planDto.isPublic)
-            publicPlansRegistry[id] = domainProvider.plan(planDto)
     }
 
 }

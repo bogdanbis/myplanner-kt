@@ -7,7 +7,7 @@ class PlanInviteResponse(planInvite: PlanInvite) {
     val status = planInvite.status
     val createdAt = planInvite.createdAt
     val respondedAt = planInvite.respondedAt
-    val plan = PlanSimpleResponse(planInvite.plan.value)
+    val plan = PlanResponse(planInvite.plan.value)
     val sender = ApplicationUserResponse(planInvite.sender.value)
-    val recipient = planInvite.recipient.value?.let { ApplicationUserResponse(it) }
+    val recipient = planInvite.recipient.value.let { ApplicationUserResponse(it) }
 }

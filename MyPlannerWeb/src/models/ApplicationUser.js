@@ -48,5 +48,6 @@ export default class ApplicationUser {
 		const planProgress = await api.post(`/plans/${plan.id}/acquire`);
 		if (this.acquiredPlans)
 			this.acquiredPlans.unshift(planProgress);
+		return planProgress;
 	}
 }

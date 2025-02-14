@@ -41,7 +41,7 @@ const menuItems = computed(() => {
 	let activeIndex = null;
 	const menuItems = props.menuItems.map((menuItem, index) => {
 		let isActive = menuItem.path === '/'
-				? route.path === '/'
+				? route.path === '/' || route.path.startsWith('/plan/')
 				: route.path.startsWith(menuItem.path);
 		if (isActive)
 			activeIndex = index;

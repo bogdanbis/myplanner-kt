@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import DOMPurify from 'dompurify';
+import { sanitize } from '@/utils/sanitizer.js';
 import { computed } from 'vue';
 
 const { text } = defineProps({
@@ -15,7 +15,6 @@ const { text } = defineProps({
 
 const multiline = computed(() => {
 	if (!text) return;
-	return DOMPurify.sanitize(text, { ALLOWED_TAGS: [] })
-			.replaceAll('\n', '<br/>')
+	return sanitize(text);
 });
 </script>

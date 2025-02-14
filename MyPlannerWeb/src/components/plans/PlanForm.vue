@@ -30,7 +30,7 @@
 			id="color"
 			type="color"
 			label="Primary color"
-			description="Pick a color to personalize your plan and make it easier to recognize."
+			description="Pick a color to personalize your plan and make it easier to recognize. Make sure it is visible in both light and dark mode."
 			v-model="plan.color"
 		/>
 

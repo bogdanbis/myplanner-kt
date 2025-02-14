@@ -2,6 +2,7 @@ import Explore from '@/pages/Explore.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const MyPlans = () => import('@/pages/MyPlans.vue');
+const PlanPublicInfo = () => import('@/pages/PlanPublicInfo.vue');
 const PlanProgress = () => import('@/pages/participant/PlanProgress.vue');
 const AuthoredPlans = () => import('./pages/creator/CreatedPlans.vue');
 const CreatePlan = () => import('@/pages/creator/CreatePlan.vue');
@@ -22,6 +23,11 @@ const router = createRouter({
 			path: '/',
 			name: 'Explore',
 			component: Explore,
+		},
+		{
+			path: '/plan/:id',
+			name: 'Plan Info',
+			component: PlanPublicInfo,
 		},
 		{
 			path: '/my-plans',
