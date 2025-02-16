@@ -1,13 +1,6 @@
 <template>
-	<MpBackLink :to="`/creator/manage/${planId}`">Manage</MpBackLink>
-	<h2>{{ plan.title }}</h2>
+	<h2>Sent Invites</h2>
 
-	<div class="mb-m" :style="{ '--primary': plan.color }">
-		<MpLink :to="`/creator/manage/${planId}/participants`">
-			View participants
-		</MpLink>
-		<InviteParticipantButton :plan="plan" class="w-50-desktop" />
-	</div>
 	<MpCard title="Sent invites">
 		<MpTable :fields="tableFields" :busy="loading">
 			<tr v-for="invite in sentInvites">
@@ -15,7 +8,9 @@
 					<span>{{ invite.recipient.name }}<br /></span>
 					<span class="text-secondary font-size-s">{{ invite.recipient.email }}</span>
 				</td>
-				<td>{{ invite.plan.title }}</td>
+				<td>
+					<MpLink :to="`/creator/manage/${invite.plan.id}`">{{ invite.plan.title }}</MpLink>
+				</td>
 				<td>
 					<InviteStatus :status="invite.status" />
 				</td>
@@ -39,11 +34,8 @@
 <script setup>
 import api from '@/api/index.js';
 import InviteStatus from '@/components/plans/InviteStatus.vue';
-import InviteParticipantButton from '@/components/plans/manage-plan/InviteParticipantButton.vue';
-import Plan from '@/models/Plan.js';
 import PlanInvite from '@/models/PlanInvite.js';
 import { onMounted, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
 
 const tableFields = [
 	{ label: 'Sent to' },
@@ -53,26 +45,14 @@ const tableFields = [
 	{ label: 'Sent at' },
 ]
 
-const router = useRouter();
-const route = useRoute();
-const planId = route.params.id;
-const plan = ref(new Plan());
 const sentInvites = ref([]);
 const loading = ref(false);
 
 onMounted(async () => {
 	loading.value = true;
-	await fetchPlan();
 	await fetchInvites();
 	loading.value = false;
 })
-
-const fetchPlan = async () => {
-	const response = await api.get(`/plans/${planId}`);
-	if (!response)
-		return router.push('/creator');
-	plan.value = new Plan(response);
-}
 
 const fetchInvites = async () => {
 	const response = await api.get('/invites/sent');

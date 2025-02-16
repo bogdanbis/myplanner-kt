@@ -1,5 +1,5 @@
 <template>
-	<MpBackLink to="/my-plans">My Plans</MpBackLink>
+	<MpBackLink to="/my-plans" route-name="My Plans" />
 	<h2>{{ plan.title }}</h2>
 	<h5 class="page-subtitle">
 		<MpIcon icon="person-fill" />
@@ -19,8 +19,8 @@
 			:plan="plan"
 			class="mb-m"
 		/>
-		<p><MpMultilineText :text="plan.description" /></p>
-		<MpForm @submit="saveComment">
+		<MpMultilineText :text="plan.description" />
+		<MpForm @submit="saveComment" class="mt-m">
 			<MpFormTextarea
 				id="comment"
 				placeholder="Notes or comments for yourself."

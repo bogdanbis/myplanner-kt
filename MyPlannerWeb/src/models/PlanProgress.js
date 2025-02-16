@@ -1,3 +1,4 @@
+import { sanitize } from '@/utils/sanitizer.js';
 import ApplicationUser from './ApplicationUser.js';
 import Plan from './Plan.js';
 import StepProgress from './StepProgress.js';
@@ -28,5 +29,9 @@ export default class PlanProgress extends StepProgressContainer {
 
 	get updateAvailable() {
 		return this.lastSyncedPlan !== this.plan.lastModifiedAt
+	}
+
+	sanitize() {
+		this.comment = sanitize(this.comment);
 	}
 }

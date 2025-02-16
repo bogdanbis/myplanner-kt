@@ -1,13 +1,8 @@
 <template>
 	<MpBackLink :to="`/creator/manage/${planId}/participants`">Participants</MpBackLink>
 	<h2>{{ plan.title }}</h2>
-	<span class="page-subtitle"><b>{{ participant.name }}</b>'s progress</span>
 
-	<MpCard :style="{ '--primary': plan.color }">
-		<b class="text-secondary">About</b>
-		<p>
-			<MpMultilineText :text="plan.description" />
-		</p>
+	<MpCard :title="participant.name + '\'s progress'" :style="{ '--primary': plan.color }">
 		<StepProgressFormSection
 			v-if="!loading"
 			:may-modify="false"

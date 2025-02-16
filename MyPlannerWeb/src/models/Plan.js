@@ -24,6 +24,10 @@ export default class Plan {
 
 	constructor(plan) {
 		if (!plan) return;
+		this.init(plan);
+	}
+
+	init(plan) {
 		this.id = plan.id;
 		this.title = plan.title;
 		this.shortDescription = plan.shortDescription;
@@ -49,6 +53,13 @@ export default class Plan {
 		this.sanitize();
 	}
 
+	async update(plan) {
+		const request = new Plan(plan);
+		request.sanitize();
+		const response = await api.put('/plans/' + this.id, request);
+		this.init(response);
+	}
+
 	async uploadImage(file) {
 		const requestBody = new FormData();
 		requestBody.set('photo', file);
@@ -68,6 +79,6 @@ export default class Plan {
 	sanitize() {
 		this.title = sanitize(this.title);
 		this.shortDescription = sanitize(this.shortDescription);
-		this.description = sanitize(this.shortDescription);
+		this.description = sanitize(this.description);
 	}
 }

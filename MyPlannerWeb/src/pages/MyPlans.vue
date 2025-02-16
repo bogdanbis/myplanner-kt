@@ -17,7 +17,7 @@
 				<MpIcon icon="person-fill" />
 				{{ plan.author.name }}
 			</span>
-			<span class="text-secondary">{{ plan.description }}</span>
+			<MpMultilineText :text="plan.shortDescription" class="text-secondary" />
 			<template #actions>
 				<MpLink :to="'/my-plans/' + id">View progress</MpLink>
 			</template>

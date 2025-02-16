@@ -1,8 +1,8 @@
 <template>
-	<MpLink v-if="isPending" to="/my-plans" icon="clock">{{ statuses[status] }}</MpLink>
-	<span v-else :class="textColor" class="fw-500">
+	<span :class="textColor" class="fw-500">
 		<MpIcon :icon="icon" />
-		{{ statuses[status] }}</span>
+		{{ statuses[status] }}
+	</span>
 </template>
 
 <script setup>
@@ -27,6 +27,8 @@ const isPending = computed(() => status === InviteStatus.PENDING);
 
 const textColor = computed(() => {
 	switch (status) {
+		case InviteStatus.PENDING:
+			return 'text-warning';
 		case InviteStatus.ACCEPTED:
 			return 'text-success';
 		case InviteStatus.DECLINED:
@@ -36,6 +38,8 @@ const textColor = computed(() => {
 
 const icon = computed(() => {
 	switch (status) {
+		case InviteStatus.PENDING:
+			return 'clock';
 		case InviteStatus.ACCEPTED:
 			return 'check-lg';
 		case InviteStatus.DECLINED:

@@ -65,6 +65,11 @@ const creatorMenuItems = computed(() => ([
 		label: 'Created Plans',
 		path: '/creator',
 	},
+	{
+		icon: 'send',
+		label: 'Sent Invites',
+		path: '/sent-invites',
+	},
 	...uiStore.pinnedPlans?.map((plan) => ({
 		icon: 'pin-fill',
 		label: plan.title,

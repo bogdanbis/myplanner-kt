@@ -75,7 +75,7 @@ const router = createRouter({
 			component: ParticipantPlanProgress,
 		},
 		{
-			path: '/creator/manage/:id/sent-invites',
+			path: '/sent-invites',
 			name: 'Sent Invites',
 			component: SentInvites,
 		},
@@ -87,8 +87,9 @@ const router = createRouter({
 });
 
 export const APP_TITLE = 'Progress Planner';
-router.beforeEach((to) => {
+router.beforeEach((to, from) => {
 	document.title = to.name ? `${to.name} • ${APP_TITLE}` : APP_TITLE;
+	router.from = from;
 });
 
 export default router;

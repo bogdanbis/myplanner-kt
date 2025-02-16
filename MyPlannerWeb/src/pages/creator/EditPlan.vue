@@ -37,6 +37,7 @@
 import api from '@/api';
 import PlanForm from '@/components/plans/PlanForm.vue';
 import Plan from '@/models/Plan.js';
+import { useManagePlanStore } from '@/store/managePlan.js';
 import { isEqual } from 'lodash';
 import { computed, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -45,15 +46,15 @@ import { useToast } from 'vue-toastification';
 const router = useRouter();
 const planId = useRoute().params.id;
 
-const plan = ref(new Plan());
+const managePlanStore = useManagePlanStore();
+const plan = computed(() => managePlanStore.plan);
 const planEdits = ref(new Plan());
 const loading = ref(true);
 
 onMounted(async () => {
-	const planResponse = await api.get('/plans/created/' + planId);
-	if (!planResponse)
-		router.push('/creator');
-	plan.value = new Plan(planResponse);
+	await managePlanStore.fetchPlan(planId);
+	if (!plan.value)
+		return router.push('/creator');
 	initChanges();
 	loading.value = false;
 })
@@ -70,10 +71,8 @@ const updatePlan = async () => {
 	updating.value = true;
 	if (!hasChanges.value || !hasRequiredFields.value)
 		return;
-	planEdits.value.sanitize();
-	const planResponse = await api.put('/plans/' + plan.value.id, planEdits.value);
-	plan.value = new Plan(planResponse);
-	planEdits.value = new Plan(planResponse);
+	await plan.value.update(planEdits.value);
+	planEdits.value = new Plan(plan.value);
 	updating.value = false;
 }
 

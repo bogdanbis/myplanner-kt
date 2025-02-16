@@ -15,6 +15,6 @@ const { text } = defineProps({
 
 const multiline = computed(() => {
 	if (!text) return;
-	return sanitize(text);
+	return sanitize(text).replaceAll('\n', '<br />');
 });
 </script>
