@@ -1,7 +1,7 @@
 <template>
 	<MpLink :to="to" class="cursor-pointer mt-l">
 		<MpIcon :icon="icon" />
-		{{ routeName }}
+		<slot>{{ routeName }}</slot>
 	</MpLink>
 </template>
 
@@ -16,7 +16,6 @@ const props = defineProps({
 	},
 	routeName: {
 		type: String,
-		required: true,
 	},
 	icon: {
 		type: String,

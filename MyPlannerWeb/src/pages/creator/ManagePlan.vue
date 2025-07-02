@@ -1,5 +1,5 @@
 <template>
-	<MpBackLink to="/creator">Created Plans</MpBackLink>
+	<MpBackLink to="/creator" route-name="Created Plans" />
 	<div class="d-flex">
 		<h2>{{ plan.title }} </h2>
 	</div>
@@ -21,10 +21,7 @@
 			</MpInlineValue>
 			<div class="mt-l">
 				<InviteParticipantButton :plan="plan" />
-				<MpLink :to="`/creator/manage/${plan.id}/sent-invites`" class="my-s">
-					View sent invites
-				</MpLink>
-				<MpLink :to="`/creator/manage/${plan.id}/participants`" class="">
+				<MpLink :to="`/creator/manage/${plan.id}/participants`" class="mt-s">
 					View participants
 				</MpLink>
 			</div>

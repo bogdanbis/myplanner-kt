@@ -37,43 +37,49 @@ onMounted(() => {
 		authStore.fetchReceivedInvites();
 })
 
-const mainMenuItems = computed(() => ([
-	{
-		icon: 'search',
-		label: 'Explore',
-		path: '/',
-	},
-	{
-		icon: 'bullseye',
-		label: 'My Plans',
-		path: '/my-plans',
-		notificationCount: authStore.user?.pendingInvites?.length,
-	},
-	{
-		icon: 'envelope-fill',
-		label: 'Received Invites',
-		path: '/received-invites',
-	},
-]))
+const mainMenuItems = computed(() => {
+	const items = [
+		{
+			icon: 'search',
+			label: 'Explore',
+			path: '/',
+		},
+		{
+			icon: 'bullseye',
+			label: 'My Plans',
+			path: '/my-plans',
+			notificationCount: authStore.user?.pendingInvites?.length,
+		},
+	];
+	if (authStore.user)
+		items.push({
+			icon: 'envelope-fill',
+			label: 'Received Invites',
+			path: '/received-invites',
+		});
+	return items;
+})
 
 const uiStore = useUiStore();
 uiStore.setPinnedPlans(useAuthStore().user?.uiPreferences.pinnedPlans)
 
-const creatorMenuItems = computed(() => ([
-	{
-		icon: 'pencil-square',
-		label: 'Created Plans',
-		path: '/creator',
-	},
-	{
-		icon: 'send',
-		label: 'Sent Invites',
-		path: '/sent-invites',
-	},
-	...uiStore.pinnedPlans?.map((plan) => ({
-		icon: 'pin-fill',
-		label: plan.title,
-		path: `/creator/manage/${plan.id}`,
-	})),
-]));
+const creatorMenuItems = computed(() => {
+	return [
+		{
+			icon: 'pencil-square',
+			label: 'Created Plans',
+			path: '/creator',
+		},
+		{
+			icon: 'send',
+			label: 'Sent Invites',
+			path: '/sent-invites',
+		},
+		...uiStore.pinnedPlans?.map((plan) => ({
+			icon: 'pin-fill',
+			label: plan.title,
+			path: `/creator/manage/${plan.id}`,
+		})),
+	];
+});
 </script>

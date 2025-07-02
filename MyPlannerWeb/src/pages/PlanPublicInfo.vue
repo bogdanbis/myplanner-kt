@@ -22,6 +22,8 @@
 		/>
 		<p>
 			<MpMultilineText :text="plan.description" />
+			<br />
+			<span class="text-primary">Get this plan to view the entire description.</span>
 		</p>
 		<MpFormSection
 			title="Steps"

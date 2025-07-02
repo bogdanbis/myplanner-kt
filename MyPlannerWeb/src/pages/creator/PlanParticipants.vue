@@ -1,11 +1,8 @@
 <template>
-	<MpBackLink :to="`/creator/manage/${planId}`">Manage</MpBackLink>
+	<MpBackLink :to="`/creator/manage/${planId}`" route-name="Manage" />
 	<h2>{{ plan.title }}</h2>
 
 	<div class="mb-m" :style="{ '--primary': plan.color }">
-		<MpLink :to="`/creator/manage/${planId}/sent-invites`">
-			View sent invites
-		</MpLink>
 		<InviteParticipantButton :plan="plan" class="w-50-desktop" />
 	</div>
 	<MpCard title="Participants progress" :style="{ '--primary': plan.color }">

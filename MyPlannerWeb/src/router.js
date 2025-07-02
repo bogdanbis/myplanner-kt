@@ -4,7 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 const MyPlans = () => import('@/pages/MyPlans.vue');
 const PlanPublicInfo = () => import('@/pages/PlanPublicInfo.vue');
 const PlanProgress = () => import('@/pages/participant/PlanProgress.vue');
-const AuthoredPlans = () => import('./pages/creator/CreatedPlans.vue');
+const CreatedPlans = () => import('./pages/creator/CreatedPlans.vue');
 const CreatePlan = () => import('@/pages/creator/CreatePlan.vue');
 const ManagePlan = () => import('@/pages/creator/ManagePlan.vue');
 const EditPlan = () => import('@/pages/creator/EditPlan.vue');
@@ -46,8 +46,8 @@ const router = createRouter({
 		},
 		{
 			path: '/creator',
-			name: 'Authored Plans',
-			component: AuthoredPlans,
+			name: 'Created Plans',
+			component: CreatedPlans,
 		},
 		{
 			path: '/creator/new',

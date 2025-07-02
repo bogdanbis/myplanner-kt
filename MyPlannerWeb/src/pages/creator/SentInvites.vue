@@ -2,7 +2,7 @@
 	<h2>Sent Invites</h2>
 
 	<MpCard title="Sent invites">
-		<MpTable :fields="tableFields" :busy="loading">
+		<MpTable :fields="tableFields" :busy="loading" :empty="sentInvites.length === 0">
 			<tr v-for="invite in sentInvites">
 				<td class="line-height-normal">
 					<span>{{ invite.recipient.name }}<br /></span>
