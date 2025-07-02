@@ -39,6 +39,7 @@ class SecurityConfiguration(val jwtTokenFilter: JwtFilter) {
     }
 
     @Bean
+    @Profile("!dev")
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         applyHttpSecurityRules(http)
         return http.build()
