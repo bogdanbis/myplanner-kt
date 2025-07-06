@@ -80,5 +80,14 @@
 
 .step-progress-collapse-button {
 	margin-right: var(--spacer-xs);
-	padding-top: 2px !important;
+	padding-top: 0 !important;
+
+	.bi {
+		transition: transform .2s ease-in;
+	}
+
+	&.collapsed .bi {
+		transform: rotate(-90deg);
+		transition: transform .2s ease-in-out;
+	}
 }

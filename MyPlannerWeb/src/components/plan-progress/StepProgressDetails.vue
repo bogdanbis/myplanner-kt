@@ -3,9 +3,9 @@
 		<MpButton
 			v-if="stepsContainer.steps.length > 0"
 			@click="toggleCollapsed"
-			:class="stepsContainer.steps.length > 0 ? '' : 'd-hidden'"
 			class="step-progress-collapse-button"
-			:icon="collapsed ? 'chevron-right' : 'chevron-down'"
+			:class="{ 'd-hidden': stepsContainer.steps.length === 0, 'collapsed': collapsed }"
+			icon="chevron-down"
 			link
 		/>
 		<div class="step">
