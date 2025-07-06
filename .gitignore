@@ -19,7 +19,6 @@ target/
 **/resources/static/
 **/node_modules/*
 dist/
-**/package-lock.json
 *.local
 
 ### STS ###
