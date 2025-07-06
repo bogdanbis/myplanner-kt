@@ -1,0 +1,17 @@
+dburl: jdbc:h2:mem:myplanner_kt;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+dbusername: sa
+dbpassword: sa
+dbdialect: org.hibernate.dialect.H2Dialect
+jwtSecret: Y2FyYW1iYV9zb21icmVybzIzOTQ4
+
+server.port: 8086
+spring:
+    jpa:
+        defer-datasource-initialization: true
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+    h2:
+        console:
+            enabled: true
+            path: /h2-console

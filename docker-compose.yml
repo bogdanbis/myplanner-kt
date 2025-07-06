@@ -6,29 +6,9 @@ services:
         container_name: myplannerkt-app
         ports:
             - "8086:8086"
-        depends_on:
-            - postgres
         networks:
             - myplannerkt-network
-
-    postgres:
-        image: postgres
-        container_name: myplannerkt-postgres
-        ports:
-            - "2345:5432"
-        environment:
-            - POSTGRES_DB=myplanner_kt
-            - POSTGRES_USER=webadmin
-            - POSTGRES_PASSWORD=webadmin
-        volumes:
-            - postgres-data:/var/lib/postgresql/data
-        networks:
-            - myplannerkt-network
-        restart: unless-stopped
 
 networks:
     myplannerkt-network:
         driver: bridge
-
-volumes:
-    postgres-data:

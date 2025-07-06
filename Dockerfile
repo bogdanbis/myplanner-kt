@@ -49,7 +49,7 @@ WORKDIR /app
 COPY --from=build /app/build/libs/*.jar app.jar
 
 # Copy the configutation file
-COPY MyPlannerKT/src/main/resources/application-prod.yaml ./application.yaml
+COPY MyPlannerKT/src/main/resources/application-docker.yaml ./application.yaml
 
 
 # Expose the application port
