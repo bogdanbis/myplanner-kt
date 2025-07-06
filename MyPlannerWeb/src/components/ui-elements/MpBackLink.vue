@@ -26,13 +26,6 @@ const props = defineProps({
 
 const router = useRouter();
 
-const to = computed(() => {
-	if (router.from?.name)
-		return router.from.path;
-	else
-		return props.to;
-});
-
 const routeName = computed(() => {
 	if (router.from?.name)
 		return router.from.name;
