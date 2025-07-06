@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import LogInButton from '@/components/LogInButton.vue';
+import LogInButton from '@/components/auth/LogInButton.vue';
 import ReceivedPendingInvite from '@/components/plan-progress/ReceivedPendingInvite.vue';
 import { useAuthStore } from '@/store/auth.js';
 import { computed, onMounted } from 'vue';

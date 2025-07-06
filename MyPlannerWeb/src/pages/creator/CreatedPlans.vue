@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import LogInButton from '@/components/LogInButton.vue';
+import LogInButton from '@/components/auth/LogInButton.vue';
 import { useAuthStore } from '@/store/auth.js';
 import { computed, onMounted } from 'vue';
 

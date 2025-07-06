@@ -5,6 +5,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import ro.bogdannegoita.myplannerkt.persistence.entities.ApplicationUserEntity
+import ro.bogdannegoita.myplannerkt.persistence.entities.UserUIPreferencesEntity
 import ro.bogdannegoita.myplannerkt.persistence.repositories.ApplicationUserRepository
 import ro.bogdannegoita.myplannerkt.security.exceptions.UserAlreadyExistsException
 import ro.bogdannegoita.myplannerkt.security.exceptions.UserNotFoundException
@@ -30,10 +31,12 @@ class UserAuthHelperService(
         val email: String = request.email
         if (existsByEmail(email))
             throw UserAlreadyExistsException(email)
-        val user = ApplicationUserEntity(
+        var user = ApplicationUserEntity(
             request.email, request.firstName,
             request.lastName, encoder.encode(request.password),
         )
+        user = repository.save(user)
+        user.uiPreferences = UserUIPreferencesEntity(user = user)
         repository.save(user)
     }
 

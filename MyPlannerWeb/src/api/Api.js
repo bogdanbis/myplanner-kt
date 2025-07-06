@@ -1,10 +1,11 @@
-import ApplicationUser from '@/models/ApplicationUser';
 import axios from 'axios';
 import { useToast } from 'vue-toastification';
+import AuthService from './AuthService.js';
 
 export default class Api {
 	static toast = useToast();
 	params = null;
+	authService = new AuthService(this);
 
 	constructor(params) {
 		const token = localStorage.getItem('token');
@@ -20,22 +21,21 @@ export default class Api {
 	}
 
 	async logIn(email, password) {
-		localStorage.removeItem('token');
-		const logInResponse = await this.post('/login', { email, password });
-		const user = new ApplicationUser(logInResponse);
-		if (logInResponse.token) {
-			const params = {
-				...this.params,
-				headers: { 'Authorization': 'Bearer ' + logInResponse.token },
-			};
-			localStorage.setItem('token', logInResponse.token);
-			this.caller = axios.create(params);
-		}
-		return user;
+		const response = await this.authService.logIn(email, password);
+		const params = {
+			...this.params,
+			headers: { 'Authorization': 'Bearer ' + response.token },
+		};
+		this.caller = axios.create(params);
+	}
+
+	async signUp(user) {
+		await this.authService.signUp(user);
+		await this.logIn(user.email, user.password);
 	}
 
 	logOut() {
-		localStorage.removeItem('token');
+		this.authService.logOut();
 		this.params.headers = null;
 		this.caller = axios.create(this.params);
 	}
@@ -132,6 +132,7 @@ export default class Api {
 	static errorTypes = {
 		entity_not_found: 'Something was not found :(',
 		user_not_found: 'An account with this email does not exist.',
+		email_used: 'An account with this email already exists.',
 	}
 
 }

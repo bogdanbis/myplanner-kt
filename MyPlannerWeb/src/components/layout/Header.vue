@@ -19,7 +19,7 @@
 import { APP_TITLE } from '@/router.js';
 import { useAuthStore } from '@/store/auth.js';
 import { computed } from 'vue';
-import LogInButton from '../LogInButton.vue';
+import LogInButton from '../auth/LogInButton.vue';
 import UserInfoButton from '../UserInfoButton.vue';
 
 const emit = defineEmits(['show-sidebar']);

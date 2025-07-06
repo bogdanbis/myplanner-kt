@@ -5,7 +5,7 @@
 		class="text-white"
 		confirm-text="Log Out"
 	>
-		{{ user.firstName }}
+		{{ user.name }}
 	</MpLinkButtonWithConfirm>
 </template>
 
