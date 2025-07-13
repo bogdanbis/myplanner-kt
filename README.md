@@ -1,4 +1,4 @@
-Corrently working on translating the web app from Vue to React.
+Corrently working on translating the web app from Vue to React. [repo](https://github.com/bogdanbis/myplanner-web-react)
 
 ## Quick Start with Docker
 
