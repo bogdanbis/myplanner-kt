@@ -1,5 +1,5 @@
 <template>
-	<MpDialog ref="dialog" title="Log In" size="small">
+	<MpDialog ref="dialog" :title="showLogInForm ? 'Log In' : 'Sign Up'" size="small">
 		<LogInForm v-if="showLogInForm" />
 		<SignUpForm v-else />
 		<div class="d-flex align-center" v-if="showLogInForm">
